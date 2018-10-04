@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html>
 <html>
+<!-- asdasdadasdasdaadadasdasda -->
 <head>
 <!-- =========================================main에서 가져옴================================================= -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
