@@ -29,7 +29,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!-- Our Custom CSS -->
 <!-- <link rel="stylesheet" href="style5.css"> -->
-<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <!-- Font Awesome JS -->
 <script defer
 	src="https://use.fontawesome.com/releases/v5.0.13/js/solid.js"
@@ -258,8 +257,7 @@ var arrayValue = null
 							</table>
 						</c:when>
 						<c:otherwise>
-							<div class="container">
-								<table class="table">
+								<table class="table" style="width:850px;">
 									<tr>
 										<th>작성자</th>
 										<th>제목</th>
@@ -279,7 +277,6 @@ var arrayValue = null
 										</tr>
 									</c:forEach>
 								</table>
-							</div>
 						</c:otherwise>
 					</c:choose>
 				</div>

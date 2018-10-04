@@ -414,4 +414,10 @@ public class HpotController {
 		bs.boardComment(commentVO);
 		return "redirect:/boardView?bNum=" + commentVO.getbNum();
 	}
+	
+	@RequestMapping(value = "/boardModify", method = RequestMethod.POST)
+	public String boardModify(@ModelAttribute BoardVO boardVO) {
+		bs.boardModify(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum();
+	}
 }
