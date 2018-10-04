@@ -3,11 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-=======
-<!-- zz -->
-<!-- sdfa -->
->>>>>>> refs/remotes/origin/dev
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -58,8 +53,6 @@ b {
 					<br>
 				</c:if>
 				<b>인기</b> <br>
-				<div class="contentContainer"></div>
-				<br> <b>맞춤</b> <br>
 				<div class="contentContainer"></div>
 				<br> <b>채널(회원)</b> <br>
 				<div class="contentContainer"></div>

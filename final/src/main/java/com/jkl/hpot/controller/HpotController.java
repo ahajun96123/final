@@ -272,7 +272,7 @@ public class HpotController {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		int page = 1;
-		int limit = 12;
+		int limit = 9;
 		String category = request.getParameter("category");
 		System.out.println(request.getParameter("array"));
 		if (request.getParameter("page") != null) {
