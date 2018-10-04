@@ -1,0 +1,144 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Board">
+	<insert id="boardWrite" parameterType="board">
+		INSERT INTO BOARD
+		VALUES(#{id} , #{bNum}, #{bSubject}, #{bContent}, SYSDATE, #{bUrl}, 0,
+		#{bGrade}, 0, 0, #{bTag}, #{bCategory}, #{bWhich}, 0, #{bThumbname})
+	</insert>
+
+	<select id="boardList" parameterType="board" resultType="board">
+		SELECT *
+		FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM BOARD WHERE
+		BWHICH=#{bWhich} ORDER BY BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN
+		#{start} AND #{end}
+	</select>
+	<select id="boardListCate" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} ORDER BY BDATE
+		DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListCateGrade" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} ORDER BY
+		BGRADE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListCateView" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} ORDER BY
+		BREADCOUNT DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListCateRecommend" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} ORDER BY
+		BLIKECOUNT DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListCateBest" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM BOARD
+		WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} AND BREADCOUNT<![CDATA[ > ]]>9ORDER
+		BY BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListGrade" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} ORDER BY BGRADE DESC) V1)V2 WHERE V2.RN2
+		BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListView" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} ORDER BY BREADCOUNT DESC) V1)V2 WHERE
+		V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListRecommend" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} ORDER BY BLIKECOUNT DESC) V1)V2 WHERE
+		V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardListBest" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM BOARD
+		WHERE BWHICH=#{bWhich} AND BREADCOUNT<![CDATA[ > ]]>9
+		ORDER BY BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearchSubject" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BSUBJECT LIKE '%'||#{bSubject}||'%'
+		ORDER BY BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearchTag" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BTAG LIKE '%'||#{bTag}||'%' ORDER BY
+		BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearchId" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND ID LIKE '%'||#{id}||'%' ORDER BY
+		BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="boardSearchContent" parameterType="board"
+		resultType="board">
+		SELECT * FROM (SELECT ROWNUM RN2, V1. * FROM (SELECT * FROM
+		BOARD WHERE BWHICH=#{bWhich} AND BCONTENT LIKE '%'||#{bContent}||'%'
+		ORDER BY BDATE DESC) V1)V2 WHERE V2.RN2 BETWEEN #{start} AND #{end}
+	</select>
+	<select id="MaxBnum" resultType="int">
+		SELECT MAX(BNUM) FROM BOARD
+	</select>
+	<select id="listCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich}
+	</select>
+	<select id="listCateCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory}
+	</select>
+	<select id="listSearchCount" parameterType="board"
+		resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich}
+		<choose>
+			<when test="bSubject != null">AND BSUBJECT LIKE '%'||#{searchValue}||'%'</when>
+			<when test="id != null">AND ID LIKE '%'||#{searchValue}||'%'</when>
+			<when test="bTag != null">AND BTAG LIKE '%'||#{searchValue}||'%'</when>
+			<when test="bContent != null">AND BCONTENT LIKE '%'||#{searchValue}||'%'</when>
+		</choose>
+	</select>
+	<select id="boardView" parameterType="board" resultType="board">
+		SELECT *
+		FROM BOARD WHERE BNUM=#{bNum}
+	</select>
+	<select id="boardCommentList" parameterType="comment"
+		resultType="comment">
+		SELECT * FROM COMMENTS WHERE BNUM=#{bNum}
+	</select>
+	<update id="boardModify" parameterType="board">
+		UPDATE BOARD SET BSUBJECT=#{bSubject}, BTAG=#{bTag}, BCONTENT=#{bContent},
+		BCATEGORY=#{bCategory} WHERE BNUM=#{bNum}
+	</update>
+	<delete id="boardDelete" parameterType="board">
+		DELETE FROM BOARD WHERE BNUM=#{bNum}
+	</delete>
+	<update id="maxNumUpdate" parameterType="board">
+		UPDATE BOARD SET BNUM = BNUM-1 WHERE BNUM<![CDATA[ > ]]>#{bNum}
+	</update>
+	<insert id="boardComment" parameterType="comment">
+		INSERT INTO COMMENTS
+		VALUES(#{id}, #{bNum}, #{cContent}, SYSDATE)
+	</insert>
+	<update id="boardReadCount" parameterType="board">
+		UPDATE BOARD SET BREADCOUNT = BREADCOUNT+1 WHERE BNUM = #{bNum}
+	</update>
+	<insert id="bigData" parameterType="board">
+		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
+	</insert>
+</mapper>

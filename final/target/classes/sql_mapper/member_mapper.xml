@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+ "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Member">
+	<!-- 회원가입 쿼리 -->
+	<insert id="memberjoin" parameterType="member">
+		INSERT INTO MEMBER VALUES(#{id}, #{password}, #{name}, #{age}, #{email},
+		#{address}, #{gender}, #{approvalkey}, 'false')
+	</insert>
+
+	<select id="memberlogin" parameterType="member"
+		resultType="member">
+		SELECT * FROM MEMBER WHERE id = #{id}
+	</select>
+
+	<!-- 아이디 중복확인 -->
+	<select id="idOverlap" parameterType="member"
+		resultType="member">
+		SELECT id FROM MEMBER WHERE id = #{id}
+	</select>
+
+	<select id="memberinfo" parameterType="member"
+		resultType="member">
+		SELECT * FROM MEMBER WHERE id = #{id}
+	</select>
+
+	<select id="memberlist" parameterType="member"
+		resultType="member">
+		SELECT * FROM MEMBER
+	</select>
+
+	<delete id="memberdelete" parameterType="member">
+		DELETE FROM MEMBER WHERE id = #{id}
+	</delete>
+
+	<update id="memberalter" parameterType="member">
+		UPDATE MEMBER SET password = #{password}, name = #{name}, age = #{age},
+		email = #{email}, address = #{address}, gender = #{gender} WHERE id =
+		#{id}
+	</update>
+
+	<select parameterType="member" id="idfind" resultType="member"> SELECT *
+		FROM MEMBER WHERE name = #{name} AND email = #{email} </select>
+
+	<select parameterType="member" id="pwfind" resultType="member"> SELECT *
+		FROM MEMBER WHERE id = #{id} </select>
+
+	<update parameterType="member" id="approval_member"> update member set
+		approvalstatus = 'true' where email = #{email} and approvalkey =
+		#{approvalkey} </update>
+
+	<update parameterType="member" id="pwalter"> update member set password =
+		#{password} , approvalstatus = 'false' where id = #{id} </update>
+</mapper>
