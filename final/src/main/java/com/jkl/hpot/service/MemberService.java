@@ -118,6 +118,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		MemberVO mv = new MemberVO();
 		mv = mdao.pwFind(memberVO);
+		if(mv != null) {
 		mav.addObject("pwfind", mv);
 		mav.addObject("msg3", "인증이 완료되었습니다. 비밀번호를 변경해주세요");
 		if (mv.getApprovalstatus().equals("true")) {
@@ -125,7 +126,13 @@ public class MemberService {
 		} else {
 			send_mail(mv);
 			mav.setViewName("pwFind2");
+			}
+		}else {
+			mav.addObject("iderror", "입력한 아이디가 존재하지 않습니다");
+			mav.setViewName("pwFind");
 		}
+		
+		
 		return mav;
 	}
 
@@ -160,7 +167,7 @@ public class MemberService {
 		msg += memberVO.getId() + "님의 비밀번호 변경이 요청되어 인증메일이 전송됬습니다.</h3>";
 		msg += "<div style='font-size: 130%'>";
 		msg += "하단의 인증 버튼 클릭 시 정상적으로 인증이 완료됩니다.</div><br/>";
-		msg += "<form method='post' action='http://localhost:8040/hpot/approvalmember'>";
+		msg += "<form method='post' action='http://192.168.0.147:8040/hpot/approvalmember'>";
 		msg += "<input type='hidden' name='id' value='" + memberVO.getId() + "'>";
 		msg += "<input type='hidden' name='email' value='" + memberVO.getEmail() + "'>";
 		msg += "<input type='hidden' name='approvalkey' value='" + memberVO.getApprovalkey() + "'>";
