@@ -71,7 +71,7 @@ public class MemberService {
 	public ModelAndView memberLogout(MemberVO memberVO) {
 		mav = new ModelAndView();
 		session.invalidate();
-		mav.addObject("msg", "로그아웃");
+		mav.addObject("logout", "로그아웃");
 		mav.setViewName("login");
 		return mav;
 	}
