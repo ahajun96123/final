@@ -242,9 +242,9 @@ public class HpotController {
 
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
-
+			
 		} else {
-
+			
 		}
 
 		String which = null;
