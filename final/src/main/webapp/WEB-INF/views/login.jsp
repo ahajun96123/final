@@ -10,6 +10,7 @@
 </script>
 </c:if>
 <!-- ajasdlfjsadklfjsad;lkfjasklr;owjkalsjflksajflkajlsajdfjas -->
+<!-- test -->
 <head>
 
 <meta charset="utf-8">
@@ -92,11 +93,13 @@
 	<c:if test="${msg != null}">
 		<script>
 			alert('${msg}');
+			${msg = null};
 		</script>
 	</c:if>
 	<c:if test="${msg2 != null}">
-		<script>
+		<script>	
 			alert('${msg2}');
+			${msg2 = null};
 		</script>
 	</c:if>
 	<!-- Header - set the background image for the header in the line below -->
