@@ -58,12 +58,6 @@
 			
 		</div>
 		<br>
-		<b>맞춤</b>
-		<br>
-		<div class="contentContainer">
-			
-		</div>
-		<br>
 		<b>채널(회원)</b>
 		<br>
 		<div class="contentContainer">
