@@ -202,6 +202,18 @@ var arrayValue = null
 											<c:when test="${which eq '음식'}">
 												<div class="card border border-warning" id="card"
 													style="height: 240px; width: 240px; margin: 15px; padding:0px;">
+													
+													
+<div id="menu1" style="width: 100px; border: 1px solid red;">
+  대메뉴1-1
+  <div id="submenu1" style="position: absolute; display: none; width: 100px; border: 1px solid blue;">
+    - 서브메뉴1-1
+    <br /> - 서브메뉴2-1
+    <br /> - 서브메뉴3-1
+  </div>
+</div>													
+													
+													
 													<div class="card-body text-center">
 														<div style="margin-top:0px;">
 															<span style="color: #FF895A">${board.id}</span> <span>/&nbsp;${board.bSubject}</span>
@@ -328,4 +340,11 @@ var arrayValue = null
 		</div>
 	</div>
 </body>
+<script>
+$("#menu1").hover(function () {
+	  $("#submenu1").show();
+	}, function () {
+	  $("#submenu1").hide();
+	});
+</script>
 </html>
