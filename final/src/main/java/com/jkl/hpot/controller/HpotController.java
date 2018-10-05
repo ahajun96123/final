@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+
 import java.util.Locale;
 
 import javax.servlet.ServletContext;
@@ -16,20 +17,32 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.service.BoardService;
+import com.jkl.hpot.service.ImageService;
 import com.jkl.hpot.service.MemberService;
+import com.jkl.hpot.util.MediaUtils;
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
 import com.jkl.hpot.vo.MemberVO;
+
 
 @Controller
 public class HpotController {
@@ -37,6 +50,7 @@ public class HpotController {
 	@Autowired
 	private BoardService bs;
 	private ModelAndView mav;
+	private ImageService is;
 
 	@Autowired
 	private MemberService ms;
@@ -272,7 +286,7 @@ public class HpotController {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		int page = 1;
-		int limit = 12;
+		int limit = 9;
 		String category = request.getParameter("category");
 		System.out.println(request.getParameter("array"));
 		if (request.getParameter("page") != null) {
@@ -342,7 +356,6 @@ public class HpotController {
 	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
 	      response.setContentType("text/html;charset=UTF-8");
-
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();
 	         ServletContext context = request.getServletContext();
@@ -402,6 +415,7 @@ public class HpotController {
 	public String boardDelete(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO)
 			throws UnsupportedEncodingException {
 		response.setContentType("text/html;charset=UTF-8");
+	
 		int view = Integer.parseInt(request.getParameter("bNum"));
 		boardVO.setbNum(view);
 		String which = URLEncoder.encode(request.getParameter("which"), "UTF-8");
@@ -420,4 +434,42 @@ public class HpotController {
 		bs.boardModify(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
+	
+	@GetMapping("/img/{fileId}")
+    @ResponseBody
+    public ResponseEntity<?> serveFile(@PathVariable int fileId) {
+        try {
+            UploadFile uploadedFile = is.load(fileId);
+            HttpHeaders headers = new HttpHeaders();
+            
+            String fileName = uploadedFile.getFileName();
+            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
+
+            if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
+                headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
+            } else {
+                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
+            }
+
+            Resource resource = is.loadAsResource(uploadedFile.getSaveFileName());
+            return ResponseEntity.ok().headers(headers).body(resource);
+            
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }
+	
+	@PostMapping("/img")
+    @ResponseBody
+    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
+        try {
+            UploadFile uploadedFile = is.store(file);
+            return ResponseEntity.ok().body("/img/" + uploadedFile.getId());
+        } catch (Exception e) {
+            e.printStackTrace();
+            return ResponseEntity.badRequest().build();
+        }
+    }	
+
 }

@@ -6,7 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=1">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -26,6 +26,44 @@
 	integrity="sha384-6OIrr52G08NpOFSZdxxz1xdNSndlD4vdcf/q2myIUVO0VsqaGHJsB0RaBE01VTOY"
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<script type="text/javascript">
+	var loginCheck="<%=session.getAttribute("id")%>";
+	var which = "${view.bWhich}";
+	var num = "${view.bNum}";
+	var idCheck = "${view.id}";
+
+	function postCheck() {
+		if (loginCheck == null || loginCheck == "") {
+			alert("로그인을 해주세요.");
+		} else {
+			location.href = "postCheck?which=" + which;
+		}
+	}
+
+	function DeleteCheck() {
+		if (loginCheck == null || loginCheck == "") {
+			alert("로그인을 해주세요.");
+		} else {
+			if (loginCheck == idCheck) {
+				location.href = "boardDelete?bNum=" + num + "&which=" + which;
+			} else {
+				alert("잘못된 요청입니다. (아이디 불일치)");
+			}
+		}
+	}
+
+	function ModifyCheck() {
+		if (loginCheck == null || loginCheck == "") {
+			alert("로그인을 해주세요.");
+		} else {
+			if (loginCheck == idCheck) {
+				location.href = "boardModify?bNum=" + num
+			} else {
+				alert("잘못된 요청입니다. (아이디 불일치)");
+			}
+		}
+	}
+</script>
 <meta charset="UTF-8">
 <title>View</title>
 </head>
@@ -36,99 +74,95 @@
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div style="height: 100%;">
-				<div class="container">
-					<div style="height: 50px;"></div>
-					<table class="table table-bordered">
-						<tr>
-							<th>제목</th>
-							<td>${view.bSubject}</td>
-						</tr>
+			<div style="width: 1110px; height: 100%;">
+				<div style="height: 50px;"></div>
+				<table class="table table-bordered" style="width: 850px;">
+					<tr>
+						<th>제목</th>
+						<td>${view.bSubject}</td>
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
-								<tr>
-									<th>평점</th>
-									<td>${view.bGrade}</td>
-								</tr>
+								<th>평점</th>
+								<td>${view.bGrade}</td>
 							</c:when>
 							<c:otherwise>
-								<tr>
-									<th>추천</th>
-									<td>${view.bLikecount}</td>
-								</tr>
+								<th>추천</th>
+								<td>${view.bLikecount}</td>
 							</c:otherwise>
 						</c:choose>
-						<tr>
-							<th>조회수</th>
-							<td>${view.bReadcount}</td>
-						</tr>
-						<c:choose>
-							<c:when test="${view.bWhich eq '음식'}">
-								<tr>
-									<th>음식 종류</th>
-									<td>${view.bCategory}</td>
-								</tr>
-							</c:when>
-							<c:when test="${view.bWhich eq '영화'}">
-								<tr>
-									<th>영화 장르</th>
-									<td>${view.bCategory}</td>
-								</tr>
-							</c:when>
-							<c:otherwise>
-								<tr>
-									<th>지름좌표</th>
-									<td><a href="${view.bUrl}">${view.bUrl}</a></td>
-								</tr>
-							</c:otherwise>
-						</c:choose>
-						<tr>
-							<th>태그</th>
-							<td>${view.bTag}</td>
-						</tr>
-						<tr>
-							<th>작성일</th>
-							<td>${view.bDate}</td>
-						</tr>
-						<tr>
-							<th>내용</th>
-							<td>${view.bContent}</td>
-						</tr>
-					</table>
-					<div style="margin-right: 10px; float: right">
-						<input class="btn btn-warning" type="button" value="수정"
-							onclick="location='modifyForm?bNum=${view.bNum}'">
-					</div>
-					<div style="margin-right: 10px; float: right">
-						<input class="btn btn-warning" type="button" value="삭제"
-							onclick="location='boardDelete?bNum=${view.bNum}&which=${view.bWhich}'">
-					</div>
-					<div style="margin-right: 10px; float: right">
-						<input class="btn btn-warning" type="button" value="목록"
-							onclick="location='boardList?which=${view.bWhich}'">
-					</div>
-					<div style="height: 30px"></div>
-					<form action="boardComment" method="post">
-						<div class="input-group mb-3" style="margin-top: 10px;">
-							<div class="input-group-prepend">
-								<textarea cols="123" rows="3" name="cContent"
-									class="form-control"></textarea>
-							</div>
-							<input type="hidden" name="bNum" value="${view.bNum}"> <input
-								type="hidden" name="id" value="${view.id}">
-							<button class="input-group-text" type="submit">댓글등록</button>
+					</tr>
+					<c:choose>
+						<c:when test="${view.bWhich eq '음식'}">
+							<tr>
+								<th>음식 종류</th>
+								<td>${view.bCategory}</td>
+								<th>태그</th>
+								<td>${view.bTag}</td>
+							</tr>
+						</c:when>
+						<c:when test="${view.bWhich eq '영화'}">
+							<tr>
+								<th>영화 장르</th>
+								<td>${view.bCategory}</td>
+								<th>태그</th>
+								<td>${view.bTag}</td>
+							</tr>
+						</c:when>
+						<c:otherwise>
+							<tr>
+								<th>지름좌표</th>
+								<td><a href="${view.bUrl}">${view.bUrl}</a></td>
+								<th>태그</th>
+								<td>${view.bTag}</td>
+							</tr>
+						</c:otherwise>
+					</c:choose>
+					<tr>
+						<th>작성일</th>
+						<td>${view.bDate}</td>
+						<th>조회수</th>
+						<td>${view.bReadcount}</td>
+					</tr>
+					<tr>
+						<th colspan="4" align="center">내용</th>
+					</tr>
+					<tr>
+						<td colspan="4" rowspan="3"><img src="img/${view.bThumbname}">${view.bContent}</td>
+					</tr>
+				</table>
+				<div style="margin-right: 10px; float: right">
+					<input class="btn btn-warning" type="button" value="수정"
+						onclick="ModifyCheck()">
+				</div>
+				<div style="margin-right: 10px; float: right">
+					<input class="btn btn-warning" type="button" value="삭제"
+						onclick="DeleteCheck()">
+				</div>
+				<div style="margin-right: 10px; float: right">
+					<input class="btn btn-warning" type="button" value="목록"
+						onclick="location='boardList?which=${view.bWhich}'">
+				</div>
+				<div style="height: 30px"></div>
+				<form action="boardComment" method="post">
+					<div class="input-group mb-3"
+						style="margin-top: 10px; width: 850px">
+						<div class="input-group-prepend">
+							<textarea cols="95" rows="3" name="cContent" class="form-control"></textarea>
 						</div>
-					</form>
-					<div>
-						<c:forEach var="comment" items="${commentList}">
-							<div>
-								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
-							</div>
-							<div>
-								<span>${comment.cContent}</span>
-							</div>
-						</c:forEach>
+						<input type="hidden" name="bNum" value="${view.bNum}"> <input
+							type="hidden" name="id" value="${view.id}">
+						<button class="input-group-text" type="submit">댓글등록</button>
 					</div>
+				</form>
+				<div>
+					<c:forEach var="comment" items="${commentList}">
+						<div>
+							<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
+						</div>
+						<div>
+							<span>${comment.cContent}</span>
+						</div>
+					</c:forEach>
 				</div>
 			</div>
 		</div>

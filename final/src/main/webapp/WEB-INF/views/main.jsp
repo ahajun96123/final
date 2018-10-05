@@ -3,11 +3,6 @@
 <!DOCTYPE html>
 <html>
 <head>
-<<<<<<< HEAD
-=======
-<!-- zz -->
-<!-- sdfa -->
->>>>>>> refs/remotes/origin/dev
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
@@ -41,6 +36,13 @@ b {
 	border: 1px solid gold;
 }
 </style>
+<script type="text/javascript">
+var which=""
+
+function postCheck() {
+	location.href="postCheck?which="+which
+}
+</script>
 <title>main</title>
 </head>
 <body>

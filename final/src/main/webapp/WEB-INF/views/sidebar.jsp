@@ -4,6 +4,10 @@
 <html>
 <html lang="en">
 <head>
+<script type="text/javascript">
+
+
+</script>
 <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <title>ui</title>
 <meta charset="utf-8">
@@ -268,9 +272,9 @@ a.Livechat, a.Livechat:hover {
 			<li class="sidemenu"><a href="boardList?which=지름"><i class="material-icons" style="font-size:18px">shopping_cart</i>  Hot Deal</a></li>
 		</ul>
 		<ul class="list-unstyled CTAs">
-			<li><a href="postCheck?which=${which}"
+			<li><a href="#" onclick="postCheck()"
 				class="post">Post</a></li>
-			<li><a href="Livechat"
+			<li><a href="#" onclick="chatCheck()"
 				class="Livechat">Live chat</a></li>
 		</ul>
 	</nav>

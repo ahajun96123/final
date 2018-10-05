@@ -1,19 +1,19 @@
 package com.jkl.hpot.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-import org.apache.ibatis.annotations.MapKey;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.jkl.hpot.dao.BoardDAO;
+
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
 import com.jkl.hpot.vo.PageInfo;
@@ -29,7 +29,7 @@ public class BoardService {
 	private BoardVO boardVO;
 	private PageInfo pageInfo;
 	private CommentVO commentVO;
-	
+		
 	@Autowired
 	private HttpSession session;
 
@@ -195,5 +195,6 @@ public class BoardService {
 		boardDAO.boardComment(commentVO);
 		return mav;
 	}
+	
 	
 }
