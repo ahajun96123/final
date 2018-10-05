@@ -1,10 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-
 <html>
 <html lang="en">
 <head>
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 <title>ui</title>
 <meta charset="utf-8">
 </head>
@@ -69,8 +69,8 @@ a, a:hover, a:focus {
     SIDEBAR STYLE
 ----------------------------------------------------- */
 #sidebar {
-	min-width: 250px;
-	max-width: 250px;
+	min-width: 220px;
+	max-width: 220px;
 	height: 100%;
 	background: #dcdcdc;
 	color: #fff;
@@ -229,13 +229,13 @@ a.Livechat, a.Livechat:hover {
 	<!-- Sidebar Holder -->
 	<nav id="sidebar">
 		<div class="sidebar-header">
-			<h3>MENU</h3>
+			<h3><i class="fa fa-bars"></i>  MENU</h3>
 		</div>
 
 		<ul class="list-unstyled components">
 			<p>Category</p>
 			<li class="active"><a href="#homeSubmenu" data-toggle="collapse"
-				aria-expanded="false" class="dropdown-toggle">Food</a>
+				aria-expanded="false" class="dropdown-toggle"><i class="material-icons" style="font-size:18px">restaurant</i>  Food</a>
 				<ul class="collapse in list-unstyled" id="homeSubmenu">
 					<li class="sideside"><a href="boardList?which=음식">전체</a></li>
 					<li class="sideside"><a href="boardList?which=음식&category=한식">한식</a></li>
@@ -245,7 +245,7 @@ a.Livechat, a.Livechat:hover {
 					<li class="sideside"><a href="boardList?which=음식&category=음식기타">기타</a></li>
 				</ul></li>
 			<li class="sidemenu"><a href="#pageSubmenu"
-				data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">Movie</a>
+				data-toggle="collapse" aria-expanded="false" class="dropdown-toggle"><i class="material-icons" style="font-size:18px">local_movies</i>  Movie</a>
 				<ul class="collapse in list-unstyled" id="pageSubmenu">
 					<li class="sideside"><a href="boardList?which=영화">전체</a></li>
 					<li class="sideside"><a href="boardList?which=영화&category=액션">액션</a></li>
@@ -265,7 +265,7 @@ a.Livechat, a.Livechat:hover {
 					<li class="sideside"><a href="boardList?which=영화&category=역사">역사</a></li>
 					<li class="sideside"><a href="boardList?which=영화&category=영화기타">기타</a></li>
 				</ul></li>
-			<li class="sidemenu"><a href="boardList?which=지름">Hot Deal</a></li>
+			<li class="sidemenu"><a href="boardList?which=지름"><i class="material-icons" style="font-size:18px">shopping_cart</i>  Hot Deal</a></li>
 		</ul>
 		<ul class="list-unstyled CTAs">
 			<li><a href="postCheck?which=${which}"

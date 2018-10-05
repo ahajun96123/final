@@ -272,7 +272,7 @@ public class HpotController {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		int page = 1;
-		int limit = 12;
+		int limit = 9;
 		String category = request.getParameter("category");
 		System.out.println(request.getParameter("array"));
 		if (request.getParameter("page") != null) {
@@ -413,5 +413,11 @@ public class HpotController {
 	public String boardComment(HttpServletRequest request, @ModelAttribute CommentVO commentVO) {
 		bs.boardComment(commentVO);
 		return "redirect:/boardView?bNum=" + commentVO.getbNum();
+	}
+	
+	@RequestMapping(value = "/boardModify", method = RequestMethod.POST)
+	public String boardModify(@ModelAttribute BoardVO boardVO) {
+		bs.boardModify(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
 }

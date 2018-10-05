@@ -77,145 +77,159 @@
 
 </head>
 <body>
-<nav class="navbar navbar-expand-sm bg-dark navbar-muted navbar-fixed-top" style="margin-bottom:0px;background-image:url('img/honeybgcm3.png');">
+	<nav
+		class="navbar navbar-expand-sm bg-dark navbar-muted navbar-fixed-top"
+		style="margin-bottom: 0px; background-image: url('img/honeybgcm3.png');height:80px;">
 		<!-- Brand/logo -->
-		<img src="img/honeypot3.png" style="width: 200px; height: 80px;"></img>
-		<div style="width:50px"></div>
+		<img src="img/honeypot3.png" style="width: 200px; height: 90px;"></img>
+		<div style="width: 50px"></div>
 		<!-- Links -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link text-warning" href="main">Home</a></li>
-			<li class="nav-item"><a class="nav-link text-warning" href="#">My Page</a></li>
-			<li class="nav-item"><a class="nav-link text-warning" href="#">Admin Page</a></li>
+			<li class="nav-item"><a class="nav-link text-warning"
+				href="main">Home</a></li>
 			<c:choose>
-			<c:when test="${which ne null}"> 
-			<li class="nav-item"><form class="form-inline"
-					action="boardList">
-					<select class="custom-select" name="option">
-					<option selected value="제목">제목</option>
-					<option value="태그">태그</option>
-					<option value="작성자">작성자</option>
-					<option value="내용&지역">내용&지역</option>
-					</select>
-					<input class="form-control mr-auto" type="text"
-						placeholder="search" name="search">
-						<div style="width:850px;">
-							<button class="btn btn-light" type="submit">Search</button>
-						</div>
-						<input type="hidden" name="bWhich" value="${which}">
-				</form></li>
+				<c:when test="${which ne null}">
+					<li class="nav-item">
+						<form class="form-inline" action="boardList" style="height:45px;">
+							<div class="input-group mb-1">
+								<select class="custom-select" name="option">
+									<option selected value="제목">제목</option>
+									<option value="태그">태그</option>
+									<option value="작성자">작성자</option>
+									<option value="내용&지역">내용&지역</option>
+								</select>
+								<div class="input-group mb-1">
+									<input type="text" class="form-control" placeholder="Search">
+									<div class="input-group-append" style="width: 200px;">
+										<button class="btn btn-warning" type="submit"><span class="fa fa-search"></span>검색	</button>
+									</div>
+								</div>
+							</div>
+							<input type="hidden" name="bWhich" value="${which}">
+						</form>
+					</li>
 				</c:when>
 				<c:otherwise>
-				<li class="nav-item"><div style="width:1169px;"></div></li>
+					<li class="nav-item"><div style="width:369;"></div></li>
 				</c:otherwise>
-				</c:choose>
+			</c:choose>
 			<li class="nav-item">
 				<div class="btn-group">
 					<c:if test="${sessionScope.id == null }">
 						<button class="btn btn-warning" onclick="location.href='login'">로그인</button>
 						<button id="myBtn" class="btn btn-lg btn-primary btn-block">회원가입</button>
 					</c:if>
-					<c:if test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
-						<form action="memberinfomation" method="post"><button class="btn btn-warning">내 정 보</button></form>
-						<form action="memberlogout" method="post"><button class="btn btn-info">로 그 아 웃 </button></form>
+					<c:if
+						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
+						<form action="memberinfomation" method="post">
+							<button class="btn btn-warning">내 정 보</button>
+						</form>
+						<form action="memberlogout" method="post">
+							<button class="btn btn-info">로 그 아 웃</button>
+						</form>
 					</c:if>
-					<c:if test="${sessionScope.id != null && sessionScope.id.equals('admin') }">
-						<form action="memberlist" method="post"><button class="btn btn-warning">회 원 관 리</button></form>
-						<form action="memberlogout" method="post"><button class="btn btn-info">로 그 아 웃 </button></form>
+					<c:if
+						test="${sessionScope.id != null && sessionScope.id.equals('admin') }">
+						<form action="memberlist" method="post">
+							<button class="btn btn-warning">회 원 관 리</button>
+						</form>
+						<form action="memberlogout" method="post">
+							<button class="btn btn-info">로 그 아 웃</button>
+						</form>
 					</c:if>
 				</div>
 			</li>
 		</ul>
 	</nav>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-				<!-- Trigger/Open The Modal -->
 
-				<!-- The Modal -->
-				<div id="myModal" class="modal">
 
-					<!-- Modal content -->
-					<div class="modal-content">
 
-						<div class="page-header">
-							<h1>HoneyPot 회원가입</h1>
-						</div>
-						<div class="col-md-6 col-md-offset-3">
-							<form action="memberjoin" method="post">
-								<div class="form-group">
-									<label for="InputID">사용하실 아이디</label> 
-									<input type="text" class="form-control" name="id" placeholder="아이디" required>
-								</div>
-								<div class="form-group">
-									<label for="InputPassword">비밀번호</label> <input type="password"
-										class="form-control" name="password" placeholder="비밀번호"
-										required>
-								</div>
-								<div class="form-group">
-									<label for="username">이름</label> <input type="text"
-										class="form-control" name="name" placeholder="이름" required>
-								</div>
-								<div class="form-group">
-									<label for="userage">나이</label> <input type="number"
-										class="form-control" name="age" placeholder="나이" required>
-								</div>
-								<div class="form-group">
-									<label for="useremail">이메일</label> <input type="text"
-										class="form-control" name="email" placeholder="이메일" required>
-								</div>
-								<div class="form-group">
-									<label for="useraddress">주소</label> <input type="text"
-										class="form-control" name="address" placeholder="주소">
-								</div>
-								<div class="form-group">
-									<label for="usergender">성별</label><br> <input type="radio"
-										name="gender" value="남자" checked="checked" /> 남자 <input
-										type="radio" name="gender" value="여자" /> 여자
-								</div>
-								<div class="form-group text-center">
-									<button type="submit" class="btn btn-info">
-										회원가입<i class="fa fa-check spaceLeft"></i>
-									</button>
-									<button class="btn btn-warning">
-										<span class="close" style="font-size: 15pt">가입취소</span><i
-											class="fa fa-times spaceLeft"></i>
-									</button>
 
-								</div>
-							</form>
-						</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Trigger/Open The Modal -->
+
+	<!-- The Modal -->
+	<div id="myModal" class="modal">
+
+		<!-- Modal content -->
+		<div class="modal-content">
+
+			<div class="page-header">
+				<h1>HoneyPot 회원가입</h1>
+			</div>
+			<div class="col-md-6 col-md-offset-3">
+				<form action="memberjoin" method="post">
+					<div class="form-group">
+						<label for="InputID">사용하실 아이디</label> <input type="text"
+							class="form-control" name="id" placeholder="아이디" required>
+					</div>
+					<div class="form-group">
+						<label for="InputPassword">비밀번호</label> <input type="password"
+							class="form-control" name="password" placeholder="비밀번호" required>
+					</div>
+					<div class="form-group">
+						<label for="username">이름</label> <input type="text"
+							class="form-control" name="name" placeholder="이름" required>
+					</div>
+					<div class="form-group">
+						<label for="userage">나이</label> <input type="number"
+							class="form-control" name="age" placeholder="나이" required>
+					</div>
+					<div class="form-group">
+						<label for="useremail">이메일</label> <input type="text"
+							class="form-control" name="email" placeholder="이메일" required>
+					</div>
+					<div class="form-group">
+						<label for="useraddress">주소</label> <input type="text"
+							class="form-control" name="address" placeholder="주소">
+					</div>
+					<div class="form-group">
+						<label for="usergender">성별</label><br> <input type="radio"
+							name="gender" value="남자" checked="checked" /> 남자 <input
+							type="radio" name="gender" value="여자" /> 여자
+					</div>
+					<div class="form-group text-center">
+						<button type="submit" class="btn btn-info">
+							회원가입<i class="fa fa-check spaceLeft"></i>
+						</button>
+						<button class="btn btn-warning">
+							<span class="close" style="font-size: 15pt">가입취소</span><i
+								class="fa fa-times spaceLeft"></i>
+						</button>
 
 					</div>
+				</form>
+			</div>
 
-				</div>
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				
-				<!-- Bootstrap core JavaScript -->
+		</div>
+
+	</div>
+
+
+
+
+
+
+
+
+
+
+
+
+	<!-- Bootstrap core JavaScript -->
 	<%-- <script
 		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>
 	<script

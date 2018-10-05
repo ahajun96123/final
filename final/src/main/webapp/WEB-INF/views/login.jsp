@@ -5,9 +5,9 @@
 <html lang="ko">
 
 <c:if test="${sessionScope.id != null }">
-<script>
-	window.location.href = 'main';
-</script>
+	<script>
+		window.location.href = 'main';
+	</script>
 </c:if>
 <!-- ajasdlfjsadklfjsad;lkfjasklr;owjkalsjflksajflkajlsajdfjas -->
 <!-- dev브랜치만듬 -->
@@ -21,8 +21,10 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 
 <!-- ajax를 이용한 아이디 중복확인 기능 -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <title>HoneyPot</title>
 <link rel="shortcut icon" href="resources/img/bee.jpg">
@@ -128,13 +130,27 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 	<c:if test="${msg != null}">
 		<script>
 			alert('${msg}');
+<<<<<<< HEAD
 			delete ${msg};
+=======
+			$
+			{
+				msg = null
+			};
+>>>>>>> branch 'dev' of https://github.com/ahajun96123/final.git
 		</script>
 	</c:if>
 	<c:if test="${msg2 != null}">
-		<script>	
+		<script>
 			alert('${msg2}');
+<<<<<<< HEAD
 			delete ${msg2};
+=======
+			$
+			{
+				msg2 = null
+			};
+>>>>>>> branch 'dev' of https://github.com/ahajun96123/final.git
 		</script>
 	</c:if>
 	<!-- Header - set the background image for the header in the line below -->
@@ -150,10 +166,11 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 				<h2 class="card-title text-center" style="color: #113366;">회원로그인</h2>
 			</div>
 			<div class="card-body">
-				<form action="memberlogin" method="post" onSubmit="logincall();return false">
+				<form action="memberlogin" method="post"
+					onSubmit="logincall();return false">
 					<h5 class="form-signin-heading">회원님의 정보를 입력해주세요</h5>
-					<label for="inputEmail" class="sr-only">Your ID</label> 
-					<input type="text" id="id" name="id" class="form-control"
+					<label for="inputEmail" class="sr-only">Your ID</label> <input
+						type="text" id="id" name="id" class="form-control"
 						placeholder="Your ID" required autofocus> <BR> <label
 						for="inputPassword" class="sr-only">Password</label> <input
 						type="password" id="upw" name="password" class="form-control"
@@ -161,17 +178,21 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 					<div class="checkbox"></div>
 					<button id="btn-Yes" class="btn btn-lg btn-warning btn-block"
 						type="submit">로 그 인</button>
-					
-					
-				</form><br>
-				<button class="btn btn-lg btn-warning btn-block" onclick="location.href='idfind'">아 이 디 찾 기</button>
-				<button class="btn btn-lg btn-warning btn-block" onclick="location.href='pwfind'">비 밀 번 호 찾 기</button>
+
+
+				</form>
+				<br>
+				<button class="btn btn-lg btn-warning btn-block"
+					onclick="location.href='idfind'">아 이 디 찾 기</button>
+				<button class="btn btn-lg btn-warning btn-block"
+					onclick="location.href='pwfind'">비 밀 번 호 찾 기</button>
 				<h5 class="form-signin-heading" style="text-align: center;">
-				<br>아직 회원이 아니신가요?
+					<br>아직 회원이 아니신가요?
 				</h5>
 				<br>
 				<!-- Trigger/Open The Modal -->
-				<button id="myBtn" class="btn btn-lg btn-primary btn-block">회 원 가 입</button>
+				<button id="myBtn" class="btn btn-lg btn-primary btn-block">회
+					원 가 입</button>
 
 				<!-- The Modal -->
 				<div id="myModal" class="modal">
@@ -185,9 +206,10 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 						<div class="col-md-6 col-md-offset-3">
 							<form action="memberjoin" method="post" name="frm">
 								<div class="form-group">
-									<label for="InputID">사용하실 아이디</label> 
-									<input type="text" id="idbox" class="form-control" name="id" placeholder="아이디" required>
-									<input type="button" id="checkbtn" onclick="idOverlap()" value="중복확인" />
+									<label for="InputID">사용하실 아이디</label> <input type="text"
+										id="idbox" class="form-control" name="id" placeholder="아이디"
+										required> <input type="button" id="checkbtn"
+										onclick="idOverlap()" value="중복확인" />
 								</div>
 								<div class="form-group">
 									<label for="InputPassword">비밀번호</label> <input type="password"
@@ -294,36 +316,38 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 		}
 	</script>
 	<script>
-	function idCheck(){
-		var idbox = document.getElementById("idbox");
-		if(document.getElementById("idbox").readOnly == false){
-			alert('아이디 중복 체크를 해주세요');
-			return false;
-        }
-	}
+		function idCheck() {
+			var idbox = document.getElementById("idbox");
+			if (document.getElementById("idbox").readOnly == false) {
+				alert('아이디 중복 체크를 해주세요');
+				return false;
+			}
+		}
 	</script>
 	<script>
-	function idOverlap(){
-		var idbox = document.getElementById("idbox");
-	      $.ajax({
-	         type : "post",
-	         url : "idOverlap",
-	         data : {"id" : frm.id.value},
-	         dataType : "text",
-	         success : function(data){
-	            if(data=="1"){
-	               alert("이 아이디는 사용 가능합니다.");
-	               $("input[id=idbox]").attr("readonly", true);
-	               $('#checkbtn').attr('disabled', true);
-	            } else{
-	               alert("이 아이디는 사용할 수 없습니다.");
-	            }
-	         },
-	         error : function(request, status, error){
-	            alert("code:" + request.status + "\n" + "error:" + error);
-	         }
-	      });
-	   }
+		function idOverlap() {
+			var idbox = document.getElementById("idbox");
+			$.ajax({
+				type : "post",
+				url : "idOverlap",
+				data : {
+					"id" : frm.id.value
+				},
+				dataType : "text",
+				success : function(data) {
+					if (data == "1") {
+						alert("이 아이디는 사용할 수 없습니다.");
+					} else {
+						alert("이 아이디는 사용 가능합니다.");
+						$("input[id=idbox]").attr("readonly", true);
+						$('#checkbtn').attr('disabled', true);
+					}
+				},
+				error : function(request, status, error) {
+					alert("code:" + request.status + "\n" + "error:" + error);
+				}
+			});
+		}
 	</script>
 	<!-- <script type="text/javascript">
 
@@ -334,7 +358,7 @@ alert('로그아웃후 뒤로가기가 가능합니다');
       }
 
 	</script> -->
-	
+
 </body>
 
 </html>

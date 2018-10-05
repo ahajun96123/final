@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,48 +28,38 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
 <style>
-	b{
-		font-size : 25px;
-	}
-	.contentContainer{
-		border: 1px solid gold;
-	}
+b {
+	font-size: 25px;
+}
+
+.contentContainer {
+	border: 1px solid gold;
+}
 </style>
 <title>main</title>
 </head>
 <body>
-	<%@include file="./topui.jsp"%>
-	<div style="width: 1920px; height: 1080px;">
-		<div style="width: 260px; height: 100%; float: left;">
-			<%@include file="./sidebar.jsp"%>
-		</div>
-		<div>
-		<c:if test="${sessionScope.id !=null }">
-			<b>맞춤</b>
-			<br>
-			<div class="contentContainer">
-				
+	<div class=container>
+		<%@include file="./topui.jsp"%>
+		<div style="width: 1130px; height: 1080px;">
+			<div style="width: 260px; height: 100%; float: left;">
+				<%@include file="./sidebar.jsp"%>
 			</div>
-			<br>
-		</c:if>
-		<b>인기</b>
-		<br>
-		<div class="contentContainer">
-			
-		</div>
-		<br>
-		<b>채널(회원)</b>
-		<br>
-		<div class="contentContainer">
-			
-		</div>
-		<br>
-		<b>주제</b>
-		<br>
-		<div class="contentContainer">
-			
-		</div>
-		<br>
+			<div>
+				<c:if test="${sessionScope.id !=null }">
+					<b>맞춤</b>
+					<br>
+					<div class="contentContainer"></div>
+					<br>
+				</c:if>
+				<b>인기</b> <br>
+				<div class="contentContainer"></div>
+				<br> <b>채널(회원)</b> <br>
+				<div class="contentContainer"></div>
+				<br> <b>주제</b> <br>
+				<div class="contentContainer"></div>
+				<br>
+			</div>
 		</div>
 	</div>
 </body>
