@@ -161,7 +161,7 @@
 							<h1>HoneyPot 회원가입</h1>
 						</div>
 						<div class="col-md-6 col-md-offset-3">
-							<form action="memberjoin" method="post" name="frm" onSubmit="return false;">
+							<form action="memberjoin" id="chch" method="post" name="frm" onSubmit="return false;">
 								<div class="form-group">
 									<label for="InputID">사용하실 아이디</label> <input type="text"
 										id="idbox" class="form-control" name="id" placeholder="아이디"
@@ -293,11 +293,12 @@
 				dataType : "text",
 				success : function(data) {
 					if (data == "1") {
-						alert("이 아이디는 사용할 수 없습니다.");
-					} else {
-						alert("이 아이디는 사용 가능합니다.");
+						alert("이 아이디는 사용 가능합니다!.");
 						$("input[id=idbox]").attr("readonly", true);
 						$('#checkbtn').attr('disabled', true);
+						$('#chch').attr('onSubmit', true);
+					} else {
+						alert("이 아이디는 사용할 수 없습니다.");
 					}
 				},
 				error : function(request, status, error) {
