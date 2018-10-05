@@ -161,7 +161,7 @@
 							<h1>HoneyPot 회원가입</h1>
 						</div>
 						<div class="col-md-6 col-md-offset-3">
-							<form action="memberjoin" method="post" name="frm">
+							<form action="memberjoin" method="post" name="frm" onSubmit="return false;">
 								<div class="form-group">
 									<label for="InputID">사용하실 아이디</label> <input type="text"
 										id="idbox" class="form-control" name="id" placeholder="아이디"
