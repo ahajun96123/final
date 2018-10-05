@@ -134,4 +134,8 @@ public class BoardDAO {
 		return sqlSession.insert("Board.bigData", boardVO);
 	}
 
+	public List<BoardVO> myBoard(String id) {
+		return sqlSession.selectList("Board.myBoard", id);		
+	}
+
 }

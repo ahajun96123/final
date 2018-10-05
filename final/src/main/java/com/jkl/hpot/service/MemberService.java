@@ -222,6 +222,8 @@ public class MemberService {
 
 	public void idOverlap(String id, HttpServletResponse response) throws Exception {
 		System.out.println("아이디 : " + id);
+		memberVO = new MemberVO();
+		memberVO = mdao.idOverlap(id);
 		if (memberVO == null) {
 			response.getWriter().print("1");
 			if (id == "") {

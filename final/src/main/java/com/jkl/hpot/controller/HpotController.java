@@ -49,6 +49,13 @@ public class HpotController {
 
 		return "chat2";
 	}
+	
+	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView memberInfo(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		mav = ms.memberInfo(id);
+		return mav;
+	}*/
 
 	/*
 	 * @RequestMapping(value = "/boardList", method = RequestMethod.GET) public
@@ -419,5 +426,11 @@ public class HpotController {
 	public String boardModify(@ModelAttribute BoardVO boardVO) {
 		bs.boardModify(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
+	}
+	
+	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
+	public String myBoard(@RequestParam("id") String id) {
+		bs.myBoard(id);
+		return "redirect:/myBoardList";
 	}
 }

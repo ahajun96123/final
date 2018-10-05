@@ -141,4 +141,8 @@
 	<insert id="bigData" parameterType="board">
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
+	<select id="myBoard" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE id=#{id}
+	</select>
+	
 </mapper>

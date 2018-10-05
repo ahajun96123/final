@@ -195,5 +195,13 @@ public class BoardService {
 		boardDAO.boardComment(commentVO);
 		return mav;
 	}
+
+	public ModelAndView myBoard(String id) {
+		mav = new ModelAndView();
+		List<BoardVO> BV = boardDAO.myBoard(id);
+		mav.addObject("myBoardList", BV);
+		mav.setViewName("myBoardList");
+		return mav;
+	}
 	
 }
