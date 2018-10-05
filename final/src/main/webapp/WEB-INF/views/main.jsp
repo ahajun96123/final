@@ -60,9 +60,31 @@ function postCheck() {
 					<br>
 				</c:if>
 				<b>인기</b> <br>
-				<div class="contentContainer"></div>
-				<br> <b>맞춤</b> <br>
-				<div class="contentContainer"></div>
+				<div class="contentContainer">
+					<div class="card border border-warning" id="card"
+						style="height: 240px; width: 240px; margin: 15px; padding: 0px;">
+						<div class="card-body text-center">
+							<div style="margin-top: 0px;">
+								<span style="color: #FF895A">${board.id}</span> <span>/&nbsp;${board.bSubject}</span>
+							</div>
+							<div class="videoplay">
+								<img class="btn-img-rounded" alt="Cinque Terre"
+									src="img/${board.bThumbname}"
+									style="width: 200px; height: 140px;"
+									onclick="location='boardView?bNum=${board.bNum}'">
+								<div>
+									<div>
+										<span style="color: #FF9614">평점 ${board.bGrade}</span> <span>조회
+											${board.bReadcount}</span>
+									</div>
+									<div>
+										<span style="color: #6478FF">${board.bTag}</span>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
 				<br> <b>채널(회원)</b> <br>
 				<div class="contentContainer"></div>
 				<br> <b>주제</b> <br>

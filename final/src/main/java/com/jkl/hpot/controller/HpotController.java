@@ -63,6 +63,13 @@ public class HpotController {
 
 		return "chat2";
 	}
+		
+	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView memberInfo(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		mav = ms.memberInfo(id);
+		return mav;
+	}*/
 
 	/*
 	 * @RequestMapping(value = "/boardList", method = RequestMethod.GET) public

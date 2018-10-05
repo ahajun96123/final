@@ -338,4 +338,11 @@ function postCheck() {
 		</div>
 	</div>
 </body>
+<script>
+$("#menu1").hover(function () {
+	  $("#submenu1").show();
+	}, function () {
+	  $("#submenu1").hide();
+	});
+</script>
 </html>

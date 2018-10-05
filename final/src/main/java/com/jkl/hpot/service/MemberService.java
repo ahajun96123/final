@@ -72,7 +72,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		session.invalidate();
 		mav.addObject("msg", "로그아웃");
-		mav.setViewName("login");
+		mav.setViewName("redirect:/login");
 		return mav;
 	}
 
@@ -222,6 +222,8 @@ public class MemberService {
 
 	public void idOverlap(String id, HttpServletResponse response) throws Exception {
 		System.out.println("아이디 : " + id);
+		memberVO = new MemberVO();
+		memberVO = mdao.idOverlap(id);
 		if (memberVO == null) {
 			response.getWriter().print("1");
 			if (id == "") {

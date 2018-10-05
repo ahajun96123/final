@@ -5,6 +5,33 @@
 <html>
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
+
+
+<style>
+#talkbubble {
+   width: 100px;
+   height: 20px;
+   background: green;
+   position: right; /* relative */
+   -moz-border-radius:    10px;
+   -webkit-border-radius: 10px;
+   border-radius:         10px;
+   float:right;
+}
+#talkbubble:before {
+   content:"";
+   position: absolute;
+   right: 100%;
+   top: 0px;
+   width: 0;
+   height: 0;
+   border-top: 1px solid transparent;
+   border-right: 1px solid red;
+   border-bottom: 1px solid transparent;
+}
+</style>
+
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 <script
@@ -75,11 +102,22 @@
 				<%@include file="./sidebar.jsp"%>
 			</div>
 			<div style="width: 1110px; height: 100%;">
-				<div style="height: 50px;"></div>
-				<table class="table table-bordered" style="width: 850px;">
-					<tr>
-						<th>제목</th>
-						<td>${view.bSubject}</td>
+				<div class="container">
+					<div style="height: 50px;"></div>
+					<table class="table table-bordered" style="width: 850px;">
+						<tr>
+							<th>제목</th>
+							<td>${view.bSubject}</td>
+						</tr>
+						<tr>
+							<th>작성자</th>
+							<td>
+								<div><a href="memberInfo?id=${view.id }" id="idHover">${view.id}</a></div>
+								<div id="talkbubble" style="display:none;">
+									<a href="">구독</a>&nbsp;|&nbsp;<a href="">좋아요</a>
+								</div>
+							</td>
+						</tr>
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
 								<th>평점</th>
@@ -168,4 +206,11 @@
 		</div>
 	</div>
 </body>
+<script>
+$("#idHover").hover(function () {
+	  $("#talkbubble").show();
+	}, function () {
+	  $("#talkbubble").hide();
+	});
+</script>
 </html>

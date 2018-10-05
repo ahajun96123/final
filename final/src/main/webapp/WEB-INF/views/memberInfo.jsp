@@ -66,41 +66,45 @@
 			<div>
 				<table>
 					<tr>
-						<th><%=session.getAttribute("id")%>회원님의 정보</th>
+						<th>'${info.id }'회원님의 정보</th>
 					</tr>
 					<tr>
 						<td>아이디</td>
 						<td>${info.id}</td>
 					</tr>
-					<tr>
-						<td>이름</td>
-						<td>${info.name}</td>
-					</tr>
-					<tr>
-						<td>나이</td>
-						<td>${info.age}</td>
-					</tr>
-					<tr>
-						<td>이메일주소</td>
-						<td>${info.email}</td>
-					</tr>
-					<tr>
-						<td>집주소</td>
-						<td>${info.address}</td>
-					</tr>
-					<tr>
-						<td>성별</td>
-						<td>${info.gender}</td>
-					</tr>
+					<c:if test="${info.id eq sessionScope.id }">
+						<tr>
+							<td>이름</td>
+							<td>${info.name}</td>
+						</tr>
+						<tr>
+							<td>나이</td>
+							<td>${info.age}</td>
+						</tr>
+						<tr>
+							<td>이메일주소</td>
+							<td>${info.email}</td>
+						</tr>
+						<tr>
+							<td>집주소</td>
+							<td>${info.address}</td>
+						</tr>
+						<tr>
+							<td>성별</td>
+							<td>${info.gender}</td>
+						</tr>
+					</c:if>
 				</table>
 				<form action="myBoard" method="post">
-					<button class="btn btn-info">내가 쓴 게시물</button>
+					<button class="btn btn-info"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
 				</form>
 				<br>
 				<button onclick="goBack()">뒤로가기</button>
-
+				
+				<c:if test="${info.id eq sessionScope.id }">
 				<!-- Trigger/Open The Modal -->
 				<button id="myBtn2">프로필수정</button>
+				</c:if>
 				<!-- The Modal -->
 				<div id="userMod" class="modal">
 
