@@ -2,6 +2,8 @@ package com.jkl.hpot.dao;
 
 import java.util.List;
 
+import javax.servlet.http.HttpSession;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -58,6 +60,22 @@ public class MemberDAO {
 	@Transactional
 	public int pwAlter(MemberVO memberVO) throws Exception{
 		return sqlSession.update("Member.pwalter", memberVO);
+	}
+
+	public MemberVO ifFollow(MemberVO memberVO) {
+		return sqlSession.selectOne("Member.ifFollow", memberVO);
+	}
+	
+	public MemberVO follow(MemberVO memberVO, String id, String followId) {
+		memberVO.setId(id);
+		memberVO.setFollowId(followId);
+		return sqlSession.selectOne("Member.follow", memberVO);
+	}
+
+	public void deleteFollow(MemberVO memberVO, String id, String followId) {
+		memberVO.setId(id);
+		memberVO.setFollowId(followId);
+		sqlSession.selectOne("Member.deleteFollow", memberVO);
 	}
 
 	

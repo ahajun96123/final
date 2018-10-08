@@ -141,4 +141,18 @@
 	<insert id="bigData" parameterType="board">
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	<!-- ==============================준모================================== -->
+	
+	
+	
+	
 </mapper>

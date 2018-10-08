@@ -233,4 +233,23 @@ public class MemberService {
 			response.getWriter().print("0");
 		}
 	}
+
+	public void follow(String id, HttpServletResponse response, HttpSession session) throws Exception { 
+		System.out.println("follow아이디 : " + id);
+		memberVO = new MemberVO();
+		memberVO.setFollowId(id);
+		String followId = (String) session.getAttribute("id");
+		memberVO.setId(followId);
+		memberVO = mdao.ifFollow(memberVO);
+		if (memberVO == null) {
+			mdao.follow(memberVO, id, followId);
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		} else {
+			mdao.deleteFollow(memberVO, id, followId);
+			response.getWriter().print("0");
+		}
+	}
 }
