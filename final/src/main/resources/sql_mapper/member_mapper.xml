@@ -68,6 +68,6 @@
 		INSERT INTO FOLLOW VALUES(#{id}, #{followId})
 	</insert>
 	<delete id="deleteFollow" parameterType="member">
-		DELETE FROM MEMBER WHERE id = #{id} AND followid = #{followId}
+		DELETE FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
 	</delete>
 </mapper>

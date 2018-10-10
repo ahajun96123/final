@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -72,6 +73,10 @@ public class HpotController {
 	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
 	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
 		ms.follow(followId, response, session);
+	}
+	@RequestMapping(value = "/followCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.followCheck(followId, response, session);
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
@@ -181,7 +186,7 @@ public class HpotController {
 	}
 
 	// 로그아웃 처리
-	@RequestMapping(value = "/memberlogout", method = RequestMethod.POST)
+	@RequestMapping(value = "/memberlogout", method = RequestMethod.GET)
 	public ModelAndView memberLogout(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
 		mav = ms.memberLogout(memberVO);

@@ -90,7 +90,7 @@
 <script type="text/javascript">
 if(${sessionScope.id != null}){
 alert('로그아웃후 뒤로가기가 가능합니다');
-	window.history.forward();
+	window.history.forward()
 
 	function noBack() {
 
