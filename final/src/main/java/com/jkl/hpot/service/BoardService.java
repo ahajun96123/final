@@ -175,6 +175,7 @@ public class BoardService {
 	      boardDAO.bigData(boardVO);
 	      mav.addObject("view", viewBoard);
 	      mav.addObject("commentList",commentList);
+	      mav.addObject("commentcount",commentList.size());
 	      mav.setViewName("View");
 	      return mav;
 	   }
@@ -204,6 +205,14 @@ public class BoardService {
 	public ModelAndView boardComment(CommentVO commentVO) {
 		mav = new ModelAndView();
 		boardDAO.boardComment(commentVO);
+		return mav;
+	}
+
+	public ModelAndView myBoard(BoardVO boardVO) {
+		mav = new ModelAndView();
+		List<BoardVO> BV = boardDAO.myBoard(boardVO);
+		mav.addObject("myBoardList", BV);
+		mav.setViewName("myBoardList");
 		return mav;
 	}
 	

@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -73,7 +73,6 @@ public class HpotController {
 	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
 		ms.follow(followId, response, session);
 	}
-	
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -204,6 +203,15 @@ public class HpotController {
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView MI(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		mav = ms.memberInfo(memberVO);
+		return mav;
+	}
 
 	// 관리자의 회원 삭제
 	@RequestMapping(value = "/memberdelete", method = { RequestMethod.GET, RequestMethod.POST })
@@ -291,7 +299,6 @@ public class HpotController {
 		if (which.equals("")) {
 			mav.addObject("msg", "게시판을 선택해주세요.");
 		} else {
-			/*model.addAttribute("files", is.loadAll().collect(Collectors.toList()));*/
 			request.setAttribute("which", which);
 			mav.setViewName("post");
 		}
@@ -303,8 +310,18 @@ public class HpotController {
 			@ModelAttribute BoardVO boardVO) {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
+		String which = request.getParameter("which");
+		System.out.println(which);
+		boardVO.setbWhich(which);
 		int page = 1;
-		int limit = 9;
+		int limit = 12;
+		if(which.equals("영화")) {
+			limit = 9;
+		}else if(which.equals("지름")){
+			limit = 20;
+		}else {
+			limit = 12;
+		}
 		String category = request.getParameter("category");
 		System.out.println(request.getParameter("array"));
 		if (request.getParameter("page") != null) {
@@ -354,17 +371,11 @@ public class HpotController {
 			System.out.println("array = " + boardVO.getInArray());
 			boardVO.setInCate(1);
 			System.out.println(boardVO.getInCate());
-			String which = request.getParameter("which");
-			System.out.println(which);
-			boardVO.setbWhich(which);
 			mav = bs.boardList(boardVO, page, limit);
 		} else if (request.getParameter("option") == null) {
 			System.out.println(request.getParameter("array"));
 			System.out.println("array = " + boardVO.getInArray());
 			System.out.println(boardVO.getInCate());
-			String which = request.getParameter("which");
-			System.out.println(which);
-			boardVO.setbWhich(which);
 			mav = bs.boardList(boardVO, page, limit);
 		}
 		return mav;
@@ -452,5 +463,13 @@ public class HpotController {
 		bs.boardModify(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
-    
+	
+	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
+	public ModelAndView myBoard(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		BoardVO boardVO = new BoardVO();
+		boardVO.setId(id);
+		mav = bs.myBoard(boardVO);
+		return mav;
+	}
 }

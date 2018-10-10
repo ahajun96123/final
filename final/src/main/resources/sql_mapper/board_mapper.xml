@@ -117,7 +117,7 @@
 		SELECT *
 		FROM BOARD WHERE BNUM=#{bNum}
 	</select>
-	<select id="boardCommentList" parameterType="comment"
+	<select id="boardCommentList" parameterType="board"
 		resultType="comment">
 		SELECT * FROM COMMENTS WHERE BNUM=#{bNum}
 	</select>
@@ -141,6 +141,9 @@
 	<insert id="bigData" parameterType="board">
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
+	<select id="myBoard" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE id=#{id}
+	</select>
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->

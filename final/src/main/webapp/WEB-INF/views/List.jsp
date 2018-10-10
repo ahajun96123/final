@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page import="com.jkl.hpot.vo.BoardVO"%>
 <%@ page import="com.jkl.hpot.vo.PageInfo"%>
 <%@ page import="java.util.*"%>
@@ -51,7 +52,7 @@ var arrayValue = null;
 var loginCheck = "<%=session.getAttribute("id")%>";
 	
 function postCheck() {
-	if(loginCheck==null || loginCheck==""){
+	if(loginCheck=="null" || loginCheck==""){
 		alert("로그인을 해주세요.")
 	}else{
 		location.href = "postCheck?which="+which;
@@ -169,10 +170,10 @@ function postCheck() {
 </script>
 <title>List</title>
 </head>
-<body>
+<body style="background-color: #dcdcdc">
 	<div class=container>
 		<%@include file="./topui.jsp"%>
-		<div style="width: 1130px; height: 1080px;">
+		<div style="width: 1110px; height: 1080px;">
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
@@ -181,21 +182,17 @@ function postCheck() {
 				<c:set var="j" value="3" />
 				<ul class="nav nav-tabs">
 					<li class="nav-item"><button type="button"
-							style="width: 85px;"
-							class="nav-link btn-warning border border-light"
+							style="width: 85px;" class="nav-link btn-warning"
 							data-toggle="tab" onclick="location='boardList?which=${which}'">전체</button></li>
 					<li class="nav-item"><button type="button"
-							style="width: 85px;"
-							class="nav-link btn-dark border border-light" data-toggle="tab"
+							style="width: 85px;" class="nav-link btn-dark" data-toggle="tab"
 							onclick="arrayList('인기');return false;">인기</button></li>
 					<li class="nav-item"><button type="button"
-							style="width: 85px;"
-							class="nav-link btn-warning border border-light"
+							style="width: 85px;" class="nav-link btn-warning"
 							data-toggle="tab" onclick="arrayList('평점');return false;">평점
 							순</button></li>
 					<li class="nav-item"><button type="button"
-							style="width: 85px;"
-							class="nav-link btn-dark border border-light" data-toggle="tab"
+							style="width: 85px;" class="nav-link btn-dark" data-toggle="tab"
 							onclick="arrayList('조회');return false;">조회 순</button></li>
 				</ul>
 
@@ -210,24 +207,37 @@ function postCheck() {
 									</c:if>
 									<td><c:choose>
 											<c:when test="${which eq '음식'}">
-												<div class="card border border-warning" id="card"
-													style="height: 240px; width: 240px; margin: 15px; padding: 0px;">
-													<div class="card-body text-center">
-														<div style="margin-top: 0px;">
-															<span style="color: #FF895A">${board.id}</span> <span>/&nbsp;${board.bSubject}</span>
+												<div class="card" id="card"
+													style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
+													<div>
+														<div style="border-bottom: 1px solid gray;">
+															<span
+																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+															<c:choose>
+																<c:when test="${fn:length(board.bSubject) > 14}">
+																	<span style="font-size: 12px;">&nbsp;<c:out
+																			value="${fn:substring(board.bSubject,0,13)}" />...
+																	</span>
+																</c:when>	
+																<c:otherwise>
+																	<span style="font-size: 12px;"><c:out
+																			value="${board.bSubject}" /></span>
+																</c:otherwise>
+															</c:choose>
 														</div>
 														<div class="videoplay">
 															<img class="btn-img-rounded" alt="Cinque Terre"
 																src="img/${board.bThumbname}"
-																style="width: 200px; height: 140px;"
+																style="width: 218px; height: 140px; margin: auto"
 																onclick="location='boardView?bNum=${board.bNum}'">
 															<div>
-																<div>
+																<div
+																	style="border-top: 1px solid gray; font-size: 12px;">
 																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span>조회 ${board.bReadcount}</span>
+																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
 																</div>
 																<div>
-																	<span style="color: #6478FF">${board.bTag}</span>
+																	<span style="color: #6478FF;font-size: 12px;">${board.bTag}</span>
 																</div>
 															</div>
 														</div>
@@ -235,24 +245,37 @@ function postCheck() {
 												</div>
 											</c:when>
 											<c:otherwise>
-												<div class="card border border-warning" id="card"
-													style="height: 340px; width: 240px; margin: 15px;">
-													<div class="card-body text-center">
+												<div class="card" id="card"
+													style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
+													<div>
+														<div style="border-bottom: 1px solid gray;">
+															<span
+																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+															<c:choose>
+																<c:when test="${fn:length(board.bSubject) > 14}">
+																	<span style="font-size: 12px;">&nbsp;<c:out
+																			value="${fn:substring(board.bSubject,0,13)}" />...
+																	</span>
+																</c:when>	
+																<c:otherwise>
+																	<span style="font-size: 12px;"><c:out
+																			value="${board.bSubject}" /></span>
+																</c:otherwise>
+															</c:choose>
+														</div>
 														<div class="videoplay">
-															<div>
-																<span style="color: #FF895A">${board.id}</span> <span>/&nbsp;${board.bSubject}</span>
-															</div>
 															<img class="btn-img-rounded" alt="Cinque Terre"
 																src="img/${board.bThumbname}"
-																style="width: 180px; height: 240px;"
+																style="width: 218px; height: 280px; margin: auto"
 																onclick="location='boardView?bNum=${board.bNum}'">
 															<div>
-																<div>
+																<div
+																	style="border-top: 1px solid gray; font-size: 12px;">
 																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span>조회 ${board.bReadcount}</span>
+																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
 																</div>
 																<div>
-																	<span style="color: #6478FF">${board.bTag}</span>
+																	<span style="color: #6478FF;font-size: 12px;">${board.bTag}</span>
 																</div>
 															</div>
 														</div>
@@ -290,15 +313,15 @@ function postCheck() {
 						</c:otherwise>
 					</c:choose>
 				</div>
-				<div style="text-align: center; margin-right: 50px">
+				<div style="text-align: center; margin-right: 78px">
 					<%
 						if (nowPage <= 1) {
 					%>
-					<button type="button" class="btn btn-outline-warning">이전</button>
+					<button type="button" class="btn btn-outline-secondary">이전</button>
 					<%
 						} else {
 					%>
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-secondary"
 						onclick="pageCheckMinus(<%=nowPage - 1%>);return false;">이전</button>
 					<%
 						}
@@ -308,11 +331,11 @@ function postCheck() {
 							for (int a = startPage; a <= endPage; a++) {
 								if (a == nowPage) {
 						%>
-						<button type="button" class="btn btn-warning"><%=a%></button>
+						<button type="button" class="btn btn-secondary"><%=a%></button>
 						<%
 							} else {
 						%>
-						<button type="button" class="btn btn-outline-warning"
+						<button type="button" class="btn btn-outline-secondary"
 							onclick="pageCheck(<%=a%>);return false;"><%=a%></button>
 						<%
 							}
@@ -324,11 +347,11 @@ function postCheck() {
 					<%
 						if (nowPage >= maxPage) {
 					%>
-					<button type="button" class="btn btn-outline-warning">다음</button>
+					<button type="button" class="btn btn-outline-secondary">다음</button>
 					<%
 						} else {
 					%>
-					<button type="button" class="btn btn-outline-warning"
+					<button type="button" class="btn btn-outline-secondary"
 						onclick="pageCheckPlus(<%=nowPage + 1%>);return false;">다음</button>
 					<%
 						}

@@ -30,7 +30,7 @@ p {
 	font-size: 1.1em;
 	font-weight: 300;
 	line-height: 1.7em;
-	color: #999;
+	color: gray;
 }
 
 a, a:hover, a:focus {
@@ -49,11 +49,11 @@ a, a:hover, a:focus {
 }
 
 .sidemenu {
-	background: #bebebe;
+	background: #a0a0a0;
 }
 
 #sidebar ul li.active {
-	background: #bebebe;
+	background: #a0a0a0;
 }
 
 .navbar-btn {
@@ -76,7 +76,7 @@ a, a:hover, a:focus {
 	min-width: 220px;
 	max-width: 220px;
 	height: 100%;
-	background: #dcdcdc;
+	background: #b4b4b4;
 	color: #fff;
 	transition: all 0.6s cubic-bezier(0.945, 0.020, 0.270, 0.665);
 	transform-origin: bottom left;
@@ -89,7 +89,7 @@ a, a:hover, a:focus {
 
 #sidebar .sidebar-header {
 	padding: 20px;
-	background: #bebebe;
+	background: #a0a0a0;
 }
 
 #sidebar ul.components {
@@ -109,7 +109,7 @@ a, a:hover, a:focus {
 
 #sidebar ul li a:hover {
 	color: #aaaaaa;
-	background: #bebebe;
+	background: #a0a0a0;
 }
 
 a[data-toggle="collapse"] {
@@ -127,7 +127,7 @@ a[data-toggle="collapse"] {
 ul ul a {
 	font-size: 0.9em !important;
 	padding-left: 30px !important;
-	background: #bebebe;
+	background: #a0a0a0;
 }
 
 ul.CTAs {
@@ -143,12 +143,12 @@ ul.CTAs a {
 }
 
 a.post {
-	background: #bebebe;
+	background: #a0a0a0;
 	color: #fff;
 }
 
 a.Livechat, a.Livechat:hover {
-	background: #bebebe !important;
+	background: #a0a0a0 !important;
 	color: #fff !important;
 }
 

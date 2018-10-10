@@ -5,6 +5,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.vo.BoardVO;
@@ -135,6 +136,10 @@ public class BoardDAO {
 		return sqlSession.insert("Board.bigData", boardVO);
 	}
 
+	public List<BoardVO> myBoard(BoardVO boardVO) {
+		return sqlSession.selectList("Board.myBoard", boardVO);		
+	}
+	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);
 		

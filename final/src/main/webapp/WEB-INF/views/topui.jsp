@@ -21,11 +21,6 @@
 	href="${pageContext.request.contextPath}/resources/css/full-width-pics.css"
 	type="text/css" rel="stylesheet">
 
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
-	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
-	crossorigin="anonymous">
-
 <style>
 /* The Modal (background) */
 .modal {
@@ -81,7 +76,7 @@
 		class="navbar navbar-expand-sm bg-dark navbar-muted navbar-fixed-top"
 		style="margin-bottom: 0px; background-image: url('img/honeybgcm3.png');height:80px;">
 		<!-- Brand/logo -->
-		<img src="img/honeypot3.png" style="width: 200px; height: 90px;"></img>
+		<img src="resources/img/honeypot3.png" style="width: 200px; height: 90px;"></img>
 		<div style="width: 50px"></div>
 		<!-- Links -->
 		<ul class="navbar-nav">
@@ -117,25 +112,17 @@
 				<div class="btn-group">
 					<c:if test="${sessionScope.id == null }">
 						<button class="btn btn-warning" onclick="location.href='login'">로그인</button>
-						<button id="myBtn" class="btn btn-lg btn-primary btn-block">회원가입</button>
+						<button id="myBtn" class="btn btn-info btn-block">회원가입</button>
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
-						<form action="memberinfomation" method="post">
-							<button class="btn btn-warning">내 정 보</button>
-						</form>
-						<form action="memberlogout" method="post">
-							<button class="btn btn-info">로 그 아 웃</button>
-						</form>
+						<button class="btn btn-warning" onclick="location.href='memberinfomation'">내 정 보</button>
+						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && sessionScope.id.equals('admin') }">
-						<form action="memberlist" method="post">
-							<button class="btn btn-warning">회 원 관 리</button>
-						</form>
-						<form action="memberlogout" method="post">
-							<button class="btn btn-info">로 그 아 웃</button>
-						</form>
+						<button class="btn btn-warning" onclick="location.href='memberlist'">회 원 관 리</button>
+						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 				</div>
 			</li>
@@ -234,18 +221,11 @@
 		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>
 	<script
 		src="<c:url value=" /resources/vendor/bootstrap/js/bootstrap.bundel.min.js " />"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
 	<script
 		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
 		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
 		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script> --%>
-	<!-- <script>
+	<script>
 		// Get the modal
 		var modal = document.getElementById('myModal');
 
@@ -256,11 +236,11 @@
 		var span = document.getElementsByClassName("close")[0];
 
 		// When the user clicks on the button, open the modal 
-		btn.onclick = function() {
+		/* btn.onclick = function() {
 			if(!$('#newMessage').attr('id').eqals('newMessage')){
 				modal.style.display = "block";	
 			}
-		}
+		} */
 
 		// When the user clicks on <span> (x), close the modal
 		span.onclick = function() {
@@ -273,6 +253,6 @@
 				modal.style.display = "none";
 			}
 		}
-	</script> -->
+	</script> --%>
 </body>
 </html>

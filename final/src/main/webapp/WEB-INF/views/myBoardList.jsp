@@ -43,32 +43,32 @@
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
+<script>
+	function goBack() {
+		window.history.back();
+	}
+</script>
 <style>
 table, td {
 		margin-top: 10px;
 		margin-bottom : 5px;
         border: 1px solid #444444;
       }
-th{
-	
-	width: 100px;
-	
-}
 td{
-	width: 50px;
+	width: 400px;
 	text-align:center;
 	
 }
 tr{
-	height: 10px;
+	height: 100px;
 	
 }
+img{
+width: 400px;
+height: 100px
+}
+      
 </style>
-<script>
-	function goBack() {
-		window.history.back();
-	}
-</script>
 </head>
 <body>
 	<div class=container>
@@ -79,110 +79,27 @@ tr{
 			</div>
 			<div>
 				<table>
-					<tr>
-						<th colspan = "2";>'${info.id }'회원님의 정보</th>
-					</tr>
-					<tr>
-						<th colspan = "2" width = 400px; height = 400px;><img class="photo" src="resources/img/honeypot.jpg"  alt="본인이미지"></th>
-					</tr>
-					<tr>
-						<td>아이디</td>
-						<td>${info.id}</td>
-					</tr>
-					<c:if test="${info.id eq sessionScope.id }">
+					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
-							<td>이름</td>
-							<td>${info.name}</td>
+							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일"></td>
+							<td><a href = "memberinfomation?id=${myBoardList.id}">${myBoardList.id}</a></td>
+							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
+							<td>${myBoardList.bContent}</td>
+							<td>${myBoardList.bDate}</td>
 						</tr>
-						<tr>
-							<td>나이</td>
-							<td>${info.age}</td>
-						</tr>
-						<tr>
-							<td>이메일주소</td>
-							<td>${info.email}</td>
-						</tr>
-						<tr>
-							<td>집주소</td>
-							<td>${info.address}</td>
-						</tr>
-						<tr>
-							<td>성별</td>
-							<td>${info.gender}</td>
-						</tr>
-					</c:if>
+					</c:forEach>
 				</table>
-				<form action="myBoard" method="post">
-					<button value = "${info.id}"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
-					<input type = "hidden" name="id" value = "${info.id}">
-				</form>
-				<br>
-				<button onclick="goBack()">뒤로가기</button>
-				
-				<c:if test="${info.id eq sessionScope.id }">
-				<!-- Trigger/Open The Modal -->
-				<button id="myBtn2">프로필수정</button>
+				<c:if test = "${myBoardList == null}">
+				<table>
+					<c:forEach items="${myBoardList}" var="myBoardList">
+						<tr>
+							<td><a>검색결과가 존재하지 않습니다.</a></td>
+						</tr>
+					</c:forEach>
+				</table>
 				</c:if>
-				<!-- The Modal -->
-				<div id="userMod" class="modal">
-
-					<!-- Modal content -->
-					<div class="modal-content">
-
-						<div class="page-header">
-							<h1>프로필 수정</h1>
-						</div>
-						<div class="col-md-6 col-md-offset-3">
-							<form action="memberalter" method="post">
-								<div class="form-group">
-									<label for="InputID">아이디(변경불가)</label> <input type="text"
-										class="form-control" name="id"
-										value="<%=session.getAttribute("id")%>" readonly>
-								</div>
-								<div class="form-group">
-									<label for="InputPassword">비밀번호 변경</label> <input
-										type="password" class="form-control" name="password"
-										placeholder="비밀번호" required>
-								</div>
-								<div class="form-group">
-									<label for="username">이름 변경</label> <input type="text"
-										class="form-control" name="name" value="${info.name}"
-										placeholder="이름" required>
-								</div>
-								<div class="form-group">
-									<label for="userage">나이 변경</label> <input type="number"
-										class="form-control" name="age" value="${info.age}"
-										placeholder="나이" required>
-								</div>
-								<div class="form-group">
-									<label for="useremail">이메일 변경</label> <input type="text"
-										class="form-control" name="email" value="${info.email}"
-										placeholder="이메일" required>
-								</div>
-								<div class="form-group">
-									<label for="useraddress">집 주소 변경</label> <input type="text"
-										class="form-control" name="address" value="${info.address}"
-										placeholder="주소">
-								</div>
-								<div class="form-group">
-									<label for="usergender">성별 변경</label><br> <input
-										type="radio" name="gender" value="man" checked="checked" />
-									남자 <input type="radio" name="gender" value="woman" /> 여자
-								</div>
-								<div class="form-group text-center">
-									<button type="submit" class="btn btn-info" onclick="return confirm('경고! 회원 정보를 수정하시겠습니까?');">
-										프로필수정<i class="fa fa-check spaceLeft"></i>
-									</button>
-									<button class="btn btn-warning" id="cancle">
-										<span class="close" style="font-size: 15pt">수정취소</span><i class="fa fa-times spaceLeft"></i>
-									</button>
-
-								</div>
-							</form>
-						</div>
-					</div>
-				</div>
-
+				
+				<button onclick="goBack()">뒤로가기</button>
 			</div>
 		</div>
 	</div>
