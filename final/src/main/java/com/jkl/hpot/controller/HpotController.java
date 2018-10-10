@@ -68,6 +68,12 @@ public class HpotController {
 		return "chat2";
 	}
 		
+	
+	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
+	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
+		ms.follow(id, response, session);
+	}
+	
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();

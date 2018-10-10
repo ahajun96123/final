@@ -9,25 +9,25 @@
 
 <style>
 #talkbubble {
-   width: 100px;
-   height: 20px;
-   background: green;
-   position: right; /* relative */
-   -moz-border-radius:    10px;
-   -webkit-border-radius: 10px;
-   border-radius:         10px;
-   float:right;
+	width: 100px;
+	height: 20px;
+	background: green;
+	position: relative;
+	-moz-border-radius: 10px;
+	-webkit-border-radius: 10px;
+	border-radius: 10px;
 }
+
 #talkbubble:before {
-   content:"";
-   position: absolute;
-   right: 100%;
-   top: 0px;
-   width: 0;
-   height: 0;
-   border-top: 1px solid transparent;
-   border-right: 1px solid red;
-   border-bottom: 1px solid transparent;
+	content: "";
+	position: absolute;
+	right: 100%;
+	top: 0px;
+	width: 0;
+	height: 0;
+	border-top: 1px solid transparent;
+	border-right: 1px solid red;
+	border-bottom: 1px solid transparent;
 }
 </style>
 
@@ -112,9 +112,12 @@
 						<tr>
 							<th>작성자</th>
 							<td>
-								<div><a href="memberInfo?id=${view.id }" id="idHover">${view.id}</a></div>
-								<div id="talkbubble" style="display:none;">
-									<a href="">구독</a>&nbsp;|&nbsp;<a href="">좋아요</a>
+								<div>
+									<a href="memberInfo?id=${view.id }" id="idHover">${view.id}</a>
+								</div>
+								<div id="talkbubble" style="display: none;">
+									<input type="button" id="checkbtn"
+										onclick="follow()" value="중복확인" />&nbsp;|&nbsp;<a href="">좋아요</a>
 								</div>
 							</td>
 						</tr>
@@ -128,89 +131,119 @@
 								<td>${view.bLikecount}</td>
 							</c:otherwise>
 						</c:choose>
-					</tr>
-					<c:choose>
-						<c:when test="${view.bWhich eq '음식'}">
-							<tr>
-								<th>음식 종류</th>
-								<td>${view.bCategory}</td>
-								<th>태그</th>
-								<td>${view.bTag}</td>
-							</tr>
-						</c:when>
-						<c:when test="${view.bWhich eq '영화'}">
-							<tr>
-								<th>영화 장르</th>
-								<td>${view.bCategory}</td>
-								<th>태그</th>
-								<td>${view.bTag}</td>
-							</tr>
-						</c:when>
-						<c:otherwise>
-							<tr>
-								<th>지름좌표</th>
-								<td><a href="${view.bUrl}">${view.bUrl}</a></td>
-								<th>태그</th>
-								<td>${view.bTag}</td>
-							</tr>
-						</c:otherwise>
-					</c:choose>
-					<tr>
-						<th>작성일</th>
-						<td>${view.bDate}</td>
-						<th>조회수</th>
-						<td>${view.bReadcount}</td>
-					</tr>
-					<tr>
-						<th colspan="4" align="center">내용</th>
-					</tr>
-					<tr>
-						<td colspan="4" rowspan="3"><img src="img/${view.bThumbname}">${view.bContent}</td>
-					</tr>
-				</table>
-				<div style="margin-right: 10px; float: right">
-					<input class="btn btn-warning" type="button" value="수정"
-						onclick="ModifyCheck()">
-				</div>
-				<div style="margin-right: 10px; float: right">
-					<input class="btn btn-warning" type="button" value="삭제"
-						onclick="DeleteCheck()">
-				</div>
-				<div style="margin-right: 10px; float: right">
-					<input class="btn btn-warning" type="button" value="목록"
-						onclick="location='boardList?which=${view.bWhich}'">
-				</div>
-				<div style="height: 30px"></div>
-				<form action="boardComment" method="post">
-					<div class="input-group mb-3"
-						style="margin-top: 10px; width: 850px">
-						<div class="input-group-prepend">
-							<textarea cols="95" rows="3" name="cContent" class="form-control"></textarea>
-						</div>
-						<input type="hidden" name="bNum" value="${view.bNum}"> <input
-							type="hidden" name="id" value="${view.id}">
-						<button class="input-group-text" type="submit">댓글등록</button>
+						</tr>
+						<c:choose>
+							<c:when test="${view.bWhich eq '음식'}">
+								<tr>
+									<th>음식 종류</th>
+									<td>${view.bCategory}</td>
+									<th>태그</th>
+									<td>${view.bTag}</td>
+								</tr>
+							</c:when>
+							<c:when test="${view.bWhich eq '영화'}">
+								<tr>
+									<th>영화 장르</th>
+									<td>${view.bCategory}</td>
+									<th>태그</th>
+									<td>${view.bTag}</td>
+								</tr>
+							</c:when>
+							<c:otherwise>
+								<tr>
+									<th>지름좌표</th>
+									<td><a href="${view.bUrl}">${view.bUrl}</a></td>
+									<th>태그</th>
+									<td>${view.bTag}</td>
+								</tr>
+							</c:otherwise>
+						</c:choose>
+						<tr>
+							<th>작성일</th>
+							<td>${view.bDate}</td>
+							<th>조회수</th>
+							<td>${view.bReadcount}</td>
+						</tr>
+						<tr>
+							<th colspan="4" align="center">내용</th>
+						</tr>
+						<tr>
+							<td colspan="4" rowspan="3"><img
+								src="img/${view.bThumbname}">${view.bContent}</td>
+						</tr>
+					</table>
+					<div style="margin-right: 10px; float: right">
+						<input class="btn btn-warning" type="button" value="수정"
+							onclick="ModifyCheck()">
 					</div>
-				</form>
-				<div>
-					<c:forEach var="comment" items="${commentList}">
-						<div>
-							<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
+					<div style="margin-right: 10px; float: right">
+						<input class="btn btn-warning" type="button" value="삭제"
+							onclick="DeleteCheck()">
+					</div>
+					<div style="margin-right: 10px; float: right">
+						<input class="btn btn-warning" type="button" value="목록"
+							onclick="location='boardList?which=${view.bWhich}'">
+					</div>
+					<div style="height: 30px"></div>
+					<form action="boardComment" method="post">
+						<div class="input-group mb-3"
+							style="margin-top: 10px; width: 850px">
+							<div class="input-group-prepend">
+								<textarea cols="95" rows="3" name="cContent"
+									class="form-control"></textarea>
+							</div>
+							<input type="hidden" name="bNum" value="${view.bNum}"> <input
+								type="hidden" name="id" value="${view.id}">
+							<button class="input-group-text" type="submit">댓글등록</button>
 						</div>
-						<div>
-							<span>${comment.cContent}</span>
-						</div>
-					</c:forEach>
+					</form>
+					<div>
+						<c:forEach var="comment" items="${commentList}">
+							<div>
+								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
+							</div>
+							<div>
+								<span>${comment.cContent}</span>
+							</div>
+						</c:forEach>
+					</div>
 				</div>
 			</div>
 		</div>
-	</div>
 </body>
 <script>
-$("#idHover").hover(function () {
-	  $("#talkbubble").show();
-	}, function () {
-	  $("#talkbubble").hide();
+	function follow() {
+		var idbox = document.getElementById("idbox");
+		$.ajax({
+			type : "post",
+			url : "follow",
+			data : {
+				"id" : ${veiw.id}
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					alert("이 아이디는 사용 가능합니다!.");
+					$("input[id=idbox]").attr("readonly", true);
+					$('#checkbtn').attr('disabled', true);
+					$('#chch').attr('onSubmit', true);
+				} else {
+					alert("이 아이디는 사용할 수 없습니다.");
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
+</script>
+<script>
+	$("#idHover").hover(function() {
+		$("#talkbubble").show();
+	}, function() {
+		/* $("#talkbubble").hide(); */
+		//일단 위에 것은 기능 구현 하고 작업
+		$("#talkbubble").show();
 	});
 </script>
 </html>
