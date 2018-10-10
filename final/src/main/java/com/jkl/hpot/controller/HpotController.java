@@ -70,8 +70,8 @@ public class HpotController {
 		
 	
 	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
-	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
-		ms.follow(id, response, session);
+	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.follow(followId, response, session);
 	}
 	
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
@@ -452,43 +452,5 @@ public class HpotController {
 		bs.boardModify(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
-	
-    
-  /*  @GetMapping("/img/{fileId}")
-    @ResponseBody
-    public ResponseEntity<?> serveFile(@PathVariable int fileId) {
-        try {
-            UploadFile uploadedFile = is.load(fileId);
-            HttpHeaders headers = new HttpHeaders();
-            
-            String fileName = uploadedFile.getFileName();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-            if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
-                headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
-            } else {
-                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            }
-
-            Resource resource = is.loadAsResource(uploadedFile.getSaveFileName());
-            return ResponseEntity.ok().headers(headers).body(resource);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    
-    @PostMapping("/img")
-    @ResponseBody
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            UploadFile uploadedFile = is.store(file);
-            return ResponseEntity.ok().body("/img/" + uploadedFile.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }*/
     
 }

@@ -234,14 +234,13 @@ public class MemberService {
 		}
 	}
 
-	public void follow(String id, HttpServletResponse response, HttpSession session) throws Exception { 
-		System.out.println("follow아이디 : " + id);
+	public void follow(String followId, HttpServletResponse response, HttpSession session) throws Exception { 
+		System.out.println("follow아이디 : " + followId);
 		memberVO = new MemberVO();
-		memberVO.setFollowId(id);
-		String followId = (String) session.getAttribute("id");
-		memberVO.setId(followId);
-		memberVO = mdao.ifFollow(memberVO);
-		if (memberVO == null) {
+		memberVO.setFollowId(followId);
+		String id = (String) session.getAttribute("id");
+		memberVO.setId(id);
+		if(mdao.ifFollow(memberVO)==null) {
 			mdao.follow(memberVO, id, followId);
 			response.getWriter().print("1");
 			if (id == "") {
@@ -249,7 +248,7 @@ public class MemberService {
 			}
 		} else {
 			mdao.deleteFollow(memberVO, id, followId);
-			response.getWriter().print("0");
+			response.getWriter().print("0");	
 		}
 	}
 }

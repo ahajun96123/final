@@ -66,16 +66,17 @@ public class MemberDAO {
 		return sqlSession.selectOne("Member.ifFollow", memberVO);
 	}
 	
-	public MemberVO follow(MemberVO memberVO, String id, String followId) {
+	public int follow(MemberVO memberVO, String id, String followId) {
+		System.out.println("test아위디"+id);
 		memberVO.setId(id);
 		memberVO.setFollowId(followId);
-		return sqlSession.selectOne("Member.follow", memberVO);
+		return sqlSession.insert("Member.follow", memberVO);
 	}
 
 	public void deleteFollow(MemberVO memberVO, String id, String followId) {
 		memberVO.setId(id);
 		memberVO.setFollowId(followId);
-		sqlSession.selectOne("Member.deleteFollow", memberVO);
+		sqlSession.delete("Member.deleteFollow", memberVO);
 	}
 
 	

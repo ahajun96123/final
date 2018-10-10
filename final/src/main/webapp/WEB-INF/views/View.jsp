@@ -34,6 +34,11 @@
 
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
+
+<!-- ajax -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -116,8 +121,7 @@
 									<a href="memberInfo?id=${view.id }" id="idHover">${view.id}</a>
 								</div>
 								<div id="talkbubble" style="display: none;">
-									<input type="button" id="checkbtn"
-										onclick="follow()" value="중복확인" />&nbsp;|&nbsp;<a href="">좋아요</a>
+									<input type="button" id="checkbtn" onclick="follow()" value="팔로우" />&nbsp;|&nbsp;<a href="">좋아요</a>
 								</div>
 							</td>
 						</tr>
@@ -213,12 +217,14 @@
 </body>
 <script>
 	function follow() {
-		var idbox = document.getElementById("idbox");
+		//var idbox = document.getElementById("idbox");
+		var id = "${view.id}";
+		alert(id);
 		$.ajax({
 			type : "post",
 			url : "follow",
 			data : {
-				"id" : ${veiw.id}
+				"id" : id
 			},
 			dataType : "text",
 			success : function(data) {
