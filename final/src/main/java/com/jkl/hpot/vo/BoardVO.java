@@ -28,168 +28,90 @@ public class BoardVO {
 	private String searchValue;
 	private MultipartFile bThumb;
 	private String bThumbname;
-	public BoardVO() {
-		
-	}
 
+	public BoardVO() {
+
+	}
 
 	public MultipartFile getbThumb() {
 		return bThumb;
 	}
 
-
-
-
-
-
-
-
-
-
 	public void setbThumb(MultipartFile bThumb) {
 		this.bThumb = bThumb;
 	}
-
-
-
-
-
-
-
-
-
 
 	public String getbThumbname() {
 		return bThumbname;
 	}
 
-
-
-
-
-
-
-
-
-
 	public void setbThumbname(String bThumbname) {
 		this.bThumbname = bThumbname;
 	}
-
-
-
-
-
-
-
-
-
 
 	public String getSearchValue() {
 		return searchValue;
 	}
 
-
-
-
-
 	public void setSearchValue(String searchValue) {
 		this.searchValue = searchValue;
 	}
-
-
-
-
 
 	public String getColumn() {
 		return column;
 	}
 
-
-
-
-
 	public void setColumn(String column) {
 		this.column = column;
 	}
-
-
-
-
 
 	public int getInSearch() {
 		return inSearch;
 	}
 
-
-
-
-
 	public void setInSearch(int inSearch) {
 		this.inSearch = inSearch;
 	}
-
-
-
-
 
 	public int getInCate() {
 		return inCate;
 	}
 
-
-
-
 	public void setInCate(int inCate) {
 		this.inCate = inCate;
 	}
-
-
-
 
 	public int getInArray() {
 		return inArray;
 	}
 
-
-
-
 	public void setInArray(int inArray) {
 		this.inArray = inArray;
 	}
-
-
-
 
 	public int getStart() {
 		return start;
 	}
 
-
 	public void setStart(int start) {
 		this.start = start;
 	}
-
 
 	public int getEnd() {
 		return end;
 	}
 
-
 	public void setEnd(int end) {
 		this.end = end;
 	}
-
 
 	public String getbContent() {
 		return bContent;
 	}
 
-
 	public void setbContent(String bContent) {
 		this.bContent = bContent;
 	}
-
 
 	public String getId() {
 		return id;
@@ -239,23 +161,13 @@ public class BoardVO {
 		this.bReadcount = bReadcount;
 	}
 
-	
-
 	public double getbGrade() {
 		return bGrade;
 	}
 
-
-
-
-
 	public void setbGrade(double bGrade) {
 		this.bGrade = bGrade;
 	}
-
-
-
-
 
 	public int getbLikecount() {
 		return bLikecount;
@@ -304,10 +216,5 @@ public class BoardVO {
 	public void setbBlind(int bBlind) {
 		this.bBlind = bBlind;
 	}
-	
-	
-	
-	
-}
 
-	
+}
