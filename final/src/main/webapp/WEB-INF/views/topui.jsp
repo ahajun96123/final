@@ -76,7 +76,7 @@
 		class="navbar navbar-expand-sm bg-dark navbar-muted navbar-fixed-top"
 		style="margin-bottom: 0px; background-image: url('img/honeybgcm3.png');height:80px;">
 		<!-- Brand/logo -->
-		<img src="img/honeypot3.png" style="width: 200px; height: 90px;"></img>
+		<img src="resources/img/honeypot3.png" style="width: 200px; height: 90px;"></img>
 		<div style="width: 50px"></div>
 		<!-- Links -->
 		<ul class="navbar-nav">

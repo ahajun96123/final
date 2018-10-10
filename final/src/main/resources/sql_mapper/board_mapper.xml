@@ -141,6 +141,9 @@
 	<insert id="bigData" parameterType="board">
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
+	<select id="myBoard" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE id=#{id}
+	</select>
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->

@@ -8,7 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
+import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
 
@@ -73,7 +73,6 @@ public class HpotController {
 	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
 		ms.follow(id, response, session);
 	}
-	
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -201,6 +200,15 @@ public class HpotController {
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
+		mav = ms.memberInfo(memberVO);
+		return mav;
+	}
+	
+	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
+	public ModelAndView MI(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
@@ -456,42 +464,14 @@ public class HpotController {
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
 	
-    
-  /*  @GetMapping("/img/{fileId}")
-    @ResponseBody
-    public ResponseEntity<?> serveFile(@PathVariable int fileId) {
-        try {
-            UploadFile uploadedFile = is.load(fileId);
-            HttpHeaders headers = new HttpHeaders();
-            
-            String fileName = uploadedFile.getFileName();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-            if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
-                headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
-            } else {
-                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            }
-
-            Resource resource = is.loadAsResource(uploadedFile.getSaveFileName());
-            return ResponseEntity.ok().headers(headers).body(resource);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }
-    
-    @PostMapping("/img")
-    @ResponseBody
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            UploadFile uploadedFile = is.store(file);
-            return ResponseEntity.ok().body("/img/" + uploadedFile.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }*/
-    
+	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
+	public ModelAndView myBoard(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		BoardVO boardVO = new BoardVO();
+		boardVO.setId(id);
+		mav = bs.myBoard(boardVO);
+		return mav;
+	}
+	
+	
 }
