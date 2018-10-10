@@ -10,20 +10,22 @@ public class MemberVO {
 	private String gender;
 	private String approvalkey;
 	private String approvalstatus;
-	
-	@Override
-	public String toString() {
-		return "MemberVO [id=" + id + ", password=" + password + ", name=" + name + ", age=" + age + ", email=" + email
-				+ ", address=" + address + ", gender=" + gender + ", approvalkey=" + approvalkey + ", approvalstatus="
-				+ approvalstatus + "]";
-	}
+	private String followId;
 	
 	public MemberVO() {
 		
 	}
 	
 	
-	public MemberVO(String id, String password, String name, int age, String email, String address, String gender, String approvalkey, String approvalstatus) {
+	@Override
+	public String toString() {
+		return "MemberVO [id=" + id + ", password=" + password + ", name=" + name + ", age=" + age + ", email=" + email
+				+ ", address=" + address + ", gender=" + gender + ", approvalkey=" + approvalkey + ", approvalstatus="
+				+ approvalstatus + ", followId=" + followId + "]";
+	}
+
+
+	public MemberVO(String id, String password, String name, int age, String email, String address, String gender, String approvalkey, String approvalstatus, String followId) {
 		super();
 		this.id = id;
 		this.password = password;
@@ -34,8 +36,17 @@ public class MemberVO {
 		this.gender = gender;
 		this.approvalkey = approvalkey;
 		this.approvalstatus = approvalstatus;
+		this.followId = followId;
 	}
 
+
+	public String getFollowId() {
+		return followId;
+	}
+
+	public void setFollowId(String followId) {
+		this.followId = followId;
+	}
 
 	public String getId() {
 		return id;

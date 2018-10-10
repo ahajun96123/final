@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.service.BoardService;
-import com.jkl.hpot.service.ImageService;
+/*import com.jkl.hpot.service.ImageService;*/
 import com.jkl.hpot.service.MemberService;
 import com.jkl.hpot.util.MediaUtils;
 import com.jkl.hpot.vo.BoardVO;
@@ -50,8 +52,10 @@ public class HpotController {
 	@Autowired
 	private BoardService bs;
 	private ModelAndView mav;
-	private ImageService is;
-
+	
+	/*@Autowired
+    private ImageService is;*/
+	
 	@Autowired
 	private MemberService ms;
 
@@ -62,6 +66,12 @@ public class HpotController {
 	public String liveChat() {
 
 		return "chat2";
+	}
+		
+	
+	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
+	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
+		ms.follow(id, response, session);
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
@@ -282,13 +292,14 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/postCheck", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		String which = request.getParameter("which");
 		if (which.equals("")) {
 			mav.addObject("msg", "게시판을 선택해주세요.");
 		} else {
+			/*model.addAttribute("files", is.loadAll().collect(Collectors.toList()));*/
 			request.setAttribute("which", which);
 			mav.setViewName("post");
 		}
@@ -459,41 +470,5 @@ public class HpotController {
 		return mav;
 	}
 	
-	@GetMapping("/img/{fileId}")
-    @ResponseBody
-    public ResponseEntity<?> serveFile(@PathVariable int fileId) {
-        try {
-            UploadFile uploadedFile = is.load(fileId);
-            HttpHeaders headers = new HttpHeaders();
-            
-            String fileName = uploadedFile.getFileName();
-            headers.add(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=\"" + new String(fileName.getBytes("UTF-8"), "ISO-8859-1") + "\"");
-
-            if (MediaUtils.containsImageMediaType(uploadedFile.getContentType())) {
-                headers.setContentType(MediaType.valueOf(uploadedFile.getContentType()));
-            } else {
-                headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            }
-
-            Resource resource = is.loadAsResource(uploadedFile.getSaveFileName());
-            return ResponseEntity.ok().headers(headers).body(resource);
-            
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }
 	
-	@PostMapping("/img")
-    @ResponseBody
-    public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
-        try {
-            UploadFile uploadedFile = is.store(file);
-            return ResponseEntity.ok().body("/img/" + uploadedFile.getId());
-        } catch (Exception e) {
-            e.printStackTrace();
-            return ResponseEntity.badRequest().build();
-        }
-    }	
-
 }

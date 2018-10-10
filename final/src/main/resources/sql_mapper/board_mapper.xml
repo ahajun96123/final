@@ -144,5 +144,7 @@
 	<select id="myBoard" parameterType="board" resultType="board">
 		SELECT * FROM BOARD WHERE id=#{id}
 	</select>
-	
+	<!-- <insert id="imgUpload" parameterType="saveFile">
+		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
+	</insert> -->
 </mapper>

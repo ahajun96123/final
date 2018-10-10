@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
 import com.jkl.hpot.vo.PageInfo;
@@ -138,5 +139,10 @@ public class BoardDAO {
 	public List<BoardVO> myBoard(BoardVO boardVO) {
 		return sqlSession.selectList("Board.myBoard", boardVO);		
 	}
+	
+	/*public int imgUpload(UploadFile saveFile) {
+		return sqlSession.insert("Board.imgUpload",saveFile);
+		
+	}*/
 
 }

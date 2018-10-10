@@ -53,4 +53,21 @@
 
 	<update parameterType="member" id="pwalter"> update member set password =
 		#{password} , approvalstatus = 'false' where id = #{id} </update>
+		
+		
+		
+		
+		
+		
+		
+	<!-- =====================================준모========================================== -->
+	<select id="ifFollow" parameterType="member" resultType="member">
+		SELECT id FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
+	</select>
+	<insert id="follow" parameterType="member">
+		INSERT INTO FOLLOW VALUES(#{id}, #{followId})
+	</insert>
+	<delete id="deleteFollow" parameterType="member">
+		DELETE FROM MEMBER WHERE id = #{id}
+	</delete>
 </mapper>
