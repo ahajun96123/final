@@ -44,10 +44,24 @@
 	crossorigin="anonymous">
 
 <style>
-.tr {
-	width: 500px;
-	heigt: 100px;
-	border: 1px solid #444444;
+table, td {
+		margin-top: 10px;
+		margin-bottom : 5px;
+        border: 1px solid #444444;
+      }
+th{
+	
+	width: 100px;
+	
+}
+td{
+	width: 50px;
+	text-align:center;
+	
+}
+tr{
+	height: 10px;
+	
 }
 </style>
 <script>
@@ -66,7 +80,10 @@
 			<div>
 				<table>
 					<tr>
-						<th>'${info.id }'회원님의 정보</th>
+						<th colspan = "2";>'${info.id }'회원님의 정보</th>
+					</tr>
+					<tr>
+						<th colspan = "2" width = 400px; height = 400px;><img class="photo" src="resources/img/honeypot.jpg"  alt="본인이미지"></th>
 					</tr>
 					<tr>
 						<td>아이디</td>

@@ -26,44 +26,52 @@
 </head>
 <body>
 	<script type="text/javascript">
-		$(document).ready(function() {
+	
+	var which = "${which}";
+		
+	$(document).ready(function() {
 			$('#summernote').summernote({
 				height : 300,
 				minHeight : null,
 				maxHeight : null,
 				focus : true,
 				callbacks : {
-					callbacks : {
-						onImageUpload : function(files, editor, welEditable) {
-							sendFile(files[0], this);
-
-						}
+					onImageUpload: function(files, editor, welEditable) {
+				        for (var i = files.length - 1; i >= 0; i--) {
+				          sendFile(files[i], this);
+				        }
 					}
 				}
 			});
 		});
 
-		function sendFile(file, editor) {
-			// 파일 전송을 위한 폼생성
-			data = new FormData();
-			data.append("uploadFile", file);
-			$.ajax({ // ajax를 통해 파일 업로드 처리
-				data : data,
-				type : "POST",
-				url : "./imageUpload.jsp",
-				cache : false,
-				contentType : false,
-				processData : false,
-				success : function(data) { // 처리가 성공할 경우
-					// 에디터에 이미지 출력
-					$(editor).summernote('editor.insertImage', data.url);
-				}
-			});
-		}
+	function sendFile(file, el) {
+	      var form_data = new FormData();
+	      form_data.append('file', file);
+	      $.ajax({
+	        data: form_data,
+	        type: "POST",
+	        url: 'img',
+	        cache: false,
+	        contentType: false,
+	        enctype: 'multipart/form-data',
+	        processData: false,
+	        success: function(url) {
+	          $(el).summernote('editor.insertImage', url);
+	          $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+	        }
+	      });
+	    }
 
 		function postForm() {
+			var ThumbCheck = document.getElementById("file").value;
+			if(ThumbCheck ==""||ThumbCheck==null){
+				alert("썸네일을 선택해주세요.")	
+			}else{
 			$('textarea[name="bContent"]').val(
 					$('#summernote').summernote('code'));
+			document.getElementById("writeForm").submit();
+			}
 		}
 	</script>
 
@@ -71,7 +79,7 @@
 	<div class="container">
 		<h1>글 작성</h1>
 		<form action="write" method="post" id="writeForm"
-			onsubmit="postForm()" enctype="multipart/form-data">
+			enctype="multipart/form-data">
 			<table class="table table-bordered">
 				<c:choose>
 					<c:when test="${which eq '음식'}">
@@ -133,8 +141,8 @@
 						<tr>
 							<th>썸네일</th>
 							<td><input type="hidden" value="http://" name="bUrl"
-								class="form-control" /> <input type="file" class="from-control" name="bThumb">
-							</td>
+								class="form-control" /> <input type="file" id="file"
+								class="from-control" name="bThumb"></td>
 						</tr>
 					</c:otherwise>
 				</c:choose>
@@ -151,16 +159,18 @@
 				<tr>
 					<td colspan="2">
 						<div style="margin-right: 10px; float: right">
-							<input class="btn btn-warning" value="등록 " type="submit">
-							<input type="hidden" value="${which}" name="bWhich"> <input
-								type="hidden" value="${sessionScope.id }" name="id"> <input
+							<input class="btn btn-warning" value="등록 " type="button"
+								onclick="postForm()"> <input type="hidden"
+								value="${which}" name="bWhich"> <input type="hidden"
+								value="${sessionScope.id }" name="id"> <input
 								type="hidden" value="0.0" name="bGrade">
 						</div>
 						<div style="margin-right: 10px; float: right">
 							<input class="btn btn-warning" type="reset" onclick="reset()">
 						</div>
 						<div style="margin-right: 10px; float: right">
-							<a class="btn btn-warning" type="button" href="boardList?which=${which }">목록</a>
+							<a class="btn btn-warning" type="button"
+								href="boardList?which=${which }">목록</a>
 						</div>
 					</td>
 				</tr>

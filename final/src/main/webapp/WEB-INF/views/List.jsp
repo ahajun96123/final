@@ -47,7 +47,16 @@ var category = "${category}";
 var which = "${which}";
 var arrayCheck = "${array}"
 var searchPage = "${search}"
-var arrayValue = null
+var arrayValue = null;
+var loginCheck = "<%=session.getAttribute("id")%>";
+	
+function postCheck() {
+	if(loginCheck==null || loginCheck==""){
+		alert("로그인을 해주세요.")
+	}else{
+		location.href = "postCheck?which="+which;
+	}
+}
 
    function pageCheckPlus(nowplus) {
       var arrayValue = null
@@ -190,7 +199,8 @@ var arrayValue = null
 							onclick="arrayList('조회');return false;">조회 순</button></li>
 				</ul>
 
-				<div style="border-top: 1px solid orange; magin-top: 30px; width:1110px;">
+				<div
+					style="border-top: 1px solid orange; magin-top: 30px; width: 1110px;">
 					<c:choose>
 						<c:when test="${which eq '음식' || which eq '영화'}">
 							<table id="video" style="margin-left: 50px;">
@@ -201,21 +211,9 @@ var arrayValue = null
 									<td><c:choose>
 											<c:when test="${which eq '음식'}">
 												<div class="card border border-warning" id="card"
-													style="height: 240px; width: 240px; margin: 15px; padding:0px;">
-													
-													
-<div id="menu1" style="width: 100px; border: 1px solid red;">
-  대메뉴1-1
-  <div id="submenu1" style="position: absolute; display: none; width: 100px; border: 1px solid blue;">
-    - 서브메뉴1-1
-    <br /> - 서브메뉴2-1
-    <br /> - 서브메뉴3-1
-  </div>
-</div>													
-													
-													
+													style="height: 240px; width: 240px; margin: 15px; padding: 0px;">
 													<div class="card-body text-center">
-														<div style="margin-top:0px;">
+														<div style="margin-top: 0px;">
 															<span style="color: #FF895A">${board.id}</span> <span>/&nbsp;${board.bSubject}</span>
 														</div>
 														<div class="videoplay">
@@ -238,7 +236,7 @@ var arrayValue = null
 											</c:when>
 											<c:otherwise>
 												<div class="card border border-warning" id="card"
-													style="height: 340px; width: 240px; margin: 30px;">
+													style="height: 340px; width: 240px; margin: 15px;">
 													<div class="card-body text-center">
 														<div class="videoplay">
 															<div>
@@ -269,26 +267,26 @@ var arrayValue = null
 							</table>
 						</c:when>
 						<c:otherwise>
-								<table class="table" style="width:850px;">
+							<table class="table" style="width: 850px;">
+								<tr>
+									<th>작성자</th>
+									<th>제목</th>
+									<th>추천수</th>
+									<th>조회수</th>
+									<th>작성일</th>
+									<th>태그</th>
+								</tr>
+								<c:forEach var="board" items="${boardList}">
 									<tr>
-										<th>작성자</th>
-										<th>제목</th>
-										<th>추천수</th>
-										<th>조회수</th>
-										<th>작성일</th>
-										<th>태그</th>
+										<td style="color: #FF895A">${board.id}</td>
+										<td><a href="boardView?bNum=${board.bNum}">${board.bSubject }</a></td>
+										<td style="color: #28C28">${board.bLikecount}</td>
+										<td>${board.bReadcount }</td>
+										<td>${board.bDate }</td>
+										<td style="color: #6478FF">${board.bTag}</td>
 									</tr>
-									<c:forEach var="board" items="${boardList}">
-										<tr>
-											<td style="color: #FF895A">${board.id}</td>
-											<td><a href="boardView?bNum=${board.bNum}">${board.bSubject }</a></td>
-											<td style="color: #28C28">${board.bLikecount}</td>
-											<td>${board.bReadcount }</td>
-											<td>${board.bDate }</td>
-											<td style="color: #6478FF">${board.bTag}</td>
-										</tr>
-									</c:forEach>
-								</table>
+								</c:forEach>
+							</table>
 						</c:otherwise>
 					</c:choose>
 				</div>

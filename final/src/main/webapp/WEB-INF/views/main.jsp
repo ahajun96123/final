@@ -36,6 +36,13 @@ b {
 	border: 1px solid gold;
 }
 </style>
+<script type="text/javascript">
+var which=""
+
+function postCheck() {
+	location.href="postCheck?which="+which
+}
+</script>
 <title>main</title>
 </head>
 <body>

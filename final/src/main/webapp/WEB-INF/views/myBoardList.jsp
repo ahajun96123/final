@@ -43,18 +43,32 @@
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
-<style>
-.tr {
-	width: 500px;
-	heigt: 100px;
-	border: 1px solid #444444;
-}
-</style>
 <script>
 	function goBack() {
 		window.history.back();
 	}
 </script>
+<style>
+table, td {
+		margin-top: 10px;
+		margin-bottom : 5px;
+        border: 1px solid #444444;
+      }
+td{
+	width: 400px;
+	text-align:center;
+	
+}
+tr{
+	height: 100px;
+	
+}
+img{
+width: 400px;
+height: 100px
+}
+      
+</style>
 </head>
 <body>
 	<div class=container>
@@ -65,15 +79,26 @@
 			</div>
 			<div>
 				<table>
-					<c:forEach items="${myBoardList}" var="list">
+					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
-							<td>${myBoardList.BTHUMB}</td>
-							<td>${myBoardList.BSUBJECT}</td>
-							<td>${myBoardList.BCOUNT}</td>
-							<td>${myBoardList.BGRADE}</td>
+							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일"></td>
+							<td><a href = "memberinfomation?id=${myBoardList.id}">${myBoardList.id}</a></td>
+							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
+							<td>${myBoardList.bContent}</td>
+							<td>${myBoardList.bDate}</td>
 						</tr>
 					</c:forEach>
 				</table>
+				<c:if test = "${myBoardList == null}">
+				<table>
+					<c:forEach items="${myBoardList}" var="myBoardList">
+						<tr>
+							<td><a>검색결과가 존재하지 않습니다.</a></td>
+						</tr>
+					</c:forEach>
+				</table>
+				</c:if>
+				
 				<button onclick="goBack()">뒤로가기</button>
 			</div>
 		</div>
