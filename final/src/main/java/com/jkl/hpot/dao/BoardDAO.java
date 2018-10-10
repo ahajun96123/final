@@ -6,6 +6,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
 import com.jkl.hpot.vo.PageInfo;
@@ -133,5 +134,10 @@ public class BoardDAO {
 	public int bigData(BoardVO boardVO) {
 		return sqlSession.insert("Board.bigData", boardVO);
 	}
+
+	/*public int imgUpload(UploadFile saveFile) {
+		return sqlSession.insert("Board.imgUpload",saveFile);
+		
+	}*/
 
 }

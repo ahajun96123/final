@@ -10,6 +10,7 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -36,7 +38,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.jkl.hpot.entity.UploadFile;
 import com.jkl.hpot.service.BoardService;
-import com.jkl.hpot.service.ImageService;
+/*import com.jkl.hpot.service.ImageService;*/
 import com.jkl.hpot.service.MemberService;
 import com.jkl.hpot.util.MediaUtils;
 import com.jkl.hpot.vo.BoardVO;
@@ -50,8 +52,10 @@ public class HpotController {
 	@Autowired
 	private BoardService bs;
 	private ModelAndView mav;
-	private ImageService is;
-
+	
+	/*@Autowired
+    private ImageService is;*/
+	
 	@Autowired
 	private MemberService ms;
 
@@ -274,13 +278,14 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/postCheck", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response) throws Exception {
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		String which = request.getParameter("which");
 		if (which.equals("")) {
 			mav.addObject("msg", "게시판을 선택해주세요.");
 		} else {
+			/*model.addAttribute("files", is.loadAll().collect(Collectors.toList()));*/
 			request.setAttribute("which", which);
 			mav.setViewName("post");
 		}
@@ -442,7 +447,8 @@ public class HpotController {
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
 	
-	@GetMapping("/img/{fileId}")
+    
+  /*  @GetMapping("/img/{fileId}")
     @ResponseBody
     public ResponseEntity<?> serveFile(@PathVariable int fileId) {
         try {
@@ -466,8 +472,8 @@ public class HpotController {
             return ResponseEntity.badRequest().build();
         }
     }
-	
-	@PostMapping("/img")
+    
+    @PostMapping("/img")
     @ResponseBody
     public ResponseEntity<?> handleFileUpload(@RequestParam("file") MultipartFile file) {
         try {
@@ -477,6 +483,6 @@ public class HpotController {
             e.printStackTrace();
             return ResponseEntity.badRequest().build();
         }
-    }	
-
+    }*/
+    
 }

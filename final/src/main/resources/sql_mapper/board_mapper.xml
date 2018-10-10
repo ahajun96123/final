@@ -141,4 +141,7 @@
 	<insert id="bigData" parameterType="board">
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
+	<!-- <insert id="imgUpload" parameterType="saveFile">
+		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
+	</insert> -->
 </mapper>

@@ -13,19 +13,23 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.UrlResource;
+import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.jkl.hpot.repository.FileRepository;
 import com.jkl.hpot.util.UploadFileUtils;
+import com.jkl.hpot.dao.BoardDAO;
 import com.jkl.hpot.entity.UploadFile;
 
+/*@Service
 public class ImageService {
-	private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
+	
+    private static final Logger logger = LoggerFactory.getLogger(ImageService.class);
     
     private final Path rootLocation;
     
     @Autowired
-    UploadFileUtils uploadFileUtils;
+	private BoardDAO boardDAO;
     
     @Autowired
     public ImageService(String uploadPath) {
@@ -55,7 +59,7 @@ public class ImageService {
             Resource resource = new UrlResource(file.toUri());
             if (resource.exists() || resource.isReadable()) {
                 return resource;
-            } else {	
+            } else {
                 throw new Exception("Could not read file: " + fileName);
             }
         } catch (Exception e) {
@@ -67,7 +71,7 @@ public class ImageService {
         return rootLocation.resolve(fileName);
     }
     
-	public UploadFile store(MultipartFile file) throws Exception {
+    public UploadFile store(MultipartFile file) throws Exception {
         try {
             if (file.isEmpty()) {
                 throw new Exception("Failed to store empty file " + file.getOriginalFilename());
@@ -85,15 +89,15 @@ public class ImageService {
             saveFile.setSaveFileName(saveFileName);
             saveFile.setFileName(file.getOriginalFilename());
             saveFile.setContentType(file.getContentType());
-            saveFile.setFilePath(rootLocation.toString() + File.separator + saveFileName);
+            saveFile.setFilePath(rootLocation.toString().replace(File.separatorChar, '/') + File.separator + saveFileName);
             saveFile.setSized(resource.contentLength());
             saveFile.setRegDate(new Date());
             saveFile = fileRepository.save(saveFile);
+            boardDAO.imgUpload(saveFile);
             
             return saveFile;
         } catch (IOException e) {
             throw new Exception("Failed to store file " + file.getOriginalFilename(), e);
         }
     }
-	
-}
+}*/

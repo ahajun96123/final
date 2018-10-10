@@ -9,5 +9,6 @@
 		<typeAlias alias="chatMember" type="com.jkl.hpot.vo.ChatMemberVO"/>
 		<typeAlias alias="member" type="com.jkl.hpot.vo.MemberVO"/>
 		<typeAlias alias="comment" type="com.jkl.hpot.vo.CommentVO"/>
+		<typeAlias alias="saveFile" type="com.jkl.hpot.entity.UploadFile"/>
 	</typeAliases>
 </configuration>

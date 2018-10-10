@@ -26,51 +26,51 @@
 </head>
 <body>
 	<script type="text/javascript">
-	
-	var which = "${which}";
-		
-	$(document).ready(function() {
+		var which = "${which}";
+
+		$(document).ready(function() {
 			$('#summernote').summernote({
 				height : 300,
 				minHeight : null,
 				maxHeight : null,
 				focus : true,
 				callbacks : {
-					onImageUpload: function(files, editor, welEditable) {
-				        for (var i = files.length - 1; i >= 0; i--) {
-				          sendFile(files[i], this);
-				        }
+					onImageUpload : function(files, editor, welEditable) {
+						for (var i = files.length - 1; i >= 0; i--) {
+							sendFile(files[i], this);
+						}
 					}
 				}
 			});
 		});
 
-	function sendFile(file, el) {
-	      var form_data = new FormData();
-	      form_data.append('file', file);
-	      $.ajax({
-	        data: form_data,
-	        type: "POST",
-	        url: 'img',
-	        cache: false,
-	        contentType: false,
-	        enctype: 'multipart/form-data',
-	        processData: false,
-	        success: function(url) {
-	          $(el).summernote('editor.insertImage', url);
-	          $('#imageBoard > ul').append('<li><img src="'+url+'" width="480" height="auto"/></li>');
-	        }
-	      });
-	    }
+		function sendFile(file, el) {
+			var form_data = new FormData();
+			form_data.append('file', file);
+			$.ajax({	
+						data : form_data,
+						type : "POST",
+						url : 'img',
+						cache : false,
+						contentType : false,
+						enctype : 'multipart/form-data',
+						processData : false,
+						success : function(url) {
+							$(el).summernote('editor.insertImage', url);
+							$('#imageBoard > ul')
+									.append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+						}
+					});
+		}
 
 		function postForm() {
 			var ThumbCheck = document.getElementById("file").value;
-			if(ThumbCheck ==""||ThumbCheck==null){
-				alert("썸네일을 선택해주세요.")	
-			}else{
-			$('textarea[name="bContent"]').val(
-					$('#summernote').summernote('code'));
-			document.getElementById("writeForm").submit();
+			if (ThumbCheck == "" || ThumbCheck == null) {
+				alert("썸네일을 선택해주세요.")
+			} else {
+				$('textarea[name="bContent"]').val(
+						$('#summernote').summernote('code'));
+				document.getElementById("writeForm").submit();
 			}
 		}
 	</script>
@@ -176,6 +176,13 @@
 				</tr>
 			</table>
 		</form>
+		<div id="imageBoard">
+			<ul>
+				<c:forEach items="${files}" var="file">
+					<li><img src="/img/${file}" width="480" height="auto" /></li>
+				</c:forEach>
+			</ul>
+		</div>
 	</div>
 </body>
 </html>
