@@ -185,11 +185,9 @@
 			dataType : "text",
 			success : function(data) {
 				if (data == "1") {
-					alert("팔로우 하였습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-success");
 					$('#followBtn').val('√팔로잉');
 				} else {
-					alert("팔로우 취소했습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-primary");
 					$('#followBtn').val('팔로우');
 				}
@@ -202,45 +200,46 @@
 </script>
 <script>
 window.onload=ifFollow();
-	function ifFollow(){
+function ifFollow(){
 	if(${sessionScope.id == null}){
 		return false;
-	}
-	if(${view.id == sessionScope.id}){
+	} else if(${view.id == sessionScope.id}){
 		$('#followBtn').val('내 게시물');
 		$('#followBtn').attr('disabled', true);
 		$("input[id=followBtn]").attr("class", "btn btn-light");
-	}
-	var id = "${view.id}";
-	$.ajax({
-		type : "post",
-		url : "followCheck",
-		data : {
-			"id" : id
-		},
-		dataType : "text",
-		success : function(data) {
-			if (data == "1") {
-				//팔로우
-				//$("input[id=followBtn]").attr("class", "btn btn-primary");
-			} else {
-				//팔로우취소
-				$("input[id=followBtn]").attr("class", "btn btn-success");
-				$('#followBtn').val('√팔로잉');
+		return false;
+	} else{
+		var id = "${view.id}";
+		$.ajax({
+			type : "post",
+			url : "followCheck",
+			data : {
+				"id" : id
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					//팔로우
+					//$("input[id=followBtn]").attr("class", "btn btn-primary");
+				} else {
+					//팔로우취소
+					$("input[id=followBtn]").attr("class", "btn btn-success");
+					$('#followBtn').val('√팔로잉');
+				}
+				/* if (data == "1") {
+					alert("이 아이디는 사용 가능합니다!.");
+					$("input[id=idbox]").attr("readonly", true);
+					$('#checkbtn').attr('disabled', true);
+					$('#chch').attr('onSubmit', true);
+				} else {
+					alert("이 아이디는 사용할 수 없습니다.");
+				} */
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
 			}
-			/* if (data == "1") {
-				alert("이 아이디는 사용 가능합니다!.");
-				$("input[id=idbox]").attr("readonly", true);
-				$('#checkbtn').attr('disabled', true);
-				$('#chch').attr('onSubmit', true);
-			} else {
-				alert("이 아이디는 사용할 수 없습니다.");
-			} */
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	});
+		});
+	}
 }
 </script>
 </html>
