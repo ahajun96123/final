@@ -64,9 +64,15 @@
 		}
 
 		function postForm() {
-			var ThumbCheck = document.getElementById("file").value;
-			if (ThumbCheck == "" || ThumbCheck == null) {
-				alert("썸네일을 선택해주세요.")
+			if (which == "음식" || which == "영화") {
+				var ThumbCheck = document.getElementById("file").value;
+				if (ThumbCheck == "" || ThumbCheck == null) {
+					alert("썸네일을 선택해주세요.")
+				}else{
+					$('textarea[name="bContent"]').val(
+							$('#summernote').summernote('code'));
+					document.getElementById("writeForm").submit();
+				}
 			} else {
 				$('textarea[name="bContent"]').val(
 						$('#summernote').summernote('code'));
@@ -119,7 +125,7 @@
 						</tr>
 					</c:when>
 					<c:otherwise>
-						<input type="hidden" name="bCategory" value="핫딜">
+						<input type="hidden" name="bCategory" value="지름">
 					</c:otherwise>
 				</c:choose>
 				<tr>

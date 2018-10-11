@@ -62,12 +62,12 @@
 		
 	<!-- =====================================준모========================================== -->
 	<select id="ifFollow" parameterType="member" resultType="member">
-		SELECT id FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
+		SELECT * FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
 	</select>
 	<insert id="follow" parameterType="member">
 		INSERT INTO FOLLOW VALUES(#{id}, #{followId})
 	</insert>
 	<delete id="deleteFollow" parameterType="member">
-		DELETE FROM MEMBER WHERE id = #{id}
+		DELETE FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
 	</delete>
 </mapper>

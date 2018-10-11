@@ -243,23 +243,47 @@ public class MemberService {
 			response.getWriter().print("0");
 		}
 	}
-
-	public void follow(String id, HttpServletResponse response, HttpSession session) throws Exception { 
-		System.out.println("follow아이디 : " + id);
+	
+	//팔로우 메소드
+	public void follow(String followId, HttpServletResponse response, HttpSession session) throws Exception { 
+		System.out.println("follow아이디 : " + followId);
 		memberVO = new MemberVO();
-		memberVO.setFollowId(id);
-		String followId = (String) session.getAttribute("id");
-		memberVO.setId(followId);
-		memberVO = mdao.ifFollow(memberVO);
-		if (memberVO == null) {
-			mdao.follow(memberVO, id, followId);
+		memberVO.setFollowId(followId);
+		String id = (String) session.getAttribute("id");
+		memberVO.setId(id);
+		/*팔로우 여부 확인*/
+		/*안되어있으면*/
+		if(mdao.ifFollow(memberVO)==null) {
+			/*팔로우하고*/
+			mdao.follow(memberVO);
 			response.getWriter().print("1");
 			if (id == "") {
 				response.getWriter().print("0");
 			}
+		/*되어있으면*/
 		} else {
-			mdao.deleteFollow(memberVO, id, followId);
-			response.getWriter().print("0");
+			/*팔로우 취소(삭제)*/
+			mdao.deleteFollow(memberVO);
+			response.getWriter().print("0");	
+		}
+	}
+
+	//팔로우 여부 확인 메소드
+	public void followCheck(String followId, HttpServletResponse response, HttpSession session2) throws IOException {
+		memberVO = new MemberVO();
+		memberVO.setFollowId(followId);
+		String id = (String) session.getAttribute("id");
+		memberVO.setId(id);
+		/*팔로우 여부 확인*/
+		/*안되어있으면*/
+		if(mdao.ifFollow(memberVO)==null) {
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			response.getWriter().print("0");	
 		}
 	}
 }

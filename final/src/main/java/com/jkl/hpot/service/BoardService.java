@@ -175,6 +175,7 @@ public class BoardService {
 	      boardDAO.bigData(boardVO);
 	      mav.addObject("view", viewBoard);
 	      mav.addObject("commentList",commentList);
+	      mav.addObject("commentcount",commentList.size());
 	      mav.setViewName("View");
 	      return mav;
 	   }

@@ -117,7 +117,7 @@
 		SELECT *
 		FROM BOARD WHERE BNUM=#{bNum}
 	</select>
-	<select id="boardCommentList" parameterType="comment"
+	<select id="boardCommentList" parameterType="board"
 		resultType="comment">
 		SELECT * FROM COMMENTS WHERE BNUM=#{bNum}
 	</select>

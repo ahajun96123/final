@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -73,8 +74,12 @@ public class HpotController {
 		
 	
 	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
-	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
-		ms.follow(id, response, session);
+	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.follow(followId, response, session);
+	}
+	@RequestMapping(value = "/followCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.followCheck(followId, response, session);
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
@@ -184,7 +189,7 @@ public class HpotController {
 	}
 
 	// 로그아웃 처리
-	@RequestMapping(value = "/memberlogout", method = RequestMethod.POST)
+	@RequestMapping(value = "/memberlogout", method = RequestMethod.GET)
 	public ModelAndView memberLogout(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
 		mav = ms.memberLogout(memberVO);
@@ -304,7 +309,6 @@ public class HpotController {
 		if (which.equals("")) {
 			mav.addObject("msg", "게시판을 선택해주세요.");
 		} else {
-			/*model.addAttribute("files", is.loadAll().collect(Collectors.toList()));*/
 			request.setAttribute("which", which);
 			mav.setViewName("post");
 		}
@@ -316,8 +320,18 @@ public class HpotController {
 			@ModelAttribute BoardVO boardVO) {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
+		String which = request.getParameter("which");
+		System.out.println(which);
+		boardVO.setbWhich(which);
 		int page = 1;
-		int limit = 9;
+		int limit = 12;
+		if(which.equals("영화")) {
+			limit = 9;
+		}else if(which.equals("지름")){
+			limit = 20;
+		}else {
+			limit = 12;
+		}
 		String category = request.getParameter("category");
 		System.out.println(request.getParameter("array"));
 		if (request.getParameter("page") != null) {
@@ -367,17 +381,11 @@ public class HpotController {
 			System.out.println("array = " + boardVO.getInArray());
 			boardVO.setInCate(1);
 			System.out.println(boardVO.getInCate());
-			String which = request.getParameter("which");
-			System.out.println(which);
-			boardVO.setbWhich(which);
 			mav = bs.boardList(boardVO, page, limit);
 		} else if (request.getParameter("option") == null) {
 			System.out.println(request.getParameter("array"));
 			System.out.println("array = " + boardVO.getInArray());
 			System.out.println(boardVO.getInCate());
-			String which = request.getParameter("which");
-			System.out.println(which);
-			boardVO.setbWhich(which);
 			mav = bs.boardList(boardVO, page, limit);
 		}
 		return mav;
@@ -474,6 +482,4 @@ public class HpotController {
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}
-	
-	
 }
