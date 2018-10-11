@@ -7,33 +7,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
 
-<style>
-#talkbubble {
-	width: 100px;
-	height: 20px;
-	background: green;
-	position: relative;
-	-moz-border-radius: 10px;
-	-webkit-border-radius: 10px;
-	border-radius: 10px;
-}
-
-#talkbubble:before {
-	content: "";
-	position: absolute;
-	right: 100%;
-	top: 0px;
-	width: 0;
-	height: 0;
-	border-top: 1px solid transparent;
-	border-right: 1px solid red;
-	border-bottom: 1px solid transparent;
-}
-</style>
-
-
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
+
+<!-- ajax -->
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -54,7 +34,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript">
-	var loginCheck="<%=session.getAttribute("id")%>";
+	var loginCheck="${sessionScope.id}";
 	var which = "${view.bWhich}";
 	var num = "${view.bNum}";
 	var idCheck = "${view.id}";
@@ -71,7 +51,7 @@
 		if (loginCheck == null || loginCheck == "") {
 			alert("로그인을 해주세요.");
 		} else {
-			if (loginCheck == idCheck) {
+			if (loginCheck == idCheck || loginCheck=="admin") {
 				location.href = "boardDelete?bNum=" + num + "&which=" + which;
 			} else {
 				alert("잘못된 요청입니다. (아이디 불일치)");
@@ -115,21 +95,22 @@
 				<table class="table table-bordered" style="width: 850px;">
 					<tr>
 						<th>[${view.bCategory }]</th>
-						<td colspan="7">${view.bSubject}&nbsp;&nbsp;<c:if
-								test="${commentcount > 1}">
-								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-						</c:if> <span style="color: blue">${view.bTag}</span></td>
+						<td colspan="6">${view.bSubject}&nbsp;&nbsp;
+						<c:if test="${commentcount > 1}">
+							<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+						</c:if>
+						<span style="color: blue">${view.bTag}</span></td>
+						<td>
+							<div>
+								<input type="button" id="followBtn" class="btn btn-primary" onclick="follow()" value="팔로우" />
+							</div>
+						</td>
 					</tr>
 					<tr>
 						<th>작성자</th>
 						<td>
 							<div>
-								<a style="color: #FF895A" href="memberInfo?id=${view.id }"
-									id="idHover">${view.id}</a>
-							</div>
-							<div id="talkbubble" style="display: none;">
-								<button type="button" id="checkbtn" onclick="follow()">구독</button>
-								&nbsp;|&nbsp;<a href="">좋아요</a>
+								<a style="color: #FF895A" href="memberInfo?id=${view.id }">${view.id}</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -230,22 +211,27 @@
 </body>
 <script>
 	function follow() {
-		var idbox = document.getElementById("idbox");
+		if(${sessionScope.id == null}){
+			alert('로그인을 해주세요');
+			return false;
+		}
+		var id = "${view.id}";
 		$.ajax({
 			type : "post",
 			url : "follow",
 			data : {
-				"id" : ${veiw.id}
-			}
+				"id" : id
+			},
 			dataType : "text",
 			success : function(data) {
 				if (data == "1") {
-					alert("이 아이디는 사용 가능합니다!.");
-					$("input[id=idbox]").attr("readonly", true);
-					$('#checkbtn').attr('disabled', true);
-					$('#chch').attr('onSubmit', true);
+					alert("팔로우 하였습니다.");
+					$("input[id=followBtn]").attr("class", "btn btn-success");
+					$('#followBtn').val('√팔로잉');
 				} else {
-					alert("이 아이디는 사용할 수 없습니다.");
+					alert("팔로우 취소했습니다.");
+					$("input[id=followBtn]").attr("class", "btn btn-primary");
+					$('#followBtn').val('팔로우');
 				}
 			},
 			error : function(request, status, error) {
@@ -255,12 +241,46 @@
 	}
 </script>
 <script>
-	$("#idHover").hover(function() {
-		$("#talkbubble").show();
-	}, function() {
-		/* $("#talkbubble").hide(); */
-		//일단 위에 것은 기능 구현 하고 작업
-		$("#talkbubble").show();
+window.onload=ifFollow();
+	function ifFollow(){
+	if(${sessionScope.id == null}){
+		return false;
+	}
+	if(${view.id == sessionScope.id}){
+		$('#followBtn').val('내 게시물');
+		$('#followBtn').attr('disabled', true);
+		$("input[id=followBtn]").attr("class", "btn btn-light");
+	}
+	var id = "${view.id}";
+	$.ajax({
+		type : "post",
+		url : "followCheck",
+		data : {
+			"id" : id
+		},
+		dataType : "text",
+		success : function(data) {
+			if (data == "1") {
+				//팔로우
+				//$("input[id=followBtn]").attr("class", "btn btn-primary");
+			} else {
+				//팔로우취소
+				$("input[id=followBtn]").attr("class", "btn btn-success");
+				$('#followBtn').val('√팔로잉');
+			}
+			/* if (data == "1") {
+				alert("이 아이디는 사용 가능합니다!.");
+				$("input[id=idbox]").attr("readonly", true);
+				$('#checkbtn').attr('disabled', true);
+				$('#chch').attr('onSubmit', true);
+			} else {
+				alert("이 아이디는 사용할 수 없습니다.");
+			} */
+		},
+		error : function(request, status, error) {
+			alert("code:" + request.status + "\n" + "error:" + error);
+		}
 	});
+}
 </script>
 </html>

@@ -4,6 +4,7 @@ import java.io.BufferedOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.text.SimpleDateFormat;
@@ -61,6 +62,9 @@ public class HpotController {
 
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
+	
+	@Autowired
+	private HttpSession session;
 
 	@RequestMapping(value = "/Livechat", method = RequestMethod.GET)
 	public String liveChat() {
@@ -70,8 +74,12 @@ public class HpotController {
 		
 	
 	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
-	public void follow(HttpServletResponse response, @RequestParam("id") String id, HttpSession session) throws Exception {
-		ms.follow(id, response, session);
+	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.follow(followId, response, session);
+	}
+	@RequestMapping(value = "/followCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+		ms.followCheck(followId, response, session);
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
@@ -156,9 +164,9 @@ public class HpotController {
 
 	// 로그인 처리
 	@RequestMapping(value = "/memberlogin", method = RequestMethod.POST)
-	public ModelAndView memberLogin(@ModelAttribute MemberVO memberVO) {
+	public ModelAndView memberLogin(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
-		mav = ms.memberLogin(memberVO);
+		mav = ms.memberLogin(memberVO, response);
 		return mav;
 	}
 
@@ -200,10 +208,12 @@ public class HpotController {
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
+		memberVO.setId((String) session.getAttribute("id"));
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
 	
+	// 다른회원의 내정보 열람
 	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView MI(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -478,5 +488,5 @@ public class HpotController {
 		bs.boardGrade(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum();
 	}
-	
+
 }

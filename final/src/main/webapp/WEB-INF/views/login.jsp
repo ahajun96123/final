@@ -9,8 +9,6 @@
 		window.location.href = 'main';
 	</script>
 </c:if>
-<!-- ajasdlfjsadklfjsad;lkfjasklr;owjkalsjflksajflkajlsajdfjas -->
-<!-- dev브랜치만듬 -->
 <head>
 
 <meta charset="utf-8">
@@ -92,7 +90,7 @@
 <script type="text/javascript">
 if(${sessionScope.id != null}){
 alert('로그아웃후 뒤로가기가 가능합니다');
-	window.history.forward();
+	window.history.forward()
 
 	function noBack() {
 

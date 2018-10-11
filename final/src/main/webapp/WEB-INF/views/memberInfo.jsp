@@ -73,56 +73,89 @@ tr{
 <body>
 	<div class=container>
 		<%@include file="./topui.jsp"%>
-		<div style="width: 1130px; height: 1080px;">
+		<div style="width: 1130px; height: 990px;">
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div>
-				<table>
-					<tr>
-						<th colspan = "2";>'${info.id }'회원님의 정보</th>
-					</tr>
-					<tr>
-						<th colspan = "2" width = 400px; height = 400px;><img class="photo" src="resources/img/honeypot.jpg"  alt="본인이미지"></th>
-					</tr>
-					<tr>
-						<td>아이디</td>
-						<td>${info.id}</td>
-					</tr>
-					<c:if test="${info.id eq sessionScope.id }">
-						<tr>
-							<td>이름</td>
-							<td>${info.name}</td>
-						</tr>
-						<tr>
-							<td>나이</td>
-							<td>${info.age}</td>
-						</tr>
-						<tr>
-							<td>이메일주소</td>
-							<td>${info.email}</td>
-						</tr>
-						<tr>
-							<td>집주소</td>
-							<td>${info.address}</td>
-						</tr>
-						<tr>
-							<td>성별</td>
-							<td>${info.gender}</td>
-						</tr>
-					</c:if>
-				</table>
-				<form action="myBoard" method="post">
-					<button value = "${info.id}"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
-					<input type = "hidden" name="id" value = "${info.id}">
-				</form>
-				<br>
-				<button onclick="goBack()">뒤로가기</button>
+			<div class="content">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div class="card" style="width: 820px; height: 750px; margin : 10px; padding: 20px;">
+                                <div class="card-header card-header-icon" data-background-color="rose">
+                                    <i class="material-icons">perm_identity</i>
+                                </div>
+                                <div class="card-content">
+                                    <h4 class="card-title">${info.id}님의 프로필입니다
+                                        <small class="category"></small>
+                                    </h4>
+                                       
+                                        <div class="row"> 
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <p ><label class="control-label "><h5 class="text-success">아이디</h5></label></p>
+                                                     <p class="form-control">${info.id}</p>
+                                                    
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                    <p ><label class="control-label "><h5 class="text-success">이름</h5></label></p>
+                                                    <p class="form-control">${info.name}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                   <p ><label class="control-label "><h5 class="text-success">나이</h5></label></p>
+                                                     <p class="form-control">${info.age}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                     <p ><label class="control-label "><h5 class="text-success">성별</h5></label></p>
+                                                     <p class="form-control">${info.gender}</p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                     <p ><label class="control-label "><h5 class="text-success">이메일 주소</h5></label></p>
+                                                    <p class="form-control">${info.email}</p>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group label-floating">
+                                                     <p ><label class="control-label "><h5 class="text-success">집 주소</h5></label></p>
+                                                    <p class="form-control">${info.address}</p>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                        
+                                        <form action="myBoard" method="post">
+											<button class="btn btn-lg btn-warning btn-block" value = "${info.id}"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
+											<input type = "hidden" name="id" value = "${info.id}">
+										</form>
+										<br>
+										
 				
-				<c:if test="${info.id eq sessionScope.id }">
-				<!-- Trigger/Open The Modal -->
-				<button id="myBtn2">프로필수정</button>
-				</c:if>
+										<c:if test="${info.id eq sessionScope.id }">
+										<!-- Trigger/Open The Modal -->
+										<button class="btn btn-lg btn-info btn-block" id="myBtn2">프로필수정</button>
+										</c:if>
+										<button class="btn btn-lg btn-primary btn-block" onclick="goBack()">뒤로가기</button>                                        
+                                        <div class="clearfix"></div>
+                                   
+                                </div>
+                            </div>
+                        </div>
+                        
+                    </div>
+                </div>
+            </div>
 				<!-- The Modal -->
 				<div id="userMod" class="modal">
 
@@ -186,6 +219,7 @@ tr{
 			</div>
 		</div>
 	</div>
+	
 	<!-- Bootstrap core JavaScript -->
 	<script
 		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>

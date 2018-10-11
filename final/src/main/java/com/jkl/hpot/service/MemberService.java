@@ -1,5 +1,6 @@
 package com.jkl.hpot.service;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
@@ -48,20 +49,30 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberLogin(MemberVO memberVO) {
+	public ModelAndView memberLogin(MemberVO memberVO, HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
 		MemberVO mv = mdao.memberLogin(memberVO);
 		mav.addObject("info", mv);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		if (mv != null) {
 			if (passEncoder.matches(memberVO.getPassword(), mv.getPassword())) {
 				session.setAttribute("id", memberVO.getId());
 				mav.setViewName("main");
 			} else {
-				mav.addObject("msg2", "아이디 또는 비밀번호를 확인해주세요");
+				out.println("<script>");
+				out.println("alert('아이디 또는 비밀번호를 확인해주세요.');");
+				out.println("history.go(-1);");
+				out.println("</script>");
+				out.close();
 				mav.setViewName("login");
 			}
 		} else {
-			mav.addObject("msg2", "아이디 또는 비밀번호를 확인해주세요");
+			out.println("<script>");
+			out.println("alert('아이디 또는 비밀번호를 확인해주세요.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
 			mav.setViewName("login");
 		}
 
@@ -86,7 +97,6 @@ public class MemberService {
 
 	public ModelAndView memberInfo(MemberVO memberVO) {
 		mav = new ModelAndView();
-		memberVO.setId((String) session.getAttribute("id"));
 		MemberVO mv = new MemberVO();
 		mv = mdao.memberInfo(memberVO);
 		mav.addObject("info", mv);
@@ -233,23 +243,47 @@ public class MemberService {
 			response.getWriter().print("0");
 		}
 	}
-
-	public void follow(String id, HttpServletResponse response, HttpSession session) throws Exception { 
-		System.out.println("follow아이디 : " + id);
+	
+	//팔로우 메소드
+	public void follow(String followId, HttpServletResponse response, HttpSession session) throws Exception { 
+		System.out.println("follow아이디 : " + followId);
 		memberVO = new MemberVO();
-		memberVO.setFollowId(id);
-		String followId = (String) session.getAttribute("id");
-		memberVO.setId(followId);
-		memberVO = mdao.ifFollow(memberVO);
-		if (memberVO == null) {
-			mdao.follow(memberVO, id, followId);
+		memberVO.setFollowId(followId);
+		String id = (String) session.getAttribute("id");
+		memberVO.setId(id);
+		/*팔로우 여부 확인*/
+		/*안되어있으면*/
+		if(mdao.ifFollow(memberVO)==null) {
+			/*팔로우하고*/
+			mdao.follow(memberVO);
 			response.getWriter().print("1");
 			if (id == "") {
 				response.getWriter().print("0");
 			}
+		/*되어있으면*/
 		} else {
-			mdao.deleteFollow(memberVO, id, followId);
-			response.getWriter().print("0");
+			/*팔로우 취소(삭제)*/
+			mdao.deleteFollow(memberVO);
+			response.getWriter().print("0");	
+		}
+	}
+
+	//팔로우 여부 확인 메소드
+	public void followCheck(String followId, HttpServletResponse response, HttpSession session2) throws IOException {
+		memberVO = new MemberVO();
+		memberVO.setFollowId(followId);
+		String id = (String) session.getAttribute("id");
+		memberVO.setId(id);
+		/*팔로우 여부 확인*/
+		/*안되어있으면*/
+		if(mdao.ifFollow(memberVO)==null) {
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			response.getWriter().print("0");	
 		}
 	}
 }
