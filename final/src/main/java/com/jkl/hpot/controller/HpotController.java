@@ -61,6 +61,9 @@ public class HpotController {
 
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
+	
+	@Autowired
+	private HttpSession session;
 
 	@RequestMapping(value = "/Livechat", method = RequestMethod.GET)
 	public String liveChat() {
@@ -156,9 +159,9 @@ public class HpotController {
 
 	// 로그인 처리
 	@RequestMapping(value = "/memberlogin", method = RequestMethod.POST)
-	public ModelAndView memberLogin(@ModelAttribute MemberVO memberVO) {
+	public ModelAndView memberLogin(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
-		mav = ms.memberLogin(memberVO);
+		mav = ms.memberLogin(memberVO, response);
 		return mav;
 	}
 
@@ -200,10 +203,12 @@ public class HpotController {
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
+		memberVO.setId((String) session.getAttribute("id"));
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
 	
+	// 다른회원의 내정보 열람
 	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView MI(@RequestParam("id") String id) {
 		mav = new ModelAndView();

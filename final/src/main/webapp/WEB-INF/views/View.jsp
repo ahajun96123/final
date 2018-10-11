@@ -71,7 +71,7 @@
 		if (loginCheck == null || loginCheck == "") {
 			alert("로그인을 해주세요.");
 		} else {
-			if (loginCheck == idCheck) {
+			if (loginCheck == idCheck || loginCheck=="admin") {
 				location.href = "boardDelete?bNum=" + num + "&which=" + which;
 			} else {
 				alert("잘못된 요청입니다. (아이디 불일치)");

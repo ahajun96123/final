@@ -1,5 +1,6 @@
 package com.jkl.hpot.service;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.List;
 import java.util.Random;
@@ -48,20 +49,30 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberLogin(MemberVO memberVO) {
+	public ModelAndView memberLogin(MemberVO memberVO, HttpServletResponse response) throws IOException {
 		mav = new ModelAndView();
 		MemberVO mv = mdao.memberLogin(memberVO);
 		mav.addObject("info", mv);
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		if (mv != null) {
 			if (passEncoder.matches(memberVO.getPassword(), mv.getPassword())) {
 				session.setAttribute("id", memberVO.getId());
 				mav.setViewName("main");
 			} else {
-				mav.addObject("msg2", "아이디 또는 비밀번호를 확인해주세요");
+				out.println("<script>");
+				out.println("alert('아이디 또는 비밀번호를 확인해주세요.');");
+				out.println("history.go(-1);");
+				out.println("</script>");
+				out.close();
 				mav.setViewName("login");
 			}
 		} else {
-			mav.addObject("msg2", "아이디 또는 비밀번호를 확인해주세요");
+			out.println("<script>");
+			out.println("alert('아이디 또는 비밀번호를 확인해주세요.');");
+			out.println("history.go(-1);");
+			out.println("</script>");
+			out.close();
 			mav.setViewName("login");
 		}
 
@@ -86,7 +97,6 @@ public class MemberService {
 
 	public ModelAndView memberInfo(MemberVO memberVO) {
 		mav = new ModelAndView();
-		memberVO.setId((String) session.getAttribute("id"));
 		MemberVO mv = new MemberVO();
 		mv = mdao.memberInfo(memberVO);
 		mav.addObject("info", mv);

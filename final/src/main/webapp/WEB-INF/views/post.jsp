@@ -20,9 +20,7 @@
 <script src="plugins/lang/summernote-ko-KR.js"></script>
 
 
-<script type="text/javascript">
-	
-</script>
+<script type="text/javascript"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -47,7 +45,8 @@
 		function sendFile(file, el) {
 			var form_data = new FormData();
 			form_data.append('file', file);
-			$.ajax({	
+			$
+					.ajax({
 						data : form_data,
 						type : "POST",
 						url : 'img',
@@ -58,7 +57,8 @@
 						success : function(url) {
 							$(el).summernote('editor.insertImage', url);
 							$('#imageBoard > ul')
-									.append('<li><img src="'+url+'" width="480" height="auto"/></li>');
+									.append(
+											'<li><img src="'+url+'" width="480" height="auto"/></li>');
 						}
 					});
 		}
@@ -175,6 +175,11 @@
 					</td>
 				</tr>
 			</table>
+			<c:choose>
+				<c:when test="${which eq '음식'}">
+					<%@include file="./map.jsp"%>
+				</c:when>
+			</c:choose>
 		</form>
 		<div id="imageBoard">
 			<ul>
