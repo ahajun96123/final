@@ -22,40 +22,40 @@
 	type="text/css" rel="stylesheet">
 
 <style>
-/* The Modal (background) */
+/* / The Modal (background) /
 .modal {
 	display: none;
-	/* Hidden by default */
+	/ Hidden by default /
 	position: fixed;
-	/* Stay in place */
+	/ Stay in place /
 	z-index: 1;
-	/* Sit on top */
+	/ Sit on top /
 	left: 0;
 	top: 0;
 	width: 100%;
-	/* Full width */
+	/ Full width /
 	height: 100%;
-	/* Full height */
+	/ Full height /
 	overflow: auto;
-	/* Enable scroll if needed */
+	/ Enable scroll if needed /
 	background-color: rgb(0, 0, 0);
-	/* Fallback color */
+	/ Fallback color /
 	background-color: rgba(0, 0, 0, 0.4);
-	/* Black w/ opacity */
+	/ Black w/ opacity /
 }
 
-/* Modal Content/Box */
+/ Modal Content/Box /
 .modal-content {
 	background-color: #fefefe;
 	margin: 15% auto;
-	/* 15% from the top and centered */
+	/ 15% from the top and centered /
 	padding: 20px;
 	border: 1px solid #888;
 	width: 50%;
-	/* Could be more or less, depending on screen size */
+	/ Could be more or less, depending on screen size /
 }
 
-/* The Close Button */
+/ The Close Button /
 .close {
 	color: white;
 	float: right;
@@ -64,7 +64,7 @@
 .close:hover, .close:focus {
 	text-decoration: none;
 	cursor: pointer;
-}
+} */
 </style>
 
 
@@ -160,7 +160,7 @@
 			<div class="col-md-6 col-md-offset-3">
 				<form action="memberjoin" method="post">
 					<div class="form-group">
-						<label for="InputID">사용하실 아이디</label> <input type="text"
+						<label for="InputID">사용하실 아이디  </label> <input type="text"
 							class="form-control" name="id" placeholder="아이디" required>
 					</div>
 					<div class="form-group">

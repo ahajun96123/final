@@ -147,4 +147,13 @@
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->
+	<insert id="boardGrade" parameterType="board">
+		INSERT INTO GRADE VALUES(#{id}, #{bNum}, #{grade})
+	</insert>
+	<select id="boardGradeAvg" parameterType="board" resultType="board">
+		SELECT AVG(GRADE) AS grade FROM GRADE WHERE BNUM=#{bNum}
+	</select>
+	<update id="boardGradeUpdate" parameterType="board">
+		UPDATE BOARD SET BGRADE=#{gradeavg} WHERE BNUM=#{bNum}
+	</update>
 </mapper>

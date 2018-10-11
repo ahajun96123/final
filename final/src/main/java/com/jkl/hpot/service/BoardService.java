@@ -215,5 +215,17 @@ public class BoardService {
 		mav.setViewName("myBoardList");
 		return mav;
 	}
+
+	public String boardGrade(BoardVO boardVO) {
+		int result = boardDAO.boardGrade(boardVO);
+		if(result != 0) {
+			double avg = boardDAO.boardGradeAvg(boardVO).getGrade();
+			System.out.println(avg);
+			boardVO.setGradeavg(avg);
+			System.out.println(boardVO.getGradeavg());
+			boardDAO.boardGradeUpdate(boardVO);
+		}
+		return "redirect:/boardView?bNum="+boardVO.getbNum();
+	}
 	
 }

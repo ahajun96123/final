@@ -54,8 +54,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <script type="text/javascript">
-	var loginCheck="<%=session.getAttribute("id")%>
-	";
+	var loginCheck="<%=session.getAttribute("id")%>";
 	var which = "${view.bWhich}";
 	var num = "${view.bNum}";
 	var idCheck = "${view.id}";
@@ -91,6 +90,15 @@
 			}
 		}
 	}
+	
+	function GradeCheck() {
+		var grade = document.getElementById("grade").value;	
+		if(grade > 1 && grade < 5) {
+			document.getElementById("gradeForm").submit();
+		}else{
+			alert("1.0~5.0 사이의 평점으로 등록해주세요.")
+		}
+	}
 </script>
 <meta charset="UTF-8">
 <title>View</title>
@@ -107,11 +115,10 @@
 				<table class="table table-bordered" style="width: 850px;">
 					<tr>
 						<th>[${view.bCategory }]</th>
-						<td colspan="7">${view.bSubject}&nbsp;&nbsp;
-						<c:if test="${commentcount > 1}">
-							<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-						</c:if>
-						<span style="color: blue">${view.bTag}</span></td>
+						<td colspan="7">${view.bSubject}&nbsp;&nbsp;<c:if
+								test="${commentcount > 1}">
+								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+						</c:if> <span style="color: blue">${view.bTag}</span></td>
 					</tr>
 					<tr>
 						<th>작성자</th>
@@ -121,7 +128,8 @@
 									id="idHover">${view.id}</a>
 							</div>
 							<div id="talkbubble" style="display: none;">
-								<button type="button" id="checkbtn" onclick="follow()">구독</button>&nbsp;|&nbsp;<a href="">좋아요</a>
+								<button type="button" id="checkbtn" onclick="follow()">구독</button>
+								&nbsp;|&nbsp;<a href="">좋아요</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -147,10 +155,12 @@
 					</c:if>
 					<tr>
 						<td colspan="8" rowspan="10"><img
-							src="img/${view.bThumbname}" style="width: 300px; height:auto;">${view.bContent}</td>
+							src="img/${view.bThumbname}" style="width: 300px; height: auto;">${view.bContent}</td>
 					</tr>
 				</table>
 				<div class="btn-group" style="float: right">
+					<button class="btn btn-success" data-toggle="modal"
+						data-target="#Grade">평점 매기기</button>
 					<c:if test="${sessionScope.id == view.id}">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
@@ -161,10 +171,11 @@
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
 				</div>
 				<div style="height: 30px"></div>
-				<span style="color:#aaaaaa">Total ${commentcount} Comments ─────────</span>
+				<span style="color: #aaaaaa">Total ${commentcount} Comments
+					─────────</span>
 				<div>
 					<c:forEach var="comment" items="${commentList}">
-						<div class="border border-muted" style="padding:15px;">
+						<div class="border border-muted" style="padding: 15px;">
 							<div>
 								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
 							</div>
@@ -183,6 +194,34 @@
 						<input type="hidden" name="bNum" value="${view.bNum}"> <input
 							type="hidden" name="id" value="${view.id}">
 						<button class="input-group-text" type="submit">댓글등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+	<div class="modal fade" id="Grade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">평점 매기기</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardGrade" method="post" id="gradeForm">
+					<!-- Modal body -->
+					<div class="modal-body">
+					<span>한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span>
+						<input type="hidden" name="id" value="${view.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}"> <input
+							type="text" name="grade" class="form-control" placeholder="평점범위 : 1.0~5.0" id="grade">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-success" type="button"
+							onclick="GradeCheck()">등록</button>
 					</div>
 				</form>
 			</div>

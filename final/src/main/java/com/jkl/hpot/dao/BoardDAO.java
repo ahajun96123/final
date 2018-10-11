@@ -139,6 +139,18 @@ public class BoardDAO {
 	public List<BoardVO> myBoard(BoardVO boardVO) {
 		return sqlSession.selectList("Board.myBoard", boardVO);		
 	}
+
+	public int boardGrade(BoardVO boardVO) {
+		return sqlSession.insert("Board.boardGrade", boardVO);
+	}
+
+	public int boardGradeUpdate(BoardVO boardVO) {
+		return sqlSession.update("Board.boardGradeUpdate", boardVO);
+	}
+
+	public BoardVO boardGradeAvg(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardGradeAvg", boardVO);
+	}
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

@@ -181,7 +181,7 @@ public class HpotController {
 	}
 
 	// 로그아웃 처리
-	@RequestMapping(value = "/memberlogout", method = RequestMethod.POST)
+	@RequestMapping(value = "/memberlogout", method = RequestMethod.GET)
 	public ModelAndView memberLogout(@ModelAttribute MemberVO memberVO) {
 		mav = new ModelAndView();
 		mav = ms.memberLogout(memberVO);
@@ -473,5 +473,10 @@ public class HpotController {
 		return mav;
 	}
 	
+	@RequestMapping(value = "/boardGrade", method = RequestMethod.POST)
+	public String boardGrade(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardGrade(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum();
+	}
 	
 }
