@@ -82,6 +82,9 @@ public class BoardService {
 			}
 			System.out.println("boardList size ="+boardList.size());
 			int listCateCount = boardDAO.listCateCount(boardVO);
+			if(boardVO.getInArray()==4) {
+				listCateCount = boardDAO.boardBestCateCount(boardVO);
+			}
 			// 페이지 계산을 위한 부분
 			// 최대로 필요한 페이지 개수 계산
 			int maxPage = (int) ((double) listCateCount / limit + 1);
@@ -126,6 +129,9 @@ public class BoardService {
 			if(boardVO.getInSearch()>=1) {
 				listCount = boardDAO.listSearchCount(boardVO);
 			}
+			if(boardVO.getInArray()==4) {
+				listCount = boardDAO.boardBestCount(boardVO);
+			}
 			System.out.println("boardList size ="+boardList.size());
 			System.out.println("listCount = " + listCount);
 			/*if(boardList.size()<1) {
@@ -168,11 +174,14 @@ public class BoardService {
 	      BoardVO viewBoard = boardDAO.boardView(boardVO);
 	      System.out.println(commentVO.getbNum());
 	      List<CommentVO> commentList = boardDAO.boardCommentList(commentVO);
+	      BoardVO result = boardDAO.boardGradeCheck(boardVO);
+	      System.out.println(result);
 	      boardDAO.boardReadCount(boardVO);
 	      boardVO.setId(viewBoard.getId());
 	      boardVO.setbNum(viewBoard.getbNum());
 	      boardVO.setbCategory(viewBoard.getbCategory());
 	      boardDAO.bigData(boardVO);
+	      mav.addObject("gradeValue",result);
 	      mav.addObject("view", viewBoard);
 	      mav.addObject("commentList",commentList);
 	      mav.addObject("commentcount",commentList.size());
@@ -190,7 +199,7 @@ public class BoardService {
 
 	public String boardModify(BoardVO boardVO) {
 		boardDAO.boardModify(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum();
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 
 	public ModelAndView boardDelete(BoardVO boardVO) {
@@ -225,7 +234,7 @@ public class BoardService {
 			System.out.println(boardVO.getGradeavg());
 			boardDAO.boardGradeUpdate(boardVO);
 		}
-		return "redirect:/boardView?bNum="+boardVO.getbNum();
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 	
 }

@@ -234,7 +234,7 @@ function postCheck() {
 															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
 																src="img/${board.bThumbname}"
 																style="width: 218px; height: 140px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}'">
+																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 															<div>
 																<div
 																	style="border-top: 1px solid gray; font-size: 12px;">
@@ -272,7 +272,7 @@ function postCheck() {
 															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
 																src="img/${board.bThumbname}"
 																style="width: 218px; height: 280px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}'">
+																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 															<div>
 																<div
 																	style="border-top: 1px solid gray; font-size: 12px;">
@@ -307,7 +307,7 @@ function postCheck() {
 								<c:forEach var="board" items="${boardList}">
 									<tr>
 										<td style="color: #FF895A">${board.id}</td>
-										<td><a href="boardView?bNum=${board.bNum}">${board.bSubject }</a></td>
+										<td><a href="boardView?bNum=${board.bNum}&id=${sessionScope.id}">${board.bSubject }</a></td>
 										<td style="color: #28C28">${board.bLikecount}</td>
 										<td>${board.bReadcount }</td>
 										<td>${board.bDate }</td>

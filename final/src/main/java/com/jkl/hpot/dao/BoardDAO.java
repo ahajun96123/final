@@ -151,6 +151,17 @@ public class BoardDAO {
 	public BoardVO boardGradeAvg(BoardVO boardVO) {
 		return sqlSession.selectOne("Board.boardGradeAvg", boardVO);
 	}
+
+	public BoardVO boardGradeCheck(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardGradeCheck", boardVO);
+	}
+
+	public int boardBestCount(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.listBestCount", boardVO);
+	}
+	public int boardBestCateCount(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.listBestCateCount", boardVO);
+	}
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);
