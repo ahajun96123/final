@@ -63,16 +63,17 @@
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
+							<th colspan="4" align="center">'${idInfo.idInfo}'님의 게시물</th>
+						</tr>
+						<tr>
 							<th>썸네일</th>
-							<th>등록아이디</th>
 							<th>제목</th>
 							<th>태그</th>
 							<th>등록일자</th>
 						</tr>
 					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
-							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일"></td>
-							<td><a href = "memberinfomation?id=${myBoardList.id}">${myBoardList.id}</a></td>
+							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
 							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
 							<td>${myBoardList.bDate}</td>

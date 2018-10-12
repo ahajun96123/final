@@ -81,6 +81,14 @@ public class HpotController {
 	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
 		ms.followCheck(followId, response, session);
 	}
+	@RequestMapping(value = "/bookCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public void bookCheck(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+		bs.bookCheck(bNum, response, session);
+	}
+	@RequestMapping(value = "/bookMark", method = { RequestMethod.GET, RequestMethod.POST })
+	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+		bs.bookMark(bNum, response, session);
+	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -206,9 +214,13 @@ public class HpotController {
 
 	// 회원의 내정보 열람
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO) {
+	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO, @RequestParam("idInfo") String idInfo) {
 		mav = new ModelAndView();
-		memberVO.setId((String) session.getAttribute("id"));
+		if(!idInfo.equals("")) {
+			memberVO.setId(idInfo);
+		} else {
+			memberVO.setId((String) session.getAttribute("id"));
+		}
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
@@ -392,9 +404,11 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO,
+	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
-	      response.setContentType("text/html;charset=UTF-8");
+	    System.out.println("위도 넘어오냐?? : "+mapu);
+	    System.out.println("경도 넘어오냐?? : "+mapk);
+		response.setContentType("text/html;charset=UTF-8");
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();
 	         ServletContext context = request.getServletContext();
@@ -419,6 +433,8 @@ public class HpotController {
 	      }
 	      System.out.println(
 	            "작성내용:" + boardVO.getbThumb() + "/" + boardVO.getbCategory() + "/" + boardVO.getbThumbname());
+	      boardVO.setMapu(mapu);
+	      boardVO.setMapk(mapk);
 	      bs.boardWrite(boardVO);
 	      String which = URLEncoder.encode(boardVO.getbWhich(), "UTF-8");
 	      return "redirect:/boardList?which=" + which;
@@ -476,10 +492,11 @@ public class HpotController {
 	}
 	
 	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
-	public ModelAndView myBoard(@RequestParam("id") String id) {
+	public ModelAndView myBoard(@RequestParam("id") String id, @RequestParam("idInfo") String idInfo) {
 		mav = new ModelAndView();
 		BoardVO boardVO = new BoardVO();
 		boardVO.setId(id);
+		boardVO.setIdInfo(idInfo);
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}

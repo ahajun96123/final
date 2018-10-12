@@ -286,4 +286,5 @@ public class MemberService {
 			response.getWriter().print("0");	
 		}
 	}
+
 }

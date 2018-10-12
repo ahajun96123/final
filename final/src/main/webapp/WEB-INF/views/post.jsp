@@ -86,6 +86,8 @@
 		<h1>글 작성</h1>
 		<form action="write" method="post" id="writeForm"
 			enctype="multipart/form-data">
+			<input type="hidden" name="mapu" id="mapu" value="">
+			<input type="hidden" name="mapk" id="mapk" value="">
 			<table class="table table-bordered">
 				<c:choose>
 					<c:when test="${which eq '음식'}">
@@ -181,12 +183,10 @@
 					</td>
 				</tr>
 			</table>
-			<c:choose>
-				<c:when test="${which eq '음식'}">
-					<%@include file="./map.jsp"%>
-				</c:when>
-			</c:choose>
 		</form>
+		<c:if test="${which eq '음식'}">
+			<%@include file="./map.jsp"%>
+		</c:if>
 		<div id="imageBoard">
 			<ul>
 				<c:forEach items="${files}" var="file">

@@ -30,11 +30,14 @@ public class BoardVO {
 	private int inSearch;
 	private String searchValue;
 	private MultipartFile bThumb;
+	private String idInfo;
+	/*map 위도, 경도*/
+	private String mapu;
+	private String mapk;
 	/*--평점,추천,신고--*/
 	private double grade;
 	private double gradeavg;
 	private String reason;
-	
 	public BoardVO() {
 
 	}
@@ -69,6 +72,14 @@ public class BoardVO {
 		this.grade = grade;
 	}
 
+
+	public String getIdInfo() {
+		return idInfo;
+	}
+
+	public void setIdInfo(String idInfo) {
+		this.idInfo = idInfo;
+	}
 
 	public MultipartFile getbThumb() {
 		return bThumb;
@@ -252,6 +263,22 @@ public class BoardVO {
 
 	public void setbBlind(int bBlind) {
 		this.bBlind = bBlind;
+	}
+
+	public String getMapu() {
+		return mapu;
+	}
+
+	public void setMapu(String mapu) {
+		this.mapu = mapu;
+	}
+
+	public String getMapk() {
+		return mapk;
+	}
+
+	public void setMapk(String mapk) {
+		this.mapk = mapk;
 	}
 
 }

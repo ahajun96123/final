@@ -97,10 +97,25 @@
 				<table class="table table-bordered" style="width: 850px;">
 					<tr>
 						<th>[${view.bCategory }]</th>
-						<td colspan="6">${view.bSubject}&nbsp;&nbsp;<c:if
-								test="${commentcount > 0}">
+						<c:if test="${view.id != sessionScope.id }">
+							<td colspan="5">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 0}">
 								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-						</c:if> <span style="color: blue">${view.bTag}</span></td>
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+							<td>
+								<div>
+									<input type="button" id="bookBtn" class="btn btn-info" onclick="bookMark()" value="북마크" />
+								</div>
+							</td>
+						</c:if>
+						<c:if test="${view.id == sessionScope.id }">
+							<td colspan="6">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 1}">
+								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+						</c:if>
 						<td>
 							<div>
 								<input type="button" id="followBtn" class="btn btn-primary"
@@ -112,7 +127,7 @@
 						<th>작성자</th>
 						<td>
 							<div>
-								<a style="color: #FF895A" href="memberInfo?id=${view.id }">${view.id}</a>
+								<a style="color: #FF895A" href="memberinfomation?idInfo=${view.id }">${view.id}</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -139,6 +154,7 @@
 							<td colspan="7"><a href="${view.bUrl}">${view.bUrl}</a></td>
 						</tr>
 					</c:if>
+					
 					<tr>
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
@@ -152,6 +168,32 @@
 						</c:choose>
 					</tr>
 				</table>
+				<c:if test="${view.bWhich eq '음식'}">
+						<!-- 이미지 지도를 표시할 div 입니다 -->
+					<div id="staticMap" style="width:600px;height:350px;"></div>    
+
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
+					<script>
+					// 이미지 지도에서 마커가 표시될 위치입니다 
+					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk}); 
+
+					// 이미지 지도에 표시할 마커입니다
+					// 이미지 지도에 표시할 마커는 Object 형태입니다
+					var marker = {
+    					position: markerPosition
+					};
+
+					var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+    				staticMapOption = { 
+        			center: new daum.maps.LatLng(${view.mapu}, ${view.mapk}), // 이미지 지도의 중심좌표
+        			level: 3, // 이미지 지도의 확대 레벨
+        			marker: marker // 이미지 지도에 표시할 마커 
+    				};    
+
+					// 이미지 지도를 생성합니다
+					var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
+					</script>
+					</c:if>
 				<div class="btn-group" style="float: right">
 					<c:choose>
 						<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
@@ -159,6 +201,9 @@
 								<c:if test="${gradeValue == null}">
 									<button class="btn btn-success" data-toggle="modal"
 										data-target="#Grade">평점 매기기</button>
+								</c:if>
+								<c:if test="${gradeValue != null}">
+									<button class="btn btn-secondary" data-target="#Grade" disabled="disabled">(${gradeValue.grade}점)평점주기 완료</button>
 								</c:if>
 							</c:if>
 						</c:when>
@@ -334,11 +379,9 @@
 			dataType : "text",
 			success : function(data) {
 				if (data == "1") {
-					alert("팔로우 하였습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-success");
 					$('#followBtn').val('√팔로잉');
 				} else {
-					alert("팔로우 취소했습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-primary");
 					$('#followBtn').val('팔로우');
 				}
@@ -348,48 +391,101 @@
 			}
 		});
 	}
+	function bookMark() {
+		if(${sessionScope.id == null}){
+			alert('로그인을 해주세요');
+			return false;
+		}
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookMark",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-info");
+					$('#bookBtn').val('북마크');
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
 </script>
 <script>
-window.onload=ifFollow();
-	function ifFollow(){
-	if(${sessionScope.id == null}){ 
+window.onload=ifFollow(), ifBookMark();
+function ifFollow(){
+	if(${sessionScope.id == null}){
 		return false;
-	}
-	if(${view.id == sessionScope.id}){ 
+	} else if(${view.id == sessionScope.id}){
 		$('#followBtn').val('내 게시물');
 		$('#followBtn').attr('disabled', true);
 		$("input[id=followBtn]").attr("class", "btn btn-light");
-	}
-	var id = "${view.id}";
-	$.ajax({
-		type : "post",
-		url : "followCheck",
-		data : {
-			"id" : id
-		},
-		dataType : "text",
-		success : function(data) {
-			if (data == "1") {
-				//팔로우
-				//$("input[id=followBtn]").attr("class", "btn btn-primary");
-			} else {
-				//팔로우취소
-				$("input[id=followBtn]").attr("class", "btn btn-success");
-				$('#followBtn').val('√팔로잉'); 
+		return false;
+	} else{
+		var id = "${view.id}";
+		$.ajax({
+			type : "post",
+			url : "followCheck",
+			data : {
+				"id" : id
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					//팔로우
+					//$("input[id=followBtn]").attr("class", "btn btn-primary");
+				} else {
+					//팔로우취소
+					$("input[id=followBtn]").attr("class", "btn btn-success");
+					$('#followBtn').val('√팔로잉');
+				}
+				/* if (data == "1") {
+					alert("이 아이디는 사용 가능합니다!.");
+					$("input[id=idbox]").attr("readonly", true);
+					$('#checkbtn').attr('disabled', true);
+					$('#chch').attr('onSubmit', true);
+				} else {
+					alert("이 아이디는 사용할 수 없습니다.");
+				} */
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
 			}
-			/* if (data == "1") {
-				alert("이 아이디는 사용 가능합니다!.");
-				$("input[id=idbox]").attr("readonly", true);
-				$('#checkbtn').attr('disabled', true);
-				$('#chch').attr('onSubmit', true);
-			} else {
-				alert("이 아이디는 사용할 수 없습니다.");
-			} */
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	});
+		});
+	}
+}
+function ifBookMark(){
+	if(${sessionScope.id == null}){
+		return false;
+	} else{
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookCheck",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
 }
 </script>
 </html>

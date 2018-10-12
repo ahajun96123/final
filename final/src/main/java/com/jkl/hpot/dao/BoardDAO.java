@@ -130,6 +130,19 @@ public class BoardDAO {
 		return sqlSession.selectList("Board.myBoard", boardVO);		
 	}
 
+	public BoardVO ifBooked(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.ifBooked", boardVO);
+	}
+
+	public int book(BoardVO boardVO) {
+		System.out.println("test아위디"+boardVO.getId());
+		return sqlSession.insert("Board.book", boardVO);
+	}
+
+	public void deleteBooked(BoardVO boardVO) {
+		sqlSession.delete("Board.deleteBooked", boardVO);
+	}
+	
 	public int boardGrade(BoardVO boardVO) {
 		return sqlSession.insert("Board.boardGrade", boardVO);
 	}

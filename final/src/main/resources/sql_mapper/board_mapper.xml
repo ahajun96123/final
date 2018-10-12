@@ -7,7 +7,7 @@
 	<insert id="boardWrite" parameterType="board">
 		INSERT INTO BOARD
 		VALUES(#{id} , #{bNum}, #{bSubject}, #{bContent}, SYSDATE, #{bUrl}, 0,
-		#{bGrade}, 0, 0, #{bTag}, #{bCategory}, #{bWhich}, 0, #{bThumbname})
+		#{bGrade}, 0, 0, #{bTag}, #{bCategory}, #{bWhich}, 0, #{bThumbname}, #{mapu}, #{mapk})
 	</insert>
 
 	<select id="boardList" parameterType="board" resultType="board">
@@ -144,6 +144,15 @@
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->
+	<select id="ifBooked" parameterType="board" resultType="board">
+		SELECT * FROM BOOK WHERE id = #{id} AND bNum = #{bNum}
+	</select>
+	<insert id="book" parameterType="board">
+		INSERT INTO BOOK VALUES(#{id}, #{bNum})
+	</insert>
+	<delete id="deleteBooked" parameterType="board">
+		DELETE FROM BOOK WHERE id = #{id} AND bNum = #{bNum}
+	</delete>
 	<insert id="boardGrade" parameterType="board">
 		INSERT INTO GRADE VALUES(#{id}, #{bNum}, #{grade})
 	</insert>
