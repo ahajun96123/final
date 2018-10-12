@@ -392,9 +392,11 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO,
+	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
-	      response.setContentType("text/html;charset=UTF-8");
+	    System.out.println("위도 넘어오냐?? : "+mapu);
+	    System.out.println("경도 넘어오냐?? : "+mapk);
+		response.setContentType("text/html;charset=UTF-8");
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();
 	         ServletContext context = request.getServletContext();
@@ -419,6 +421,8 @@ public class HpotController {
 	      }
 	      System.out.println(
 	            "작성내용:" + boardVO.getbThumb() + "/" + boardVO.getbCategory() + "/" + boardVO.getbThumbname());
+	      boardVO.setMapu(mapu);
+	      boardVO.setMapk(mapk);
 	      bs.boardWrite(boardVO);
 	      String which = URLEncoder.encode(boardVO.getbWhich(), "UTF-8");
 	      return "redirect:/boardList?which=" + which;

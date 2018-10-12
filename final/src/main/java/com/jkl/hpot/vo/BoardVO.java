@@ -28,6 +28,8 @@ public class BoardVO {
 	private String searchValue;
 	private MultipartFile bThumb;
 	private String bThumbname;
+	private String mapu;
+	private String mapk;
 
 	public BoardVO() {
 
@@ -215,6 +217,22 @@ public class BoardVO {
 
 	public void setbBlind(int bBlind) {
 		this.bBlind = bBlind;
+	}
+
+	public String getMapu() {
+		return mapu;
+	}
+
+	public void setMapu(String mapu) {
+		this.mapu = mapu;
+	}
+
+	public String getMapk() {
+		return mapk;
+	}
+
+	public void setMapk(String mapk) {
+		this.mapk = mapk;
 	}
 
 }
