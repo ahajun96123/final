@@ -30,15 +30,26 @@ public class BoardVO {
 	private int inSearch;
 	private String searchValue;
 	private MultipartFile bThumb;
-	/*--평점,추천--*/
+	/*--평점,추천,신고--*/
 	private double grade;
 	private double gradeavg;
-
+	private String reason;
+	
 	public BoardVO() {
 
 	}
 	
 	
+	public String getReason() {
+		return reason;
+	}
+
+
+	public void setReason(String reason) {
+		this.reason = reason;
+	}
+
+
 	public double getGradeavg() {
 		return gradeavg;
 	}
