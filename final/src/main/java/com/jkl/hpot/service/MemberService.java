@@ -14,7 +14,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jkl.hpot.dao.BoardDAO;
 import com.jkl.hpot.dao.MemberDAO;
+import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.MemberVO;
 
 @Service
@@ -22,6 +24,9 @@ public class MemberService {
 
 	@Autowired
 	private MemberDAO mdao;
+	
+	@Autowired
+	private BoardDAO bdao;
 
 	private ModelAndView mav;
 
@@ -285,6 +290,25 @@ public class MemberService {
 		} else {
 			response.getWriter().print("0");	
 		}
+	}
+	
+	public ModelAndView following(MemberVO memberVO) {
+		mav = new ModelAndView();
+		//팔로우중인 사람들 리스트 불러오기
+		/*List<MemberVO> mv = mdao.followingList(memberVO);
+		List<BoardVO> bv = mdao.followingList(memberVO);
+		List<List<BoardVO>> st = new ArrayList<ArrayList<BoardVO>>();
+		
+		for(MemberVO fl : mv) {
+			st.add(bdao.getfollowingBoard(fl.getId()));
+			String fId = fl.getFollowId();
+			bv.add();
+		}
+		
+		mav.addObject("followingList", mv);*/
+		mav.addObject("idInfo", memberVO.getId());
+		mav.setViewName("followingList");
+		return mav;
 	}
 
 }

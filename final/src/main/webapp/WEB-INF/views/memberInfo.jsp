@@ -140,7 +140,7 @@ tr{
 											<input type = "hidden" name="id" value = "${info.id}">
 										</form>
 										<br>
-										<form action="myBoard?idInfo=${info.id}" method="post">
+										<form action="following?id=${info.id}" method="post">
 											<button class="btn btn-lg btn-warning btn-block" value = "${info.id}"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 팔로우 중인 사람들</button>
 											<input type = "hidden" name="id" value = "${info.id}">
 										</form>

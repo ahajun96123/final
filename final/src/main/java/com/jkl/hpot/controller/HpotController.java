@@ -89,6 +89,14 @@ public class HpotController {
 	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
 		bs.bookMark(bNum, response, session);
 	}
+	@RequestMapping(value = "/following", method = RequestMethod.POST)
+	public ModelAndView follwing(@RequestParam("id") String id) {
+		mav = new ModelAndView();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		mav = ms.following(memberVO);
+		return mav;
+	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();

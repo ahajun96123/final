@@ -164,7 +164,7 @@
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
 					<script>
 					// 이미지 지도에서 마커가 표시될 위치입니다 
-					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk}); 
+					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk});
 
 					// 이미지 지도에 표시할 마커입니다
 					// 이미지 지도에 표시할 마커는 Object 형태입니다
