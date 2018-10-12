@@ -147,4 +147,22 @@
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->
+	<insert id="boardGrade" parameterType="board">
+		INSERT INTO GRADE VALUES(#{id}, #{bNum}, #{grade})
+	</insert>
+	<select id="boardGradeAvg" parameterType="board" resultType="board">
+		SELECT AVG(GRADE) AS grade FROM GRADE WHERE BNUM=#{bNum}
+	</select>
+	<update id="boardGradeUpdate" parameterType="board">
+		UPDATE BOARD SET BGRADE=#{gradeavg} WHERE BNUM=#{bNum}
+	</update>
+	<select id="boardGradeCheck" parameterType="board" resultType="board">
+		SELECT * FROM GRADE WHERE BNUM=#{bNum} AND ID=#{id}
+	</select>
+	<select id="listBestCateCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich} AND BCATEGORY=#{bCategory} AND BREADCOUNT<![CDATA[ > ]]>9
+	</select>
+	<select id="listBestCount" resultType="int">
+		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich} AND BREADCOUNT<![CDATA[ > ]]>9
+	</select>
 </mapper>

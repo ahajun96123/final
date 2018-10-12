@@ -438,6 +438,7 @@ public class HpotController {
 	public ModelAndView boardView(HttpServletRequest request, @ModelAttribute BoardVO boardVO, @ModelAttribute CommentVO commentVO) {
 		mav = new ModelAndView();
 		int view = Integer.parseInt(request.getParameter("bNum"));
+		boardVO.setId(request.getParameter("id"));
 		boardVO.setbNum(view);
 		commentVO.setbNum(view);
 		mav = bs.boardView(boardVO,commentVO);
@@ -469,13 +470,13 @@ public class HpotController {
 	@RequestMapping(value = "/boardComment", method = RequestMethod.POST)
 	public String boardComment(HttpServletRequest request, @ModelAttribute CommentVO commentVO) {
 		bs.boardComment(commentVO);
-		return "redirect:/boardView?bNum=" + commentVO.getbNum();
+		return "redirect:/boardView?bNum="+commentVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 	
 	@RequestMapping(value = "/boardModify", method = RequestMethod.POST)
 	public String boardModify(@ModelAttribute BoardVO boardVO) {
 		bs.boardModify(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum();
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 	
 	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
@@ -486,4 +487,11 @@ public class HpotController {
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/boardGrade", method = RequestMethod.POST)
+	public String boardGrade(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardGrade(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
+
 }
