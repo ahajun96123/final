@@ -49,24 +49,6 @@
 	}
 </script>
 <style>
-table, td {
-		margin-top: 10px;
-		margin-bottom : 5px;
-        border: 1px solid #444444;
-      }
-td{
-	width: 400px;
-	text-align:center;
-	
-}
-tr{
-	height: 100px;
-	
-}
-img{
-width: 400px;
-height: 100px
-}
       
 </style>
 </head>
@@ -77,12 +59,21 @@ height: 100px
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div>
-				<table>
+			<div style="width: 850px; float: left;">
+				<table class="table">
+					<thead class="thead-light">
+						<tr>
+							<th colspan="4" align="center">'${idInfo.idInfo}'님의 게시물</th>
+						</tr>
+						<tr>
+							<th>썸네일</th>
+							<th>제목</th>
+							<th>태그</th>
+							<th>등록일자</th>
+						</tr>
 					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
-							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일"></td>
-							<td><a href = "memberinfomation?id=${myBoardList.id}">${myBoardList.id}</a></td>
+							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
 							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
 							<td>${myBoardList.bDate}</td>
@@ -99,7 +90,7 @@ height: 100px
 				</table>
 				</c:if>
 				
-				<button onclick="goBack()">뒤로가기</button>
+				<button class="btn btn-lg btn-primary btn-block" onclick="goBack()">뒤로가기</button>
 			</div>
 		</div>
 	</div>

@@ -51,7 +51,7 @@
 		if (loginCheck == null || loginCheck == "") {
 			alert("로그인을 해주세요.");
 		} else {
-			if (loginCheck == idCheck) {
+			if (loginCheck == idCheck || loginCheck=="admin") {
 				location.href = "boardDelete?bNum=" + num + "&which=" + which;
 			} else {
 				alert("잘못된 요청입니다. (아이디 불일치)");
@@ -86,11 +86,25 @@
 				<table class="table table-bordered" style="width: 850px;">
 					<tr>
 						<th>[${view.bCategory }]</th>
-						<td colspan="6">${view.bSubject}&nbsp;&nbsp;
-						<c:if test="${commentcount > 1}">
-							<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+						<c:if test="${view.id != sessionScope.id }">
+							<td colspan="5">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 1}">
+								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+							<td>
+								<div>
+									<input type="button" id="bookBtn" class="btn btn-info" onclick="bookMark()" value="북마크" />
+								</div>
+							</td>
 						</c:if>
-						<span style="color: blue">${view.bTag}</span></td>
+						<c:if test="${view.id == sessionScope.id }">
+							<td colspan="6">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 1}">
+								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+						</c:if>
 						<td>
 							<div>
 								<input type="button" id="followBtn" class="btn btn-primary" onclick="follow()" value="팔로우" />
@@ -101,7 +115,7 @@
 						<th>작성자</th>
 						<td>
 							<div>
-								<a style="color: #FF895A" href="memberInfo?id=${view.id }">${view.id}</a>
+								<a style="color: #FF895A" href="memberinfomation?idInfo=${view.id }">${view.id}</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -197,9 +211,36 @@
 			}
 		});
 	}
+	function bookMark() {
+		if(${sessionScope.id == null}){
+			alert('로그인을 해주세요');
+			return false;
+		}
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookMark",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-info");
+					$('#bookBtn').val('북마크');
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
 </script>
 <script>
-window.onload=ifFollow();
+window.onload=ifFollow(), ifBookMark();
 function ifFollow(){
 	if(${sessionScope.id == null}){
 		return false;
@@ -234,6 +275,31 @@ function ifFollow(){
 				} else {
 					alert("이 아이디는 사용할 수 없습니다.");
 				} */
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
+}
+function ifBookMark(){
+	if(${sessionScope.id == null}){
+		return false;
+	} else{
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookCheck",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				}
 			},
 			error : function(request, status, error) {
 				alert("code:" + request.status + "\n" + "error:" + error);

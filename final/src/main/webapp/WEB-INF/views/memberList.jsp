@@ -63,27 +63,49 @@
 </script>
 </head>
 <body>
-	<table>
-		<c:forEach items="${list}" var="list">
-			<tr>
-				<td>${list.id}</td>
-				<td>${list.name}</td>
-				<td>${list.age}</td>
-				<td>${list.email}</td>
-				<td>${list.address}</td>
-				<td>${list.gender}</td>
-				<td><c:choose>
-						<c:when test="${list.id=='admin'}">
-							<b>관리자</b>
-						</c:when>
-						<c:otherwise>
-							<a href="memberdelete?id=${list.id}"
-								onclick="return confirm('경고! 회원 정보를 삭제하시겠습니까?');">삭제</a>
-						</c:otherwise>
-					</c:choose></td>
-			</tr>
-		</c:forEach>
-	</table>
-	<button onclick="goBack()">뒤로가기</button>
+	<div class=container>
+		<%@include file="./topui.jsp"%>
+		<div style="width: 1130px; height: 990px;">
+			<div style="width: 260px; height: 100%; float: left;">
+				<%@include file="./sidebar.jsp"%>
+			</div>
+			<div style="width: 850px;float: left;">
+			<br>
+			<a style = "font-size: 30px; font-weight: bold;">회원관리</a>
+				<table class="table table-hover" style = "margin-top: 20px;">
+					<thead class="thead-light">
+						<tr>
+							<th>회원 ID</th>
+							<th>회원 성함</th>
+							<th>회원 나이</th>
+							<th>회원 이메일</th>
+							<th>회원 주소</th>
+							<th>회원 성별</th>
+							<th>삭제 기능</th>
+						</tr>
+					<c:forEach items="${list}" var="list">
+						<tr>
+							<td><a href = "MI?id=${list.id}">${list.id}</a></td>
+							<td>${list.name}</td>
+							<td>${list.age}</td>
+							<td>${list.email}</td>
+							<td>${list.address}</td>
+							<td>${list.gender}</td>
+							<td><c:choose>
+									<c:when test="${list.id=='admin'}">
+										<b>관리자</b>
+									</c:when>
+									<c:otherwise>
+										<a href="memberdelete?id=${list.id}"
+											onclick="return confirm('경고! 회원 정보를 삭제하시겠습니까?');">삭제</a>
+									</c:otherwise>
+								</c:choose></td>
+						</tr>
+					</c:forEach>
+				</table>
+				<button class="btn btn-lg btn-primary btn-block" onclick="goBack()">뒤로가기</button>
+			</div>
+		</div>
+	</div>
 </body>
 </html>

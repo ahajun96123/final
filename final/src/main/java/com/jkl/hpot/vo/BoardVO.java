@@ -28,9 +28,18 @@ public class BoardVO {
 	private String searchValue;
 	private MultipartFile bThumb;
 	private String bThumbname;
+	private String idInfo;
 
 	public BoardVO() {
 
+	}
+
+	public String getIdInfo() {
+		return idInfo;
+	}
+
+	public void setIdInfo(String idInfo) {
+		this.idInfo = idInfo;
 	}
 
 	public MultipartFile getbThumb() {

@@ -20,9 +20,7 @@
 <script src="plugins/lang/summernote-ko-KR.js"></script>
 
 
-<script type="text/javascript">
-	
-</script>
+<script type="text/javascript"></script>
 </head>
 <body>
 	<script type="text/javascript">
@@ -183,6 +181,11 @@
 					</td>
 				</tr>
 			</table>
+			<c:choose>
+				<c:when test="${which eq '음식'}">
+					<%@include file="./map.jsp"%>
+				</c:when>
+			</c:choose>
 		</form>
 		<div id="imageBoard">
 			<ul>

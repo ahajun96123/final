@@ -147,4 +147,13 @@
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
 	</insert> -->
+	<select id="ifBooked" parameterType="board" resultType="board">
+		SELECT * FROM BOOK WHERE id = #{id} AND bNum = #{bNum}
+	</select>
+	<insert id="book" parameterType="board">
+		INSERT INTO BOOK VALUES(#{id}, #{bNum})
+	</insert>
+	<delete id="deleteBooked" parameterType="board">
+		DELETE FROM BOOK WHERE id = #{id} AND bNum = #{bNum}
+	</delete>
 </mapper>

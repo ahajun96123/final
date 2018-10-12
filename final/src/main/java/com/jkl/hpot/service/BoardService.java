@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import com.jkl.hpot.repository.FileRepository;
 import com.jkl.hpot.util.UploadFileUtils;
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
+import com.jkl.hpot.vo.MemberVO;
 import com.jkl.hpot.vo.PageInfo;
 
 
@@ -212,8 +214,52 @@ public class BoardService {
 		mav = new ModelAndView();
 		List<BoardVO> BV = boardDAO.myBoard(boardVO);
 		mav.addObject("myBoardList", BV);
+		mav.addObject("idInfo", boardVO);
 		mav.setViewName("myBoardList");
 		return mav;
+	}
+
+	
+	public void bookCheck(int bNum, HttpServletResponse response, HttpSession session2) throws IOException {
+		boardVO = new BoardVO();
+		boardVO.setbNum(bNum);
+		String id = (String) session.getAttribute("id");
+		boardVO.setId(id);
+		/*북마크 여부 확인*/
+		/*안되어있으면*/
+		if(boardDAO.ifBooked(boardVO)==null) {
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			response.getWriter().print("0");	
+		}
+		
+	}
+
+	public void bookMark(int bNum, HttpServletResponse response, HttpSession session2) throws IOException {
+		System.out.println("follow아이디 : " + bNum);
+		boardVO = new BoardVO();
+		boardVO.setbNum(bNum);
+		String id = (String) session.getAttribute("id");
+		boardVO.setId(id);
+		/*북마크 여부 확인*/
+		/*안되어있으면*/
+		if(boardDAO.ifBooked(boardVO)==null) {
+			/*북마크하고*/
+			boardDAO.book(boardVO);
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			/*북마크 취소(삭제)*/
+			boardDAO.deleteBooked(boardVO);
+			response.getWriter().print("0");	
+		}
 	}
 	
 }
