@@ -404,9 +404,11 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO,
+	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
-	      response.setContentType("text/html;charset=UTF-8");
+	    System.out.println("위도 넘어오냐?? : "+mapu);
+	    System.out.println("경도 넘어오냐?? : "+mapk);
+		response.setContentType("text/html;charset=UTF-8");
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();
 	         ServletContext context = request.getServletContext();
@@ -431,6 +433,8 @@ public class HpotController {
 	      }
 	      System.out.println(
 	            "작성내용:" + boardVO.getbThumb() + "/" + boardVO.getbCategory() + "/" + boardVO.getbThumbname());
+	      boardVO.setMapu(mapu);
+	      boardVO.setMapk(mapk);
 	      bs.boardWrite(boardVO);
 	      String which = URLEncoder.encode(boardVO.getbWhich(), "UTF-8");
 	      return "redirect:/boardList?which=" + which;
@@ -446,6 +450,7 @@ public class HpotController {
 	public ModelAndView boardView(HttpServletRequest request, @ModelAttribute BoardVO boardVO, @ModelAttribute CommentVO commentVO) {
 		mav = new ModelAndView();
 		int view = Integer.parseInt(request.getParameter("bNum"));
+		boardVO.setId(request.getParameter("id"));
 		boardVO.setbNum(view);
 		commentVO.setbNum(view);
 		mav = bs.boardView(boardVO,commentVO);
@@ -477,13 +482,13 @@ public class HpotController {
 	@RequestMapping(value = "/boardComment", method = RequestMethod.POST)
 	public String boardComment(HttpServletRequest request, @ModelAttribute CommentVO commentVO) {
 		bs.boardComment(commentVO);
-		return "redirect:/boardView?bNum=" + commentVO.getbNum();
+		return "redirect:/boardView?bNum="+commentVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 	
 	@RequestMapping(value = "/boardModify", method = RequestMethod.POST)
 	public String boardModify(@ModelAttribute BoardVO boardVO) {
 		bs.boardModify(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum();
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
 	
 	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
@@ -495,4 +500,11 @@ public class HpotController {
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}
+	
+	@RequestMapping(value = "/boardGrade", method = RequestMethod.POST)
+	public String boardGrade(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardGrade(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
+
 }

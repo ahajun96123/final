@@ -11,8 +11,10 @@
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 
 <!-- ajax -->
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.min.js"></script>
-<script type="text/javascript" src="http://code.jquery.com/jquery-latest.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.min.js"></script>
+<script type="text/javascript"
+	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -64,10 +66,19 @@
 			alert("로그인을 해주세요.");
 		} else {
 			if (loginCheck == idCheck) {
-				location.href = "boardModify?bNum=" + num
+				location.href = "modifyForm?bNum=" + num
 			} else {
 				alert("잘못된 요청입니다. (아이디 불일치)");
 			}
+		}
+	}
+	
+	function GradeCheck() {
+		var grade = document.getElementById("grade").value;	
+		if(grade > 1 && grade < 5) {
+			document.getElementById("gradeForm").submit();
+		}else{
+			alert("1.0~5.0 사이의 평점으로 등록해주세요.")
 		}
 	}
 </script>
@@ -107,7 +118,8 @@
 						</c:if>
 						<td>
 							<div>
-								<input type="button" id="followBtn" class="btn btn-primary" onclick="follow()" value="팔로우" />
+								<input type="button" id="followBtn" class="btn btn-primary"
+									onclick="follow()" value="팔로우" />
 							</div>
 						</td>
 					</tr>
@@ -139,12 +151,55 @@
 							<td colspan="7"><a href="${view.bUrl}">${view.bUrl}</a></td>
 						</tr>
 					</c:if>
+					
 					<tr>
 						<td colspan="8" rowspan="10"><img
-							src="img/${view.bThumbname}" style="width: 300px; height:auto;">${view.bContent}</td>
+							src="img/${view.bThumbname}" style="width: 300px; height: auto;">${view.bContent}</td>
 					</tr>
 				</table>
+				<c:if test="${view.bWhich eq '음식'}">
+						<!-- 이미지 지도를 표시할 div 입니다 -->
+					<div id="staticMap" style="width:600px;height:350px;"></div>    
+
+					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
+					<script>
+					// 이미지 지도에서 마커가 표시될 위치입니다 
+					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk}); 
+
+					// 이미지 지도에 표시할 마커입니다
+					// 이미지 지도에 표시할 마커는 Object 형태입니다
+					var marker = {
+    					position: markerPosition
+					};
+
+					var staticMapContainer  = document.getElementById('staticMap'), // 이미지 지도를 표시할 div  
+    				staticMapOption = { 
+        			center: new daum.maps.LatLng(${view.mapu}, ${view.mapk}), // 이미지 지도의 중심좌표
+        			level: 3, // 이미지 지도의 확대 레벨
+        			marker: marker // 이미지 지도에 표시할 마커 
+    				};    
+
+					// 이미지 지도를 생성합니다
+					var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
+					</script>
+					</c:if>
 				<div class="btn-group" style="float: right">
+					<c:choose>
+						<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
+							<c:if test="${sessionScope.id ne view.id}">
+								<c:if test="${gradeValue == null}">
+									<button class="btn btn-success" data-toggle="modal"
+										data-target="#Grade">평점 매기기</button>
+								</c:if>
+								<c:if test="${gradeValue != null}">
+									<button class="btn btn-secondary" data-target="#Grade" disabled="disabled">(${gradeValue.grade}점)평점주기 완료</button>
+								</c:if>
+							</c:if>
+						</c:when>
+						<c:otherwise>
+							<button class="btn btn-success" type="button" onclick="boardLike">추천</button>
+						</c:otherwise>
+					</c:choose>
 					<c:if test="${sessionScope.id == view.id}">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
@@ -155,10 +210,11 @@
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
 				</div>
 				<div style="height: 30px"></div>
-				<span style="color:#aaaaaa">Total ${commentcount} Comments ─────────</span>
+				<span style="color: #aaaaaa">Total ${commentcount} Comments
+					─────────</span>
 				<div>
 					<c:forEach var="comment" items="${commentList}">
-						<div class="border border-muted" style="padding:15px;">
+						<div class="border border-muted" style="padding: 15px;">
 							<div>
 								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
 							</div>
@@ -177,6 +233,34 @@
 						<input type="hidden" name="bNum" value="${view.bNum}"> <input
 							type="hidden" name="id" value="${view.id}">
 						<button class="input-group-text" type="submit">댓글등록</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<!-- The Modal -->
+	<div class="modal fade" id="Grade">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">평점 매기기</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardGrade" method="post" id="gradeForm">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span> <input
+							type="hidden" name="id" value="${sessionScope.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}"> <input
+							type="text" name="grade" class="form-control"
+							placeholder="평점범위 : 1.0~5.0" id="grade">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-dark" type="button" onclick="GradeCheck()">등록</button>
 					</div>
 				</form>
 			</div>

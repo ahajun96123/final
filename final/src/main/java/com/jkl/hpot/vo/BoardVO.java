@@ -5,6 +5,7 @@ import java.sql.Date;
 import org.springframework.web.multipart.MultipartFile;
 
 public class BoardVO {
+	/*--Board--*/
 	private String id;
 	private int bNum;
 	private String bSubject;
@@ -19,20 +20,48 @@ public class BoardVO {
 	private String bCategory;
 	private String bWhich;
 	private int bBlind;
+	private String column;
+	private String bThumbname;
+	/*--페이징 외--*/
 	private int start;
 	private int end;
 	private int inCate;
 	private int inArray;
 	private int inSearch;
-	private String column;
 	private String searchValue;
 	private MultipartFile bThumb;
-	private String bThumbname;
 	private String idInfo;
+	/*map 위도, 경도*/
+	private String mapu;
+	private String mapk;
+	/*--평점,추천--*/
+	private double grade;
+	private double gradeavg;
 
 	public BoardVO() {
 
 	}
+	
+	
+	public double getGradeavg() {
+		return gradeavg;
+	}
+
+
+	public void setGradeavg(double gradeavg) {
+		this.gradeavg = gradeavg;
+	}
+
+
+	public double getGrade() {
+		return grade;
+	}
+
+
+	public void setGrade(double grade) {
+		this.grade = grade;
+	}
+
 
 	public String getIdInfo() {
 		return idInfo;
@@ -224,6 +253,22 @@ public class BoardVO {
 
 	public void setbBlind(int bBlind) {
 		this.bBlind = bBlind;
+	}
+
+	public String getMapu() {
+		return mapu;
+	}
+
+	public void setMapu(String mapu) {
+		this.mapu = mapu;
+	}
+
+	public String getMapk() {
+		return mapk;
+	}
+
+	public void setMapk(String mapk) {
+		this.mapk = mapk;
 	}
 
 }

@@ -50,7 +50,12 @@ var arrayCheck = "${array}"
 var searchPage = "${search}"
 var arrayValue = null;
 var loginCheck = "<%=session.getAttribute("id")%>";
-	
+
+
+$(document).ready(function(){
+    $('[data-toggle="popover"]').popover();   
+});
+
 function postCheck() {
 	if(loginCheck=="null" || loginCheck==""){
 		alert("로그인을 해주세요.")
@@ -208,7 +213,7 @@ function postCheck() {
 									<td><c:choose>
 											<c:when test="${which eq '음식'}">
 												<div class="card" id="card"
-													style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
+													style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8;box-shadow:6px 6px 10px 0px gray;">
 													<div>
 														<div style="border-bottom: 1px solid gray;">
 															<span
@@ -226,10 +231,10 @@ function postCheck() {
 															</c:choose>
 														</div>
 														<div class="videoplay">
-															<img class="btn-img-rounded" alt="Cinque Terre"
+															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
 																src="img/${board.bThumbname}"
 																style="width: 218px; height: 140px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}'">
+																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 															<div>
 																<div
 																	style="border-top: 1px solid gray; font-size: 12px;">
@@ -264,10 +269,10 @@ function postCheck() {
 															</c:choose>
 														</div>
 														<div class="videoplay">
-															<img class="btn-img-rounded" alt="Cinque Terre"
+															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
 																src="img/${board.bThumbname}"
 																style="width: 218px; height: 280px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}'">
+																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 															<div>
 																<div
 																	style="border-top: 1px solid gray; font-size: 12px;">
@@ -302,7 +307,7 @@ function postCheck() {
 								<c:forEach var="board" items="${boardList}">
 									<tr>
 										<td style="color: #FF895A">${board.id}</td>
-										<td><a href="boardView?bNum=${board.bNum}">${board.bSubject }</a></td>
+										<td><a href="boardView?bNum=${board.bNum}&id=${sessionScope.id}">${board.bSubject }</a></td>
 										<td style="color: #28C28">${board.bLikecount}</td>
 										<td>${board.bReadcount }</td>
 										<td>${board.bDate }</td>
