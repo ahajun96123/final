@@ -21,7 +21,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=1">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -212,80 +212,110 @@ function postCheck() {
 									</c:if>
 									<td><c:choose>
 											<c:when test="${which eq '음식'}">
-												<div class="card" id="card"
-													style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8;box-shadow:6px 6px 10px 0px gray;">
-													<div>
-														<div style="border-bottom: 1px solid gray;">
-															<span
-																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
-															<c:choose>
-																<c:when test="${fn:length(board.bSubject) > 14}">
-																	<span style="font-size: 12px;">&nbsp;<c:out
-																			value="${fn:substring(board.bSubject,0,13)}" />...
-																	</span>
-																</c:when>	
-																<c:otherwise>
-																	<span style="font-size: 12px;"><c:out
-																			value="${board.bSubject}" /></span>
-																</c:otherwise>
-															</c:choose>
+												<c:choose>
+													<c:when test="${board.bBlind==1}">
+														<div class="card" id="card"
+															style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+															<span style="margin: 10px;">다수의 신고로 인해 블라인드 처리
+																되었습니다.</span> <img src="img/honeypot3.png"
+																style="height: 100px; width: 180px; margin: auto;">
 														</div>
-														<div class="videoplay">
-															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
-																src="img/${board.bThumbname}"
-																style="width: 218px; height: 140px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
+													</c:when>
+													<c:otherwise>
+														<div class="card" id="card"
+															style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<div>
-																<div
-																	style="border-top: 1px solid gray; font-size: 12px;">
-																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
+																<div style="border-bottom: 1px solid gray;">
+																	<span
+																		style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																	<c:choose>
+																		<c:when test="${fn:length(board.bSubject) > 14}">
+																			<span style="font-size: 12px;">&nbsp;<c:out
+																					value="${fn:substring(board.bSubject,0,13)}" />...
+																			</span>
+																		</c:when>
+																		<c:otherwise>
+																			<span style="font-size: 12px;"><c:out
+																					value="${board.bSubject}" /></span>
+																		</c:otherwise>
+																	</c:choose>
 																</div>
-																<div>
-																	<span style="color: #6478FF;font-size: 12px;">${board.bTag}</span>
+																<div class="videoplay">
+																	<img class="btn-img-rounded" data-toggle="popover"
+																		data-trigger="hover"
+																		data-content="${fn:substring(board.bContent,0,20)}..."
+																		src="img/${board.bThumbname}"
+																		style="width: 218px; height: 140px; margin: auto"
+																		onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
+																	<div>
+																		<div
+																			style="border-top: 1px solid gray; font-size: 12px;">
+																			<span style="color: #FF9614">평점
+																				${board.bGrade}</span> <span class="text-info">조회
+																				${board.bReadcount}</span> <span>${board.bDate}</span>
+																		</div>
+																		<div>
+																			<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</div>
+													</c:otherwise>
+												</c:choose>
 											</c:when>
 											<c:otherwise>
-												<div class="card" id="card"
-													style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
-													<div>
-														<div style="border-bottom: 1px solid gray;">
-															<span
-																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
-															<c:choose>
-																<c:when test="${fn:length(board.bSubject) > 14}">
-																	<span style="font-size: 12px;">&nbsp;<c:out
-																			value="${fn:substring(board.bSubject,0,13)}" />...
-																	</span>
-																</c:when>	
-																<c:otherwise>
-																	<span style="font-size: 12px;"><c:out
-																			value="${board.bSubject}" /></span>
-																</c:otherwise>
-															</c:choose>
+												<c:choose>
+													<c:when test="${board.bBlind==1}">
+														<div class="card" id="card"
+															style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+															<span style="margin: 10px;">다수의 신고로 인해 블라인드 처리
+																되었습니다.</span> <img src="img/honeypot3.png"
+																style="height: 100px; width: 180px; margin: auto;">
 														</div>
-														<div class="videoplay">
-															<img class="btn-img-rounded" data-toggle="popover" data-trigger="hover" data-content="${fn:substring(board.bContent,0,20)}..."
-																src="img/${board.bThumbname}"
-																style="width: 218px; height: 280px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
+													</c:when>
+													<c:otherwise>
+														<div class="card" id="card"
+															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
 															<div>
-																<div
-																	style="border-top: 1px solid gray; font-size: 12px;">
-																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
+																<div style="border-bottom: 1px solid gray;">
+																	<span
+																		style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																	<c:choose>
+																		<c:when test="${fn:length(board.bSubject) > 14}">
+																			<span style="font-size: 12px;">&nbsp;<c:out
+																					value="${fn:substring(board.bSubject,0,13)}" />...
+																			</span>
+																		</c:when>
+																		<c:otherwise>
+																			<span style="font-size: 12px;"><c:out
+																					value="${board.bSubject}" /></span>
+																		</c:otherwise>
+																	</c:choose>
 																</div>
-																<div>
-																	<span style="color: #6478FF;font-size: 12px;">${board.bTag}</span>
+																<div class="videoplay">
+																	<img class="btn-img-rounded" data-toggle="popover"
+																		data-trigger="hover"
+																		data-content="${fn:substring(board.bContent,0,20)}..."
+																		src="img/${board.bThumbname}"
+																		style="width: 218px; height: 280px; margin: auto"
+																		onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
+																	<div>
+																		<div
+																			style="border-top: 1px solid gray; font-size: 12px;">
+																			<span style="color: #FF9614">평점
+																				${board.bGrade}</span> <span class="text-info">조회
+																				${board.bReadcount}</span> <span>${board.bDate}</span>
+																		</div>
+																		<div>
+																			<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																		</div>
+																	</div>
 																</div>
 															</div>
 														</div>
-													</div>
-												</div>
+													</c:otherwise>
+												</c:choose>
 											</c:otherwise>
 										</c:choose>
 									<td><c:if test="${i%j == j-1 }">
@@ -305,15 +335,24 @@ function postCheck() {
 									<th>태그</th>
 								</tr>
 								<c:forEach var="board" items="${boardList}">
-									<tr>
-										<td style="color: #FF895A">${board.id}</td>
-										<td><a href="boardView?bNum=${board.bNum}&id=${sessionScope.id}">${board.bSubject }</a></td>
-										<td style="color: #28C28">${board.bLikecount}</td>
-										<td>${board.bReadcount }</td>
-										<td>${board.bDate }</td>
-										<td style="color: #6478FF">${board.bTag}</td>
-									</tr>
+									<c:choose>
+										<c:when test="${board.bBlind==1}">
+											<td colspan="6">다수의 신고로 인해 블라인드 처리 되었습니다.</td>
+										</c:when>
+										<c:otherwise>
+											<tr>
+												<td style="color: #FF895A">${board.id}</td>
+												<td><a
+													href="boardView?bNum=${board.bNum}&id=${sessionScope.id}">${board.bSubject }</a></td>
+												<td style="color: #28C28">${board.bLikecount}</td>
+												<td>${board.bReadcount }</td>
+												<td>${board.bDate }</td>
+												<td style="color: #6478FF">${board.bTag}</td>
+											</tr>
+										</c:otherwise>
+									</c:choose>
 								</c:forEach>
+
 							</table>
 						</c:otherwise>
 					</c:choose>

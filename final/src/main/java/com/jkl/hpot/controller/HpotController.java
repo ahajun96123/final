@@ -514,5 +514,16 @@ public class HpotController {
 		bs.boardGrade(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
+	
+	@RequestMapping(value = "/boardLike", method = RequestMethod.POST)
+	public String boardLike(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardLike(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
 
+	@RequestMapping(value = "/boardReport", method = RequestMethod.POST)
+	public String boardReport(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardReport(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
 }

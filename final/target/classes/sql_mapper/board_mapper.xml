@@ -128,9 +128,6 @@
 	<delete id="boardDelete" parameterType="board">
 		DELETE FROM BOARD WHERE BNUM=#{bNum}
 	</delete>
-	<update id="maxNumUpdate" parameterType="board">
-		UPDATE BOARD SET BNUM = BNUM-1 WHERE BNUM<![CDATA[ > ]]>#{bNum}
-	</update>
 	<insert id="boardComment" parameterType="comment">
 		INSERT INTO COMMENTS
 		VALUES(#{id}, #{bNum}, #{cContent}, SYSDATE)
@@ -173,5 +170,32 @@
 	</select>
 	<select id="listBestCount" resultType="int">
 		SELECT COUNT(*) FROM BOARD WHERE BWHICH=#{bWhich} AND BREADCOUNT<![CDATA[ > ]]>9
+	</select>
+	<select id="gradeCount" resultType="int">
+		SELECT COUNT(*) FROM GRADE WHERE BNUM=#{bNum}
+	</select>
+	<insert id="boardLike" parameterType="board">
+		INSERT INTO LIKED VALUES(#{id}, #{bNum})
+	</insert>
+	<update id="boardLikeUpdate" parameterType="board">
+		UPDATE BOARD SET BLIKECOUNT=BLIKECOUNT+1 WHERE BNUM=#{bNum}
+	</update>
+	<select id="boardLikeCheck" parameterType="board" resultType="board">
+		SELECT * FROM LIKED WHERE BNUM=#{bNum} AND ID=#{id}
+	</select>
+	<insert id="boardReport" parameterType="board">
+		INSERT INTO REPORT VALUES(#{id}, #{bNum}, #{reason})
+	</insert>
+	<update id="boardReportUpdate" parameterType="board">
+		UPDATE BOARD SET BREPORTCOUNT=BREPORTCOUNT+1 WHERE BNUM=#{bNum}
+	</update>
+	<select id="reportCount" resultType="int">
+		SELECT COUNT(*) FROM REPORT WHERE BNUM=#{bNum}
+	</select>
+	<update id="boardBlindUpdate" parameterType="board">
+		UPDATE BOARD SET BBLIND=1 WHERE BNUM=#{bNum}
+	</update>
+	<select id="boardReportCheck" parameterType="board" resultType="board">
+		SELECT * FROM REPORT WHERE BNUM=#{bNum} AND ID=#{id}
 	</select>
 </mapper>

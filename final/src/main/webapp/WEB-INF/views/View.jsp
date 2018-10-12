@@ -99,7 +99,7 @@
 						<th>[${view.bCategory }]</th>
 						<c:if test="${view.id != sessionScope.id }">
 							<td colspan="5">${view.bSubject}&nbsp;&nbsp;
-							<c:if test="${commentcount > 1}">
+							<c:if test="${commentcount > 0}">
 								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
 							</c:if>
 							<span style="color: blue">${view.bTag}</span></td>
@@ -137,7 +137,10 @@
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
 								<th>평점</th>
-								<td>${view.bGrade}</td>
+								<td>${view.bGrade}<c:if test="${gradeCount > 0}">
+										<span style="color: green">&nbsp;[평가수:&nbsp;${gradeCount}]</span>
+									</c:if>
+								</td>
 							</c:when>
 							<c:otherwise>
 								<th>추천</th>
@@ -153,8 +156,16 @@
 					</c:if>
 					
 					<tr>
-						<td colspan="8" rowspan="10"><img
-							src="img/${view.bThumbname}" style="width: 300px; height: auto;">${view.bContent}</td>
+						<c:choose>
+							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
+								<td colspan="8" rowspan="10"><img
+									src="img/${view.bThumbname}"
+									style="width: 300px; height: auto;">${view.bContent}</td>
+							</c:when>
+							<c:otherwise>
+								<td colspan="8" rowspan="10">${view.bContent}</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</table>
 				<c:if test="${view.bWhich eq '음식'}">
@@ -196,15 +207,26 @@
 								</c:if>
 							</c:if>
 						</c:when>
-						<c:otherwise>
-							<button class="btn btn-success" type="button" onclick="boardLike">추천</button>
-						</c:otherwise>
+						<c:when test="${view.bWhich eq '지름'}">
+							<c:if test="${sessionScope.id ne view.id}">
+								<c:if test="${likeValue == null}">
+									<button class="btn btn-success" data-toggle="modal"
+										data-target="#Like">추천</button>
+								</c:if>
+							</c:if>
+						</c:when>
 					</c:choose>
+					<c:if test="${sessionScope.id ne view.id}">
+								<c:if test="${reportValue == null}">
+									<button class="btn btn-danger" data-toggle="modal"
+										data-target="#Report">신고</button>
+								</c:if>
+							</c:if>
 					<c:if test="${sessionScope.id == view.id}">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
-						<button class="btn btn-warning" type="button"
-							onclick="DeleteCheck()">삭제</button>
+						<button class="btn btn-danger" data-toggle="modal"
+										data-target="#Delete">삭제</button>
 					</c:if>
 					<button class="btn btn-warning" type="button"
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
@@ -251,7 +273,7 @@
 				<form action="boardGrade" method="post" id="gradeForm">
 					<!-- Modal body -->
 					<div class="modal-body">
-						<span>한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span> <input
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span> <input
 							type="hidden" name="id" value="${sessionScope.id}"> <input
 							type="hidden" name="bNum" value="${view.bNum}"> <input
 							type="text" name="grade" class="form-control"
@@ -260,9 +282,83 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button class="btn btn-dark" type="button" onclick="GradeCheck()">등록</button>
+						<button class="btn btn-info" type="button" onclick="GradeCheck()">등록</button>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Like">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 추천</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardLike" method="post">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 추천은 취소가 불가능합니다.</span> <input
+							type="hidden" name="id" value="${sessionScope.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}">
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-info" type="submit">추천하기</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Report">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 신고</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardReport" method="post">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 신고는 취소가 불가능합니다.</span> 
+						<span>&nbsp;신고를 3회 이상 받은 게시물은 블라인드 처리됩니다.</span>
+						<input
+							type="hidden" name="id" value="${sessionScope.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}"> <input
+							type="text" name="reason" class="form-control"
+							placeholder="신고 사유를 적어주세요.">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" type="submit">신고</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Delete">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 삭제</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;게시물을 삭제 하시겠습니까?</span>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" type="button" onclick="DeleteCheck()">삭제</button>
+					</div>
 			</div>
 		</div>
 	</div>

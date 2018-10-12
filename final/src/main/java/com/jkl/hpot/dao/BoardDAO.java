@@ -23,11 +23,6 @@ public class BoardDAO {
 	}
 
 	public List<BoardVO> boardList(BoardVO boardVO) {
-		/*
-		 * Map<Object,Object>map = new HashMap<Object,Object>(); map.put("start",
-		 * pageInfo.getStart()); map.put("end", pageInfo.getEnd()); map.put("bWhich",
-		 * boardVO.getbWhich());
-		 */
 		System.out.println(boardVO.getStart());
 		System.out.println(boardVO.getEnd());
 		return sqlSession.selectList("Board.boardList", boardVO);
@@ -119,11 +114,6 @@ public class BoardDAO {
 		return sqlSession.delete("Board.boardDelete", boardVO);
 	}
 
-	public int maxNumUpdate(BoardVO boardVO) {
-		return sqlSession.update("Board.maxNumUpdate", boardVO);
-
-	}
-
 	public int boardComment(CommentVO commentVO) {
 		return sqlSession.insert("Board.boardComment", commentVO);
 	}
@@ -174,6 +164,41 @@ public class BoardDAO {
 	}
 	public int boardBestCateCount(BoardVO boardVO) {
 		return sqlSession.selectOne("Board.listBestCateCount", boardVO);
+	}
+
+	public int boardGradeCount(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.gradeCount", boardVO);
+	}
+
+	public int boardLike(BoardVO boardVO) {
+		return sqlSession.insert("Board.boardLike", boardVO);
+	}
+	public int boardLikeUpdate(BoardVO boardVO) {
+		return sqlSession.update("Board.boardLikeUpdate", boardVO);
+	}
+
+	public BoardVO boardLikeCheck(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardLikeCheck", boardVO);
+	}
+
+	public int boardReport(BoardVO boardVO) {
+		return sqlSession.insert("Board.boardReport", boardVO);
+	}
+
+	public int boardReportUpdate(BoardVO boardVO) {
+		return sqlSession.update("Board.boardReportUpdate", boardVO);
+	}
+
+	public int boardReportCount(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.reportCount", boardVO);
+	}
+
+	public int boardBlindUpdate(BoardVO boardVO) {
+		return sqlSession.update("Board.boardBlindUpdate", boardVO);
+	}
+
+	public BoardVO boardReportCheck(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardReportCheck", boardVO);
 	}
 	
 	/*public int imgUpload(UploadFile saveFile) {
