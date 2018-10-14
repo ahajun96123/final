@@ -90,11 +90,13 @@ public class HpotController {
 		bs.bookMark(bNum, response, session);
 	}
 	@RequestMapping(value = "/following", method = RequestMethod.POST)
-	public ModelAndView follwing(@RequestParam("id") String id) {
+	public ModelAndView follwing(@RequestParam("id") String id, HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
 		mav = ms.following(memberVO);
+		System.out.println("test123123123 : "+id);
 		return mav;
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })

@@ -276,7 +276,7 @@ function postCheck() {
 													</c:when>
 													<c:otherwise>
 														<div class="card" id="card"
-															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
+															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<div>
 																<div style="border-bottom: 1px solid gray;">
 																	<span
