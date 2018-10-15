@@ -172,7 +172,7 @@ public class BoardService {
 	public ModelAndView boardView(BoardVO boardVO, CommentVO commentVO) {
 	      mav = new ModelAndView();
 	      BoardVO viewBoard = boardDAO.boardView(boardVO);
-	      System.out.println(commentVO.getbNum());
+	      System.out.println("아ㅓ아아아아아아아아아아아아아ㅏ" + commentVO.getbNum());
 	      List<CommentVO> commentList = boardDAO.boardCommentList(commentVO);
 	      BoardVO result = boardDAO.boardGradeCheck(boardVO);
 	      System.out.println(result);

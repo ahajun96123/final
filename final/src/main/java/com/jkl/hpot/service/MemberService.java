@@ -83,7 +83,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		session.invalidate();
 		mav.addObject("logout", "로그아웃");
-		mav.setViewName("redirect:/login");
+		mav.setViewName("redirect:/main");
 		return mav;
 	}
 

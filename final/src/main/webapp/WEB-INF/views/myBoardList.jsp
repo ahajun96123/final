@@ -73,7 +73,7 @@
 						<tr>
 							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일"></td>
 							<td><a href = "memberinfomation?id=${myBoardList.id}">${myBoardList.id}</a></td>
-							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
+							<td><a href = "boardView?bNum=${myBoardList.bNum}&id=${myBoardList.id}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
 							<td>${myBoardList.bDate}</td>
 						</tr>

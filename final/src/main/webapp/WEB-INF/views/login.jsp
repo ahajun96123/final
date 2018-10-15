@@ -128,14 +128,11 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 	<c:if test="${msg != null}">
 		<script>
 			alert('${msg}');
-<<<<<<< HEAD
 			delete ${msg};
-=======
 			$
 			{
 				msg = null
 			};
->>>>>>> branch 'dev' of https://github.com/ahajun96123/final.git
 		</script>
 	</c:if>
 	<c:if test="${msg2 != null}">
@@ -252,8 +249,6 @@ alert('로그아웃후 뒤로가기가 가능합니다');
 
 				</div>
 				<br>
-				<button class="btn btn-lg btn-primary btn-block"
-					onclick="location.href='main'">비 로 그 인 접 속</button>
 			</div>
 		</div>
 

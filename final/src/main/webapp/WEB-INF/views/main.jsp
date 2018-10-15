@@ -88,6 +88,7 @@ function postCheck() {
 				<br> <b>채널(회원)</b> <br>
 				<div class="contentContainer"></div>
 				<br> <b>주제</b> <br>
+				
 				<div class="contentContainer"></div>
 				<br>
 			</div>

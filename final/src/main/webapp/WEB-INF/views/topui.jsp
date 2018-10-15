@@ -111,8 +111,7 @@
 			<li class="nav-item">
 				<div class="btn-group">
 					<c:if test="${sessionScope.id == null }">
-						<button class="btn btn-warning" onclick="location.href='login'">로그인</button>
-						<button id="myBtn" class="btn btn-info btn-block">회원가입</button>
+						<button class="btn btn-warning" onclick="location.href='login'">로그인/회원가입</button>
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">

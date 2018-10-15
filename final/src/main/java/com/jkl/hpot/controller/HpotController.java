@@ -136,7 +136,7 @@ public class HpotController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String start() {
 
-		return "login";
+		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -394,8 +394,6 @@ public class HpotController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
-	    System.out.println("위도 넘어오냐?? : "+mapu);
-	    System.out.println("경도 넘어오냐?? : "+mapk);
 		response.setContentType("text/html;charset=UTF-8");
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();
