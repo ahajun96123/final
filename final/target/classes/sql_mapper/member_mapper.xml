@@ -70,4 +70,7 @@
 	<delete id="deleteFollow" parameterType="member">
 		DELETE FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
 	</delete>
+	<select id="followingList" parameterType="member" resultType="member">
+		SELECT * FROM FOLLOW WHERE id=#{id}
+	</select>
 </mapper>

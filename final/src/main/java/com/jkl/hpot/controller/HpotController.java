@@ -89,6 +89,16 @@ public class HpotController {
 	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
 		bs.bookMark(bNum, response, session);
 	}
+	@RequestMapping(value = "/following", method = RequestMethod.POST)
+	public ModelAndView follwing(@RequestParam("id") String id, HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
+		mav = new ModelAndView();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		mav = ms.following(memberVO);
+		System.out.println("test123123123 : "+id);
+		return mav;
+	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -299,22 +309,23 @@ public class HpotController {
 	 * request.setAttribute("which", which); return "main"; }
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpSession session) {
-
+	public ModelAndView main(HttpServletRequest request, HttpSession session,@ModelAttribute BoardVO boardVO) {
+		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
 			
 		} else {
 			
 		}
-
+		boardVO.setId(id);
+		mav = bs.boardmain(boardVO);
 		String which = null;
 		request.setAttribute("which", which);
-		return "main";
+		return mav;
 	}
 
 	@RequestMapping(value = "/postCheck", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception {
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		String which = request.getParameter("which");

@@ -183,7 +183,9 @@ public class BoardService {
 	      if(viewBoard.getbWhich().equals("지름")) {
 	      	result = boardDAO.boardLikeCheck(boardVO);
 	      }
-	      boardDAO.boardReadCount(boardVO);
+	      if(!boardVO.getbCategory().equals("핫딜")) {
+	    	  boardDAO.boardReadCount(boardVO);
+	      }
 	      boardVO.setId(viewBoard.getId());
 	      boardVO.setbNum(viewBoard.getbNum());
 	      boardVO.setbCategory(viewBoard.getbCategory());
@@ -303,6 +305,19 @@ public class BoardService {
 				boardDAO.boardBlindUpdate(boardVO);
 			}
 		}
+	}
+
+	public ModelAndView boardmain(BoardVO boardVO) {
+		mav = new ModelAndView();
+		List<BoardVO> boardList = boardDAO.boardBest();
+		String category = boardDAO.boardFit(boardVO).getbCategory();
+		boardVO.setbCategory(category);
+		List<BoardVO> fitList = boardDAO.boardFitList(boardVO);
+		System.out.println(boardList.size());
+		mav.addObject("fitList", fitList);
+		mav.addObject("bestmain", boardList);
+		mav.setViewName("main");
+		return mav;
 	}
 	
 }

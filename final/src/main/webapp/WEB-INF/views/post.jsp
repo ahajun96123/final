@@ -157,7 +157,7 @@
 				<tr>
 					<th>내용</th>
 					<td><textarea name="bContent" style="display: none;"></textarea>
-						<div id="summernote">지역 & 출처 : </div></td>
+						<div id="summernote"></div></td>
 				</tr>
 				<tr>
 					<th>태그</th>

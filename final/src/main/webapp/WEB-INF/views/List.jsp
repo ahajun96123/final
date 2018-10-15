@@ -268,7 +268,7 @@ function postCheck() {
 												<c:choose>
 													<c:when test="${board.bBlind==1}">
 														<div class="card" id="card"
-															style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<span style="margin: 10px;">다수의 신고로 인해 블라인드 처리
 																되었습니다.</span> <img src="img/honeypot3.png"
 																style="height: 100px; width: 180px; margin: auto;">
@@ -276,7 +276,7 @@ function postCheck() {
 													</c:when>
 													<c:otherwise>
 														<div class="card" id="card"
-															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8">
+															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<div>
 																<div style="border-bottom: 1px solid gray;">
 																	<span
@@ -317,10 +317,11 @@ function postCheck() {
 													</c:otherwise>
 												</c:choose>
 											</c:otherwise>
-										</c:choose>
-									<td><c:if test="${i%j == j-1 }">
-											</tr>
-										</c:if> <c:set var="i" value="${i+1 }" />
+										</c:choose></td>
+									<c:if test="${i%j == j-1 }">
+										</tr>
+									</c:if>
+									<c:set var="i" value="${i+1 }" />
 								</c:forEach>
 							</table>
 						</c:when>

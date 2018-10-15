@@ -85,70 +85,38 @@
 .close:hover, .close:focus {
 	text-decoration: none;
 	cursor: pointer;
-}
+	}
 </style>
+
 <script type="text/javascript">
-if(${sessionScope.id != null}){
-alert('로그아웃후 뒤로가기가 가능합니다');
-	window.history.forward()
-
-	function noBack() {
-
+window.history.forward();
+	function noBack(){
 		window.history.forward();
-
 	}
-}
-	
 </script>
-<%
-if(session.getAttribute("id") != null){
-%>
-<script type="text/javascript">
-alert('로그아웃후 뒤로가기가 가능합니다');
-	window.history.forward();
-	console.log("sex");
-	function noBack() {
-
-		window.history.forward();
-
-	}
-
-	
-</script>
-<%
-}
-%>
 
 	
 
 
 </head>
 	
-<body>
+<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
 	<c:if test="${msg != null}">
 		<script>
 			alert('${msg}');
-<<<<<<< HEAD
-			delete ${msg};
-=======
 			$
 			{
 				msg = null
 			};
->>>>>>> branch 'dev' of https://github.com/ahajun96123/final.git
 		</script>
 	</c:if>
 	<c:if test="${msg2 != null}">
 		<script>
 			alert('${msg2}');
-<<<<<<< HEAD
-			delete ${msg2};
-=======
 			$
 			{
 				msg2 = null
 			};
->>>>>>> branch 'dev' of https://github.com/ahajun96123/final.git
 		</script>
 	</c:if>
 	<!-- Header - set the background image for the header in the line below -->

@@ -2,6 +2,7 @@ package com.jkl.hpot.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -14,7 +15,9 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.jkl.hpot.dao.BoardDAO;
 import com.jkl.hpot.dao.MemberDAO;
+import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.MemberVO;
 
 @Service
@@ -22,6 +25,9 @@ public class MemberService {
 
 	@Autowired
 	private MemberDAO mdao;
+	
+	@Autowired
+	private BoardDAO bdao;
 
 	private ModelAndView mav;
 
@@ -285,6 +291,28 @@ public class MemberService {
 		} else {
 			response.getWriter().print("0");	
 		}
+	}
+	
+	public ModelAndView following(MemberVO memberVO) {
+		mav = new ModelAndView();
+		//팔로우중인 사람들 리스트 불러오기
+		List<MemberVO> mv = mdao.followingList(memberVO);
+		List<BoardVO> bv = null;
+		List<List<BoardVO>> st = new ArrayList<List<BoardVO>>();
+		
+		System.out.println("설마 안들어감?");
+		for(MemberVO fl : mv) {
+			System.out.println("testid    :     "+fl.getFollowId());
+			bv = new ArrayList<BoardVO>();
+			bv = bdao.getfollowingBoard(fl.getFollowId());
+			st.add(bv);
+		}
+		
+		mav.addObject("followingList", mv);
+		mav.addObject("BoardList", st);
+		mav.addObject("idInfo", memberVO.getId());
+		mav.setViewName("followingList");
+		return mav;
 	}
 
 }
