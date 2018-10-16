@@ -164,10 +164,19 @@ public class HpotController {
 	/////////////////////////////////////////////////////// 영표////////////////////////////////////////////////////
 
 	@RequestMapping(value="/",method=RequestMethod.GET)
+	public ModelAndView first(HttpServletRequest request, HttpSession session, @ModelAttribute BoardVO boardVO) {
+		mav = new ModelAndView();
+		String id = (String) session.getAttribute("id");
+		if (id == null) {
 
-	public String start() {
+		} else {
 
-		return "main";
+		}
+		boardVO.setId(id);
+		mav = bs.boardmain(boardVO);
+		String which = null;
+		request.setAttribute("which", which);
+		return mav;
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
