@@ -178,7 +178,7 @@ function postCheck() {
 <body style="background-color: #dcdcdc">
 	<div class=container>
 		<%@include file="./topui.jsp"%>
-		<div style="width: 1110px; height: 1080px;">
+		<div style="width: 1110px; height: 1300px;">
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
