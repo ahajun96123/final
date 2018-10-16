@@ -7,7 +7,7 @@
 	<insert id="boardWrite" parameterType="board">
 		INSERT INTO BOARD
 		VALUES(#{id} , #{bNum}, #{bSubject}, #{bContent}, SYSDATE, #{bUrl}, 0,
-		#{bGrade}, 0, 0, #{bTag}, #{bCategory}, #{bWhich}, 0, #{bThumbname}, #{mapu}, #{mapk})
+		#{bGrade}, 0, 0, #{bTag}, #{bCategory}, #{bWhich}, 0, #{bThumbname}, #{mapu}, #{mapk})	
 	</insert>
 
 	<select id="boardList" parameterType="board" resultType="board">

@@ -187,11 +187,8 @@
 		<c:if test="${which eq '음식'}">
 			<%@include file="./map.jsp"%>
 		</c:if>
-		<div id="imageBoard">
+		<div id="imageBoard">	
 			<ul>
-				<c:forEach items="${files}" var="file">
-					<li><img src="/img/${file}" width="480" height="auto" /></li>
-				</c:forEach>
 			</ul>
 		</div>
 	</div>

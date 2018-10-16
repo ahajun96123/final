@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
@@ -55,23 +56,24 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberLogin(MemberVO memberVO, HttpServletResponse response) throws IOException {
-		mav = new ModelAndView();
+	public String memberLogin(MemberVO memberVO, HttpServletResponse response ,HttpServletRequest request) throws IOException {
 		MemberVO mv = mdao.memberLogin(memberVO);
-		mav.addObject("info", mv);
+		String url=null;
+		/*mav.addObject("info", mv);*/
+		request.setAttribute("info", mv);
 		response.setContentType("text/html;charset=utf-8");
 		PrintWriter out = response.getWriter();
 		if (mv != null) {
 			if (passEncoder.matches(memberVO.getPassword(), mv.getPassword())) {
 				session.setAttribute("id", memberVO.getId());
-				mav.setViewName("main");
+				url="redirect:/main";
 			} else {
 				out.println("<script>");
 				out.println("alert('아이디 또는 비밀번호를 확인해주세요.');");
 				out.println("history.go(-1);");
 				out.println("</script>");
 				out.close();
-				mav.setViewName("login");
+				url= "redirect:/login";
 			}
 		} else {
 			out.println("<script>");
@@ -79,10 +81,10 @@ public class MemberService {
 			out.println("history.go(-1);");
 			out.println("</script>");
 			out.close();
-			mav.setViewName("login");
+			url= "redirect:/login";
 		}
 
-		return mav;
+		return url;
 	}
 
 	public ModelAndView memberLogout(MemberVO memberVO) {

@@ -216,7 +216,7 @@ public class BoardService {
 
 	public ModelAndView boardDelete(BoardVO boardVO) {
 		mav = new ModelAndView();
-		int result = boardDAO.boardDelete(boardVO);
+		boardDAO.boardDelete(boardVO);
 		return mav;
 	}
 
@@ -254,7 +254,7 @@ public class BoardService {
 		
 	}
 
-	public void bookMark(int bNum, HttpServletResponse response, HttpSession session2) throws IOException {
+	public void bookMark(int bNum, HttpServletResponse response, HttpSession session) throws IOException {
 		System.out.println("follow아이디 : " + bNum);
 		boardVO = new BoardVO();
 		boardVO.setbNum(bNum);

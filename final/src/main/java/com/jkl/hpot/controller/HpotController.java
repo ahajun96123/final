@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
+import org.json.simple.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.Resource;
 import org.springframework.http.HttpHeaders;
@@ -46,23 +47,23 @@ import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
 import com.jkl.hpot.vo.MemberVO;
 
-
 @Controller
 public class HpotController {
 
 	@Autowired
 	private BoardService bs;
 	private ModelAndView mav;
-	
-	/*@Autowired
-    private ImageService is;*/
-	
+
+	/*
+	 * @Autowired private ImageService is;
+	 */
+
 	@Autowired
 	private MemberService ms;
 
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
-	
+
 	@Autowired
 	private HttpSession session;
 
@@ -71,24 +72,31 @@ public class HpotController {
 
 		return "chat2";
 	}
-		
-	
+
 	@RequestMapping(value = "/follow", method = { RequestMethod.GET, RequestMethod.POST })
-	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+	public void follow(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session)
+			throws Exception {
 		ms.follow(followId, response, session);
 	}
+
 	@RequestMapping(value = "/followCheck", method = { RequestMethod.GET, RequestMethod.POST })
-	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
+	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session)
+			throws Exception {
 		ms.followCheck(followId, response, session);
 	}
+
 	@RequestMapping(value = "/bookCheck", method = { RequestMethod.GET, RequestMethod.POST })
-	public void bookCheck(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+	public void bookCheck(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session)
+			throws Exception {
 		bs.bookCheck(bNum, response, session);
 	}
+
 	@RequestMapping(value = "/bookMark", method = { RequestMethod.GET, RequestMethod.POST })
-	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session)
+			throws Exception {
 		bs.bookMark(bNum, response, session);
 	}
+
 	@RequestMapping(value = "/following", method = RequestMethod.POST)
 	public ModelAndView follwing(@RequestParam("id") String id, HttpServletResponse response) {
 		response.setContentType("text/html;charset=UTF-8");
@@ -96,15 +104,14 @@ public class HpotController {
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
 		mav = ms.following(memberVO);
-		System.out.println("test123123123 : "+id);
+		System.out.println("test123123123 : " + id);
 		return mav;
 	}
-	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberInfo(@RequestParam("id") String id) {
-		mav = new ModelAndView();
-		mav = ms.memberInfo(id);
-		return mav;
-	}*/
+	/*
+	 * @RequestMapping(value = "/memberInfo", method = { RequestMethod.GET,
+	 * RequestMethod.POST }) public ModelAndView memberInfo(@RequestParam("id")
+	 * String id) { mav = new ModelAndView(); mav = ms.memberInfo(id); return mav; }
+	 */
 
 	/*
 	 * @RequestMapping(value = "/boardList", method = RequestMethod.GET) public
@@ -181,11 +188,11 @@ public class HpotController {
 	}
 
 	// 로그인 처리
-	@RequestMapping(value = "/memberlogin", method = RequestMethod.POST)
-	public ModelAndView memberLogin(@ModelAttribute MemberVO memberVO, HttpServletResponse response) throws IOException {
-		mav = new ModelAndView();
-		mav = ms.memberLogin(memberVO, response);
-		return mav;
+	@RequestMapping(value = "/memberlogin", method = { RequestMethod.GET, RequestMethod.POST })
+	public String memberLogin(@ModelAttribute MemberVO memberVO, HttpServletResponse response, ModelAndView mav,
+			HttpServletRequest request) throws IOException {
+		ms.memberLogin(memberVO, response, request);
+		return "redirect:/main";
 	}
 
 	// 아이디찾기
@@ -226,7 +233,7 @@ public class HpotController {
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO, @RequestParam("idInfo") String idInfo) {
 		mav = new ModelAndView();
-		if(!idInfo.equals("")) {
+		if (!idInfo.equals("")) {
 			memberVO.setId(idInfo);
 		} else {
 			memberVO.setId((String) session.getAttribute("id"));
@@ -234,7 +241,7 @@ public class HpotController {
 		mav = ms.memberInfo(memberVO);
 		return mav;
 	}
-	
+
 	// 다른회원의 내정보 열람
 	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView MI(@RequestParam("id") String id) {
@@ -309,13 +316,13 @@ public class HpotController {
 	 * request.setAttribute("which", which); return "main"; }
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public ModelAndView main(HttpServletRequest request, HttpSession session,@ModelAttribute BoardVO boardVO) {
+	public ModelAndView main(HttpServletRequest request, HttpSession session, @ModelAttribute BoardVO boardVO) {
 		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
-			
+
 		} else {
-			
+
 		}
 		boardVO.setId(id);
 		mav = bs.boardmain(boardVO);
@@ -348,11 +355,11 @@ public class HpotController {
 		boardVO.setbWhich(which);
 		int page = 1;
 		int limit = 12;
-		if(which.equals("영화")) {
+		if (which.equals("영화")) {
 			limit = 9;
-		}else if(which.equals("지름")){
+		} else if (which.equals("지름")) {
 			limit = 20;
-		}else {
+		} else {
 			limit = 12;
 		}
 		String category = request.getParameter("category");
@@ -415,41 +422,42 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
-	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
-	         MultipartFile file) throws IllegalStateException, IOException {
-	    System.out.println("위도 넘어오냐?? : "+mapu);
-	    System.out.println("경도 넘어오냐?? : "+mapk);
+	public String boardWrite(HttpServletRequest request, HttpServletResponse response,
+			@RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
+			MultipartFile file) throws IllegalStateException, IOException {
+		System.out.println("위도 넘어오냐?? : " + mapu);
+		System.out.println("경도 넘어오냐?? : " + mapk);
 		response.setContentType("text/html;charset=UTF-8");
-	      if (boardVO.getbThumb() != null) {
-	         MultipartFile bThumb = boardVO.getbThumb();
-	         ServletContext context = request.getServletContext();
-	         String savePath = context.getRealPath("/resources/img/");
-	         /*
-	          * "C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\final\\src\\main\\webapp\\resources\\img\\";
-	          */
+		if (boardVO.getbThumb() != null) {
+			MultipartFile bThumb = boardVO.getbThumb();
+			ServletContext context = request.getServletContext();
+			String savePath = context.getRealPath("/resources/img/");
+			/*
+			 * "C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\final\\src\\main\\webapp\\resources\\img\\";
+			 */
 
-	         String originalFilename = bThumb.getOriginalFilename(); // fileName.jpg
-	         String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
-	         String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+			String originalFilename = bThumb.getOriginalFilename(); // fileName.jpg
+			String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+			String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
 
-	         String rename = onlyFileName + "_" + getCurrentDayTime() + extension; // fileName_20150721-14-07-50.jpg
-	         String fullPath = savePath + "\\" + rename;
-	         if (!bThumb.isEmpty()) {
-	            byte[] bytes = bThumb.getBytes();
-	            BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fullPath)));
-	            stream.write(bytes);
-	            stream.close();
-	            boardVO.setbThumbname(rename);
-	         }
-	      }
-	      System.out.println(
-	            "작성내용:" + boardVO.getbThumb() + "/" + boardVO.getbCategory() + "/" + boardVO.getbThumbname());
-	      boardVO.setMapu(mapu);
-	      boardVO.setMapk(mapk);
-	      bs.boardWrite(boardVO);
-	      String which = URLEncoder.encode(boardVO.getbWhich(), "UTF-8");
-	      return "redirect:/boardList?which=" + which;
-	   }
+			String rename = onlyFileName + "_" + getCurrentDayTime() + extension; // fileName_20150721-14-07-50.jpg
+			String fullPath = savePath + "\\" + rename;
+			if (!bThumb.isEmpty()) {
+				byte[] bytes = bThumb.getBytes();
+				BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fullPath)));
+				stream.write(bytes);
+				stream.close();
+				boardVO.setbThumbname(rename);
+			}
+		}
+		System.out
+				.println("작성내용:" + boardVO.getbThumb() + "/" + boardVO.getbCategory() + "/" + boardVO.getbThumbname());
+		boardVO.setMapu(mapu);
+		boardVO.setMapk(mapk);
+		bs.boardWrite(boardVO);
+		String which = URLEncoder.encode(boardVO.getbWhich(), "UTF-8");
+		return "redirect:/boardList?which=" + which;
+	}
 
 	public String getCurrentDayTime() {
 		long time = System.currentTimeMillis();
@@ -458,13 +466,14 @@ public class HpotController {
 	}
 
 	@RequestMapping(value = "/boardView", method = RequestMethod.GET)
-	public ModelAndView boardView(HttpServletRequest request, @ModelAttribute BoardVO boardVO, @ModelAttribute CommentVO commentVO) {
+	public ModelAndView boardView(HttpServletRequest request, @ModelAttribute BoardVO boardVO,
+			@ModelAttribute CommentVO commentVO) {
 		mav = new ModelAndView();
 		int view = Integer.parseInt(request.getParameter("bNum"));
 		boardVO.setId(request.getParameter("id"));
 		boardVO.setbNum(view);
 		commentVO.setbNum(view);
-		mav = bs.boardView(boardVO,commentVO);
+		mav = bs.boardView(boardVO, commentVO);
 
 		return mav;
 	}
@@ -482,7 +491,7 @@ public class HpotController {
 	public String boardDelete(HttpServletRequest request, HttpServletResponse response, @ModelAttribute BoardVO boardVO)
 			throws UnsupportedEncodingException {
 		response.setContentType("text/html;charset=UTF-8");
-	
+
 		int view = Integer.parseInt(request.getParameter("bNum"));
 		boardVO.setbNum(view);
 		String which = URLEncoder.encode(request.getParameter("which"), "UTF-8");
@@ -493,15 +502,15 @@ public class HpotController {
 	@RequestMapping(value = "/boardComment", method = RequestMethod.POST)
 	public String boardComment(HttpServletRequest request, @ModelAttribute CommentVO commentVO) {
 		bs.boardComment(commentVO);
-		return "redirect:/boardView?bNum="+commentVO.getbNum()+"&id="+session.getAttribute("id");
+		return "redirect:/boardView?bNum=" + commentVO.getbNum() + "&id=" + session.getAttribute("id");
 	}
-	
+
 	@RequestMapping(value = "/boardModify", method = RequestMethod.POST)
 	public String boardModify(@ModelAttribute BoardVO boardVO) {
 		bs.boardModify(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+		return "redirect:/boardView?bNum=" + boardVO.getbNum() + "&id=" + session.getAttribute("id");
 	}
-	
+
 	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
 	public ModelAndView myBoard(@RequestParam("id") String id, @RequestParam("idInfo") String idInfo) {
 		mav = new ModelAndView();
@@ -511,22 +520,53 @@ public class HpotController {
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}
-	
+
 	@RequestMapping(value = "/boardGrade", method = RequestMethod.POST)
 	public String boardGrade(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
 		bs.boardGrade(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+		return "redirect:/boardView?bNum=" + boardVO.getbNum() + "&id=" + session.getAttribute("id");
 	}
-	
+
 	@RequestMapping(value = "/boardLike", method = RequestMethod.POST)
 	public String boardLike(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
 		bs.boardLike(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+		return "redirect:/boardView?bNum=" + boardVO.getbNum() + "&id=" + session.getAttribute("id");
 	}
 
 	@RequestMapping(value = "/boardReport", method = RequestMethod.POST)
 	public String boardReport(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
 		bs.boardReport(boardVO);
-		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+		return "redirect:/boardView?bNum=" + boardVO.getbNum() + "&id=" + session.getAttribute("id");
 	}
+
+	@RequestMapping(value = "/img", method = RequestMethod.POST)
+	public void boardImgUpload(HttpServletRequest request,
+			HttpServletResponse response, MultipartFile file) throws IOException {
+		/* file = boardVO.getbThumb(); */
+		ServletContext context = request.getServletContext();
+		String savePath = context.getRealPath("/resources/img");
+		/*
+		 * "C:\\Users\\user\\Documents\\workspace-sts-3.9.5.RELEASE\\final\\src\\main\\webapp\\resources\\img\\";
+		 */
+
+		String originalFilename = file.getOriginalFilename(); // fileName.jpg
+		String onlyFileName = originalFilename.substring(0, originalFilename.indexOf(".")); // fileName
+		String extension = originalFilename.substring(originalFilename.indexOf(".")); // .jpg
+
+		String rename = onlyFileName + "_" + getCurrentDayTime() + extension; // fileName_20150721-14-07-50.jpg
+		String fullPath = savePath + "\\" + rename;
+		byte[] bytes = file.getBytes();
+		BufferedOutputStream stream = new BufferedOutputStream(new FileOutputStream(new File(fullPath)));
+		stream.write(bytes);
+		stream.close();
+		JSONObject jobj = new JSONObject();
+		jobj.put("url", fullPath);
+		System.out.println();
+		response.setContentType("application/json");
+		System.out.println(fullPath);
+		response.getWriter().println(request.getParameter("callback") + "(" + jobj + ")");
+
+		response.getWriter().close();
+	}
+
 }

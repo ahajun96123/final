@@ -247,7 +247,7 @@ b {
 					</c:forEach>
 				</table>
 			</div>
-			<br> <b>인기 <i class="material-icons" style="font-size: 18px">local_movies</i>
+			<b>인기 <i class="material-icons" style="font-size: 18px">local_movies</i>
 				Movie
 			</b> <br>
 			<div class="contentContainer">
@@ -309,7 +309,7 @@ b {
 					</c:forEach>
 				</table>
 			</div>
-			<br> <b>인기 <i class="material-icons" style="font-size: 18px">shopping_cart</i>
+			<b>인기 <i class="material-icons" style="font-size: 18px">shopping_cart</i>
 				Hot Deal
 			</b> <br>
 			<div class="contentContainer">
