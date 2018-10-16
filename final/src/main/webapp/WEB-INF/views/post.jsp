@@ -6,7 +6,8 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Write something else you want</title>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
 	rel="stylesheet">

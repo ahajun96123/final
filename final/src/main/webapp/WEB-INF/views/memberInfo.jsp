@@ -28,7 +28,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>꿀벌 상세정보</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -135,10 +136,21 @@ tr{
                                             
                                         </div>
                                         
-                                        <form action="myBoard" method="post">
-											<button class="btn btn-lg btn-warning btn-block" value = "${info.id}"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
+                                        <form action="myBoard?idInfo=${info.id}" method="post">
+											<button class="btn btn-lg btn-warning btn-block"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 쓴 게시물</button>
 											<input type = "hidden" name="id" value = "${info.id}">
 										</form>
+										<br>
+										<div class="btn-group" style="width:100%; margin:5px;">
+										<form action="bookBoard?id=${info.id}" method="post">
+											<button class="btn btn-lg btn-success btn-block" style="width:386px;"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 북마크한 게시물</button>
+											<%-- <input type = "hidden" name="id" value = "${info.id}"> --%>
+										</form>
+										<form action="following?id=${info.id}" method="post">
+											<button class="btn btn-lg btn-warning btn-block" style="width:386px;"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 팔로우 중인 사람들</button>
+											<%-- <input type = "hidden" name="id" value = "${info.id}"> --%>
+										</form>
+										</div>
 										<br>
 										
 				

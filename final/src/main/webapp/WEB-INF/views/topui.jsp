@@ -111,11 +111,13 @@
 			<li class="nav-item">
 				<div class="btn-group">
 					<c:if test="${sessionScope.id == null }">
-						<button class="btn btn-warning" onclick="location.href='login'">로그인/회원가입</button>
+						<button class="btn btn-warning" onclick="location.href='login'">로 그 인</button>
+						<button class="btn btn-primary" onclick="location.href='login'">회 원 가 입</button>
+						<button class="btn btn-info" onclick="location.href='login'">아이디/비밀번호찾기</button>
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
-						<button class="btn btn-warning" onclick="location.href='memberinfomation'">내 정 보</button>
+						<button class="btn btn-warning" onclick="location.href='memberinfomation?idInfo='">내 정 보</button>
 						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 					<c:if

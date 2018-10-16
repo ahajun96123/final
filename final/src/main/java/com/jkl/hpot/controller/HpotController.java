@@ -81,6 +81,24 @@ public class HpotController {
 	public void followCheck(HttpServletResponse response, @RequestParam("id") String followId, HttpSession session) throws Exception {
 		ms.followCheck(followId, response, session);
 	}
+	@RequestMapping(value = "/bookCheck", method = { RequestMethod.GET, RequestMethod.POST })
+	public void bookCheck(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+		bs.bookCheck(bNum, response, session);
+	}
+	@RequestMapping(value = "/bookMark", method = { RequestMethod.GET, RequestMethod.POST })
+	public void bookMark(HttpServletResponse response, @RequestParam("bNum") int bNum, HttpSession session) throws Exception {
+		bs.bookMark(bNum, response, session);
+	}
+	@RequestMapping(value = "/following", method = RequestMethod.POST)
+	public ModelAndView follwing(@RequestParam("id") String id, HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
+		mav = new ModelAndView();
+		MemberVO memberVO = new MemberVO();
+		memberVO.setId(id);
+		mav = ms.following(memberVO);
+		System.out.println("test123123123 : "+id);
+		return mav;
+	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })
 	public ModelAndView memberInfo(@RequestParam("id") String id) {
 		mav = new ModelAndView();
@@ -206,20 +224,24 @@ public class HpotController {
 
 	// 회원의 내정보 열람
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO) {
+	public ModelAndView memberinfo(HttpServletResponse response, @ModelAttribute MemberVO memberVO, @RequestParam("idInfo") String idInfo) throws IOException {
 		mav = new ModelAndView();
-		memberVO.setId((String) session.getAttribute("id"));
-		mav = ms.memberInfo(memberVO);
+		if(!idInfo.equals("")) {
+			memberVO.setId(idInfo);
+		} else {
+			memberVO.setId((String) session.getAttribute("id"));
+		}
+		mav = ms.memberInfo(memberVO, response);
 		return mav;
 	}
 	
 	// 다른회원의 내정보 열람
 	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView MI(@RequestParam("id") String id) {
+	public ModelAndView MI(HttpServletResponse response,@RequestParam("id") String id) throws IOException {
 		mav = new ModelAndView();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
-		mav = ms.memberInfo(memberVO);
+		mav = ms.memberInfo(memberVO, response);
 		return mav;
 	}
 
@@ -478,10 +500,11 @@ public class HpotController {
 	}
 	
 	@RequestMapping(value = "/myBoard", method = RequestMethod.POST)
-	public ModelAndView myBoard(@RequestParam("id") String id) {
+	public ModelAndView myBoard(@RequestParam("id") String id, @RequestParam("idInfo") String idInfo) {
 		mav = new ModelAndView();
 		BoardVO boardVO = new BoardVO();
 		boardVO.setId(id);
+		boardVO.setIdInfo(idInfo);
 		mav = bs.myBoard(boardVO);
 		return mav;
 	}
@@ -491,5 +514,16 @@ public class HpotController {
 		bs.boardGrade(boardVO);
 		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
 	}
+	
+	@RequestMapping(value = "/boardLike", method = RequestMethod.POST)
+	public String boardLike(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardLike(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
 
+	@RequestMapping(value = "/boardReport", method = RequestMethod.POST)
+	public String boardReport(HttpServletRequest request, @ModelAttribute BoardVO boardVO) {
+		bs.boardReport(boardVO);
+		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
 }

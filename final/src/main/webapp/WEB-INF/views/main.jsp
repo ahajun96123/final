@@ -43,7 +43,25 @@ function postCheck() {
 	location.href="postCheck?which="+which
 }
 </script>
-<title>main</title>
+
+<script>
+
+// 타임아웃에 인한 로그아웃 처리를 수행할 스크립트 함수
+function expireSession()
+{
+
+  alert("세션이 만료되었습니다.");
+
+  window.reload(true); // 파라메터를 true 로 하면 서버에서 reload .. false 로 하면 로컬에서 reload 한다.
+}
+
+ 
+
+//setTimeout() 함수를 사용하여 세션유효시간 후에 수행 함수를 호출한다. (비동기)
+setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() * 1000 %>);
+</script>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body>
 	<div class=container>

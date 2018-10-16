@@ -28,7 +28,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>꿀벌 아이디 찾기</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -43,27 +44,6 @@
 	integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm"
 	crossorigin="anonymous">
 
-<style>
-table, td {
-		margin-top: 10px;
-		margin-bottom : 5px;
-        border: 1px solid #444444;
-      }
-th{
-	
-	width: 100px;
-	
-}
-td{
-	width: 50px;
-	text-align:center;
-	
-}
-tr{
-	height: 10px;
-	
-}
-</style>
 <script>
 	function goBack() {
 		window.history.back();
@@ -81,13 +61,13 @@ tr{
 			<br>
 			<a style = "font-size: 30px; font-weight: bold;">회원관리</a>
 				<form action="idfindservice" method="post">
-				<table class="table table-hover" style = "margin-top: 20px;">
-					<thead class="thead-light">
+			<table class="table table-hover" style = "margin-top: 20px;">
+				<thead class="thead-light">
 			<tr>
-				<th>아이디찾기</th>
+				<th colspan ="2">아이디찾기</th>
 			</tr>
 			<tr>
-				<td>회원가입시 입력한 이름과 이메일주소를 입력해주십시요</td>
+				<td colspan ="2">회원가입시 입력한 이름과 이메일주소를 입력해주십시요</td>
 			</tr>
 			<tr>
 				<td>회원 이름</td>

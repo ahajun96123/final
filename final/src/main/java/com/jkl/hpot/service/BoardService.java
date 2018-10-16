@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.stream.Stream;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
@@ -27,6 +28,7 @@ import com.jkl.hpot.repository.FileRepository;
 import com.jkl.hpot.util.UploadFileUtils;
 import com.jkl.hpot.vo.BoardVO;
 import com.jkl.hpot.vo.CommentVO;
+import com.jkl.hpot.vo.MemberVO;
 import com.jkl.hpot.vo.PageInfo;
 
 
@@ -45,6 +47,7 @@ public class BoardService {
 	private HttpSession session;
 
 	public String boardWrite(BoardVO boardVO) {
+		boardVO.setbNum(1);
 		int maxBnum = boardDAO.boardMAX_Bnum();
 		boardVO.setbNum(maxBnum);
 		System.out.println("MAX_bNum ="+boardVO.getbNum());
@@ -174,14 +177,21 @@ public class BoardService {
 	      BoardVO viewBoard = boardDAO.boardView(boardVO);
 	      System.out.println("아ㅓ아아아아아아아아아아아아아ㅏ" + commentVO.getbNum());
 	      List<CommentVO> commentList = boardDAO.boardCommentList(commentVO);
+	      int gradeCount = boardDAO.boardGradeCount(boardVO);
 	      BoardVO result = boardDAO.boardGradeCheck(boardVO);
-	      System.out.println(result);
+	      BoardVO report = boardDAO.boardReportCheck(boardVO);
+	      if(viewBoard.getbWhich().equals("지름")) {
+	      	result = boardDAO.boardLikeCheck(boardVO);
+	      }
 	      boardDAO.boardReadCount(boardVO);
 	      boardVO.setId(viewBoard.getId());
 	      boardVO.setbNum(viewBoard.getbNum());
 	      boardVO.setbCategory(viewBoard.getbCategory());
 	      boardDAO.bigData(boardVO);
+	      mav.addObject("reportValue", report);
+	      mav.addObject("gradeCount", gradeCount);
 	      mav.addObject("gradeValue",result);
+	      mav.addObject("likeValue",result);
 	      mav.addObject("view", viewBoard);
 	      mav.addObject("commentList",commentList);
 	      mav.addObject("commentcount",commentList.size());
@@ -205,9 +215,6 @@ public class BoardService {
 	public ModelAndView boardDelete(BoardVO boardVO) {
 		mav = new ModelAndView();
 		int result = boardDAO.boardDelete(boardVO);
-		if(result != 0) {
-			boardDAO.maxNumUpdate(boardVO);
-		}
 		return mav;
 	}
 
@@ -221,10 +228,53 @@ public class BoardService {
 		mav = new ModelAndView();
 		List<BoardVO> BV = boardDAO.myBoard(boardVO);
 		mav.addObject("myBoardList", BV);
+		mav.addObject("idInfo", boardVO);
 		mav.setViewName("myBoardList");
 		return mav;
 	}
+	
+	public void bookCheck(int bNum, HttpServletResponse response, HttpSession session2) throws IOException {
+		boardVO = new BoardVO();
+		boardVO.setbNum(bNum);
+		String id = (String) session.getAttribute("id");
+		boardVO.setId(id);
+		/*북마크 여부 확인*/
+		/*안되어있으면*/
+		if(boardDAO.ifBooked(boardVO)==null) {
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			response.getWriter().print("0");	
+		}
+		
+	}
 
+	public void bookMark(int bNum, HttpServletResponse response, HttpSession session2) throws IOException {
+		System.out.println("follow아이디 : " + bNum);
+		boardVO = new BoardVO();
+		boardVO.setbNum(bNum);
+		String id = (String) session.getAttribute("id");
+		boardVO.setId(id);
+		/*북마크 여부 확인*/
+		/*안되어있으면*/
+		if(boardDAO.ifBooked(boardVO)==null) {
+			/*북마크하고*/
+			boardDAO.book(boardVO);
+			response.getWriter().print("1");
+			if (id == "") {
+				response.getWriter().print("0");
+			}
+		/*되어있으면*/
+		} else {
+			/*북마크 취소(삭제)*/
+			boardDAO.deleteBooked(boardVO);
+			response.getWriter().print("0");	
+		}
+	}
+	
 	public String boardGrade(BoardVO boardVO) {
 		int result = boardDAO.boardGrade(boardVO);
 		if(result != 0) {
@@ -235,6 +285,24 @@ public class BoardService {
 			boardDAO.boardGradeUpdate(boardVO);
 		}
 		return "redirect:/boardView?bNum="+boardVO.getbNum()+"&id="+session.getAttribute("id");
+	}
+
+	public void boardLike(BoardVO boardVO) {
+		int result = boardDAO.boardLike(boardVO);
+		if(result != 0) {
+			boardDAO.boardLikeUpdate(boardVO);
+		}
+	}
+
+	public void boardReport(BoardVO boardVO) {
+		int result = boardDAO.boardReport(boardVO);
+		if(result != 0) {
+			boardDAO.boardReportUpdate(boardVO);
+			int reportCount = boardDAO.boardReportCount(boardVO);
+			if(reportCount >= 3) {
+				boardDAO.boardBlindUpdate(boardVO);
+			}
+		}
 	}
 	
 }

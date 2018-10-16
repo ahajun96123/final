@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page import="com.jkl.hpot.vo.BoardVO"%>
+<%@ page import="com.jkl.hpot.vo.PageInfo"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -28,7 +32,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>꿀단지</title>
+<title>HoneyPot</title>
 <link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
@@ -64,32 +68,97 @@
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<th colspan="5" align="center">'${idInfo.idInfo}'님의 게시물</th>
+							<th colspan="3" align="center">'${idInfo}'님이 팔로우한 멤버들 게시물</th>
+						</tr>
+						<tr style="height:20px"></tr>
+						<c:forEach items="${BoardList }" var="boardList" varStatus="sts">
+						<tr>
+							<th colspan="3" align="center">'${boardList[sts.index].id}'님의 게시물</th>
 						</tr>
 						<tr>
-							<th>썸네일</th>
-							<th>아이디</th>
-							<th>제목</th>
-							<th>태그</th>
-							<th>등록일자</th>
+							<c:set var="loop_flag" value="false" />
+							<c:forEach items="${boardList}" var="board" varStatus="sts2">
+							<c:if test="${not loop_flag }">
+							<td>
+								<c:choose>
+									<c:when test="${board.bBlind==1}">
+										<div class="card" id="card"
+											style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+											<span style="margin: 10px;">다수의 신고로 인해 블라인드 처리
+												되었습니다.</span> <img src="img/honeypot3.png"
+												style="height: 100px; width: 180px; margin: auto;">
+										</div>
+									</c:when>
+									<c:otherwise>
+										<div class="card" id="card"
+											style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+											<div>
+												<div style="border-bottom: 1px solid gray;">
+													<span
+														style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.bWhich}&nbsp;</span>
+													<c:choose>
+														<c:when test="${fn:length(board.bSubject) > 14}">
+															<span style="font-size: 12px;">&nbsp;<c:out
+																	value="${fn:substring(board.bSubject,0,13)}" />...
+															</span>
+														</c:when>
+														<c:otherwise>
+															<span style="font-size: 12px;"><c:out
+																	value="${board.bSubject}" /></span>
+														</c:otherwise>
+													</c:choose>
+												</div>
+												<div class="videoplay">
+													<img class="btn-img-rounded" data-toggle="popover"
+														data-trigger="hover"
+														data-content="${fn:substring(board.bContent,0,20)}..."
+														src="img/${board.bThumbname}"
+														style="width: 218px; height: 140px; margin: auto"
+														onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
+													<div>
+														<div
+															style="border-top: 1px solid gray; font-size: 12px;">
+															<span style="color: #FF9614">평점
+																${board.bGrade}</span> <span class="text-info">조회
+																${board.bReadcount}</span> <span>${board.bDate}</span>
+														</div>
+														<div>
+															<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+														</div>
+													</div>
+												</div>
+											</div>
+										</div>
+									</c:otherwise>
+								</c:choose>
+							</td>
+							<c:if test="${sts2.count eq 3 }">
+								<td>
+								<form action="myBoard?idInfo=${board.id}" method="post">
+									<button class="btn btn-warning">더보기</button>
+									<input type = "hidden" name="id" value = "${board.id}">
+								</form>
+								</td>
+								<c:set var="loop_flag" value="true" />
+							</c:if>
+							</c:if>
+							</c:forEach>
 						</tr>
+						</c:forEach><%-- 
 					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
 							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
-							<td><a href = "MI?id=${myBoardList.id}">${myBoardList.id}</a></td>
-							<td><a href = "boardView?bNum=${myBoardList.bNum}&id=${myBoardList.id}">${myBoardList.bSubject}</a></td>
+							<td><a href = "boardView?bNum=${myBoardList.bNum}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
 							<td>${myBoardList.bDate}</td>
 						</tr>
-					</c:forEach>
+					</c:forEach> --%>
 				</table>
-				<c:if test = "${myBoardList == null}">
+				<c:if test = "${BoardList == null}">
 				<table>
-					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
 							<td><a>검색결과가 존재하지 않습니다.</a></td>
 						</tr>
-					</c:forEach>
 				</table>
 				</c:if>
 				

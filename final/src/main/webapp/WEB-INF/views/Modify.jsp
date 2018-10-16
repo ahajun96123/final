@@ -129,8 +129,8 @@
 				</c:choose>
 				<tr>
 					<th>내용</th>
-					<td><textarea name="bContent" style="display: none;">${modify.bContent}</textarea>
-						<div id="summernote"></div></td>
+					<td><textarea name="bContent" style="display: none;"></textarea>
+						<div id="summernote">${modify.bContent}</div></td>
 				</tr>
 				<tr>
 					<th>태그</th>

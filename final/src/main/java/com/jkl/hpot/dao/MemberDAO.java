@@ -75,5 +75,9 @@ public class MemberDAO {
 		sqlSession.delete("Member.deleteFollow", memberVO);
 	}
 
+	public List<MemberVO> followingList(MemberVO memberVO) {
+		return sqlSession.selectList("Member.followingList", memberVO);
+	}
+
 	
 }

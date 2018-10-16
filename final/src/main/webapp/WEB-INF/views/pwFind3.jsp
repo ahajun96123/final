@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>꿀벌 비밀번호 재설정</title>
 </head>
 <body>
 	<c:if test="${msg3 != null}">

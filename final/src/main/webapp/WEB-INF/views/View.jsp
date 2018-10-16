@@ -83,7 +83,8 @@
 	}
 </script>
 <meta charset="UTF-8">
-<title>View</title>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body>
 	<div class="container">
@@ -97,10 +98,25 @@
 				<table class="table table-bordered" style="width: 850px;">
 					<tr>
 						<th>[${view.bCategory }]</th>
-						<td colspan="6">${view.bSubject}&nbsp;&nbsp;<c:if
-								test="${commentcount > 1}">
+						<c:if test="${view.id != sessionScope.id }">
+							<td colspan="5">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 0}">
 								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-						</c:if> <span style="color: blue">${view.bTag}</span></td>
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+							<td>
+								<div>
+									<input type="button" id="bookBtn" class="btn btn-info" onclick="bookMark()" value="북마크" />
+								</div>
+							</td>
+						</c:if>
+						<c:if test="${view.id == sessionScope.id }">
+							<td colspan="6">${view.bSubject}&nbsp;&nbsp;
+							<c:if test="${commentcount > 1}">
+								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if>
+							<span style="color: blue">${view.bTag}</span></td>
+						</c:if>
 						<td>
 							<div>
 								<input type="button" id="followBtn" class="btn btn-primary"
@@ -112,7 +128,7 @@
 						<th>작성자</th>
 						<td>
 							<div>
-								<a style="color: #FF895A" href="memberInfo?id=${view.id }">${view.id}</a>
+								<a style="color: #FF895A" href="memberinfomation?idInfo=${view.id }">${view.id}</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -122,7 +138,10 @@
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
 								<th>평점</th>
-								<td>${view.bGrade}</td>
+								<td>${view.bGrade}<c:if test="${gradeCount > 0}">
+										<span style="color: green">&nbsp;[평가수:&nbsp;${gradeCount}]</span>
+									</c:if>
+								</td>
 							</c:when>
 							<c:otherwise>
 								<th>추천</th>
@@ -138,8 +157,16 @@
 					</c:if>
 					
 					<tr>
-						<td colspan="8" rowspan="10"><img
-							src="img/${view.bThumbname}" style="width: 300px; height: auto;">${view.bContent}</td>
+						<c:choose>
+							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
+								<td colspan="8" rowspan="10"><img
+									src="img/${view.bThumbname}"
+									style="width: 300px; height: auto;">${view.bContent}</td>
+							</c:when>
+							<c:otherwise>
+								<td colspan="8" rowspan="10">${view.bContent}</td>
+							</c:otherwise>
+						</c:choose>
 					</tr>
 				</table>
 				<c:if test="${view.bWhich eq '음식'}">
@@ -149,7 +176,7 @@
 					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
 					<script>
 					// 이미지 지도에서 마커가 표시될 위치입니다 
-					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk}); 
+					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk});
 
 					// 이미지 지도에 표시할 마커입니다
 					// 이미지 지도에 표시할 마커는 Object 형태입니다
@@ -176,17 +203,31 @@
 									<button class="btn btn-success" data-toggle="modal"
 										data-target="#Grade">평점 매기기</button>
 								</c:if>
+								<c:if test="${gradeValue != null}">
+									<button class="btn btn-secondary" data-target="#Grade" disabled="disabled">(${gradeValue.grade}점)평점주기 완료</button>
+								</c:if>
 							</c:if>
 						</c:when>
-						<c:otherwise>
-							<button class="btn btn-success" type="button" onclick="boardLike">추천</button>
-						</c:otherwise>
+						<c:when test="${view.bWhich eq '지름'}">
+							<c:if test="${sessionScope.id ne view.id}">
+								<c:if test="${likeValue == null}">
+									<button class="btn btn-success" data-toggle="modal"
+										data-target="#Like">추천</button>
+								</c:if>
+							</c:if>
+						</c:when>
 					</c:choose>
+					<c:if test="${sessionScope.id ne view.id}">
+								<c:if test="${reportValue == null}">
+									<button class="btn btn-danger" data-toggle="modal"
+										data-target="#Report">신고</button>
+								</c:if>
+							</c:if>
 					<c:if test="${sessionScope.id == view.id}">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
-						<button class="btn btn-warning" type="button"
-							onclick="DeleteCheck()">삭제</button>
+						<button class="btn btn-danger" data-toggle="modal"
+										data-target="#Delete">삭제</button>
 					</c:if>
 					<button class="btn btn-warning" type="button"
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
@@ -233,7 +274,7 @@
 				<form action="boardGrade" method="post" id="gradeForm">
 					<!-- Modal body -->
 					<div class="modal-body">
-						<span>한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span> <input
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 등록한 평점은 취소가 불가능합니다.</span> <input
 							type="hidden" name="id" value="${sessionScope.id}"> <input
 							type="hidden" name="bNum" value="${view.bNum}"> <input
 							type="text" name="grade" class="form-control"
@@ -242,9 +283,83 @@
 
 					<!-- Modal footer -->
 					<div class="modal-footer">
-						<button class="btn btn-dark" type="button" onclick="GradeCheck()">등록</button>
+						<button class="btn btn-info" type="button" onclick="GradeCheck()">등록</button>
 					</div>
 				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Like">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 추천</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardLike" method="post">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 추천은 취소가 불가능합니다.</span> <input
+							type="hidden" name="id" value="${sessionScope.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}">
+					</div>
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-info" type="submit">추천하기</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Report">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 신고</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+				<form action="boardReport" method="post">
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 신고는 취소가 불가능합니다.</span> 
+						<span>&nbsp;신고를 3회 이상 받은 게시물은 블라인드 처리됩니다.</span>
+						<input
+							type="hidden" name="id" value="${sessionScope.id}"> <input
+							type="hidden" name="bNum" value="${view.bNum}"> <input
+							type="text" name="reason" class="form-control"
+							placeholder="신고 사유를 적어주세요.">
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" type="submit">신고</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	<div class="modal fade" id="Delete">
+		<div class="modal-dialog">
+			<div class="modal-content">
+
+				<!-- Modal Header -->
+				<div class="modal-header">
+					<h4 class="modal-title">게시물 삭제</h4>
+					<button type="button" class="close" data-dismiss="modal">&times;</button>
+				</div>
+					<!-- Modal body -->
+					<div class="modal-body">
+						<span>&nbsp;게시물을 삭제 하시겠습니까?</span>
+					</div>
+
+					<!-- Modal footer -->
+					<div class="modal-footer">
+						<button class="btn btn-danger" type="button" onclick="DeleteCheck()">삭제</button>
+					</div>
 			</div>
 		</div>
 	</div>
@@ -265,11 +380,9 @@
 			dataType : "text",
 			success : function(data) {
 				if (data == "1") {
-					alert("팔로우 하였습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-success");
 					$('#followBtn').val('√팔로잉');
 				} else {
-					alert("팔로우 취소했습니다.");
 					$("input[id=followBtn]").attr("class", "btn btn-primary");
 					$('#followBtn').val('팔로우');
 				}
@@ -279,48 +392,101 @@
 			}
 		});
 	}
+	function bookMark() {
+		if(${sessionScope.id == null}){
+			alert('로그인을 해주세요');
+			return false;
+		}
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookMark",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-info");
+					$('#bookBtn').val('북마크');
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
 </script>
 <script>
-window.onload=ifFollow();
-	function ifFollow(){
-	if(${sessionScope.id == null}){ 
+window.onload=ifFollow(), ifBookMark();
+function ifFollow(){
+	if(${sessionScope.id == null}){
 		return false;
-	}
-	if(${view.id == sessionScope.id}){ 
+	} else if(${view.id == sessionScope.id}){
 		$('#followBtn').val('내 게시물');
 		$('#followBtn').attr('disabled', true);
 		$("input[id=followBtn]").attr("class", "btn btn-light");
-	}
-	var id = "${view.id}";
-	$.ajax({
-		type : "post",
-		url : "followCheck",
-		data : {
-			"id" : id
-		},
-		dataType : "text",
-		success : function(data) {
-			if (data == "1") {
-				//팔로우
-				//$("input[id=followBtn]").attr("class", "btn btn-primary");
-			} else {
-				//팔로우취소
-				$("input[id=followBtn]").attr("class", "btn btn-success");
-				$('#followBtn').val('√팔로잉'); 
+		return false;
+	} else{
+		var id = "${view.id}";
+		$.ajax({
+			type : "post",
+			url : "followCheck",
+			data : {
+				"id" : id
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+					//팔로우
+					//$("input[id=followBtn]").attr("class", "btn btn-primary");
+				} else {
+					//팔로우취소
+					$("input[id=followBtn]").attr("class", "btn btn-success");
+					$('#followBtn').val('√팔로잉');
+				}
+				/* if (data == "1") {
+					alert("이 아이디는 사용 가능합니다!.");
+					$("input[id=idbox]").attr("readonly", true);
+					$('#checkbtn').attr('disabled', true);
+					$('#chch').attr('onSubmit', true);
+				} else {
+					alert("이 아이디는 사용할 수 없습니다.");
+				} */
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
 			}
-			/* if (data == "1") {
-				alert("이 아이디는 사용 가능합니다!.");
-				$("input[id=idbox]").attr("readonly", true);
-				$('#checkbtn').attr('disabled', true);
-				$('#chch').attr('onSubmit', true);
-			} else {
-				alert("이 아이디는 사용할 수 없습니다.");
-			} */
-		},
-		error : function(request, status, error) {
-			alert("code:" + request.status + "\n" + "error:" + error);
-		}
-	});
+		});
+	}
+}
+function ifBookMark(){
+	if(${sessionScope.id == null}){
+		return false;
+	} else{
+		var bNum = "${view.bNum}";
+		$.ajax({
+			type : "post",
+			url : "bookCheck",
+			data : {
+				"bNum" : bNum
+			},
+			dataType : "text",
+			success : function(data) {
+				if (data == "1") {
+				} else {
+					$("input[id=bookBtn]").attr("class", "btn btn-secondary");
+					$('#bookBtn').val('√북마크됨');
+				}
+			},
+			error : function(request, status, error) {
+				alert("code:" + request.status + "\n" + "error:" + error);
+			}
+		});
+	}
 }
 </script>
 </html>
