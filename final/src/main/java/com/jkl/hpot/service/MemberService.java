@@ -2,6 +2,7 @@ package com.jkl.hpot.service;
 
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
@@ -181,7 +182,7 @@ public class MemberService {
 		msg += memberVO.getId() + "님의 비밀번호 변경이 요청되어 인증메일이 전송됬습니다.</h3>";
 		msg += "<div style='font-size: 130%'>";
 		msg += "하단의 인증 버튼 클릭 시 정상적으로 인증이 완료됩니다.</div><br/>";
-		msg += "<form method='post' action='http://192.168.0.147:8040/hpot/approvalmember'>";
+		msg += "<form method='post' action='http://192.168.0.146:8040/hpot/approvalmember'>";
 		msg += "<input type='hidden' name='id' value='" + memberVO.getId() + "'>";
 		msg += "<input type='hidden' name='email' value='" + memberVO.getEmail() + "'>";
 		msg += "<input type='hidden' name='approvalkey' value='" + memberVO.getApprovalkey() + "'>";
@@ -295,17 +296,20 @@ public class MemberService {
 	public ModelAndView following(MemberVO memberVO) {
 		mav = new ModelAndView();
 		//팔로우중인 사람들 리스트 불러오기
-		/*List<MemberVO> mv = mdao.followingList(memberVO);
-		List<BoardVO> bv = mdao.followingList(memberVO);
-		List<List<BoardVO>> st = new ArrayList<ArrayList<BoardVO>>();
+		List<MemberVO> mv = mdao.followingList(memberVO);
+		List<BoardVO> bv = null;
+		List<List<BoardVO>> st = new ArrayList<List<BoardVO>>();
 		
+		System.out.println("설마 안들어감?");
 		for(MemberVO fl : mv) {
-			st.add(bdao.getfollowingBoard(fl.getId()));
-			String fId = fl.getFollowId();
-			bv.add();
+			System.out.println("testid    :     "+fl.getFollowId());
+			bv = new ArrayList<BoardVO>();
+			bv = bdao.getfollowingBoard(fl.getFollowId());
+			st.add(bv);
 		}
 		
-		mav.addObject("followingList", mv);*/
+		mav.addObject("followingList", mv);
+		mav.addObject("BoardList", st);
 		mav.addObject("idInfo", memberVO.getId());
 		mav.setViewName("followingList");
 		return mav;

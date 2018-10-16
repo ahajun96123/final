@@ -304,5 +304,23 @@ public class BoardService {
 			}
 		}
 	}
+
+	public ModelAndView bookBoard(BoardVO boardVO) {
+		mav = new ModelAndView();
+		//북마크 리스트 불러오기
+		List<BoardVO> bl = boardDAO.bookNum(boardVO);
+		List<BoardVO> bl2 = new ArrayList<BoardVO>();
+		
+		for(BoardVO li : bl) {
+			
+			bl2.add(boardDAO.bookBoard(li.getbNum()));
+		}
+		
+		mav.addObject("bookedList", bl2);
+		mav.addObject("idInfo", boardVO.getIdInfo());
+		mav.setViewName("bookedList");
+		
+		return mav;
+	}
 	
 }

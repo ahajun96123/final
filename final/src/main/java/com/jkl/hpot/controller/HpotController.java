@@ -90,11 +90,22 @@ public class HpotController {
 		bs.bookMark(bNum, response, session);
 	}
 	@RequestMapping(value = "/following", method = RequestMethod.POST)
-	public ModelAndView follwing(@RequestParam("id") String id) {
+	public ModelAndView follwing(@RequestParam("id") String id, HttpServletResponse response) {
 		mav = new ModelAndView();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
 		mav = ms.following(memberVO);
+		System.out.println("test123123123 : "+id);
+		return mav;
+	}
+	@RequestMapping(value = "/bookBoard", method = RequestMethod.POST)
+	public ModelAndView bookBoard(@RequestParam("id") String id, HttpServletResponse response, @RequestParam("idInfo") String idInfo) {
+		mav = new ModelAndView();
+		BoardVO boardVO = new BoardVO();
+		boardVO.setId(id);
+		boardVO.setIdInfo(idInfo);
+		mav = bs.bookBoard(boardVO);
+		System.out.println("test123123123 : "+id);
 		return mav;
 	}
 	/*@RequestMapping(value = "/memberInfo", method = { RequestMethod.GET, RequestMethod.POST })

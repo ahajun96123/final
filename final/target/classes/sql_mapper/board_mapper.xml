@@ -139,7 +139,7 @@
 		INSERT INTO READ VALUES(#{id}, #{bNum}, #{bCategory})
 	</insert>
 	<select id="myBoard" parameterType="board" resultType="board">
-		SELECT * FROM BOARD WHERE id=#{id}
+		SELECT * FROM BOARD WHERE id=#{id} order by bdate desc
 	</select>
 	<!-- <insert id="imgUpload" parameterType="saveFile">
 		INSERT INTO UPLOADFILE VALUES(#{id}, #{fileName}, #{saveFileName}, #{filePath}, #{contentType}, #{sized}, #{regDate})
@@ -197,5 +197,11 @@
 	</update>
 	<select id="boardReportCheck" parameterType="board" resultType="board">
 		SELECT * FROM REPORT WHERE BNUM=#{bNum} AND ID=#{id}
+	</select>
+	<select id="bookNum" parameterType="board" resultType="board">
+		SELECT * FROM BOOK WHERE ID=#{id}
+	</select>
+	<select id="bookBoard" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE bNum=#{bNum}
 	</select>
 </mapper>

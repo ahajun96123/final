@@ -200,6 +200,18 @@ public class BoardDAO {
 	public BoardVO boardReportCheck(BoardVO boardVO) {
 		return sqlSession.selectOne("Board.boardReportCheck", boardVO);
 	}
+	//followingBoard 리스트 불러오는 건데 myBoard sql문이랑 같아서 myBoard 씀
+	public List<BoardVO> getfollowingBoard(String id) {
+		return sqlSession.selectList("Board.myBoard", id);
+	}
+
+	public List<BoardVO> bookNum(BoardVO boardVO) {
+		return sqlSession.selectList("Board.bookNum", boardVO);
+	}
+
+	public BoardVO bookBoard(int bNum) {
+		return sqlSession.selectOne("Board.bookBoard", bNum);
+	}
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page import="com.jkl.hpot.vo.BoardVO"%>
+<%@ page import="com.jkl.hpot.vo.PageInfo"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -47,9 +51,6 @@
 		window.history.back();
 	}
 </script>
-<style>
-      
-</style>
 </head>
 <body>
 	<div class=container>
@@ -62,30 +63,32 @@
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<th colspan="4" align="center">'${idInfo.idInfo}'님의 게시물</th>
+							<th colspan="6" align="center">'${idInfo}'님이 북마크한 게시물</th>
 						</tr>
 						<tr>
 							<th>썸네일</th>
 							<th>제목</th>
 							<th>태그</th>
+							<th>글쓴이</th>
 							<th>등록일자</th>
+							<th>북마크</th>
 						</tr>
-					<c:forEach items="${myBoardList}" var="myBoardList">
+					<c:forEach items="${bookedList}" var="myBoardList" varStatus="sts">
 						<tr>
 							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
 							<td><a href = "boardView?bNum=${myBoardList.bNum}&id=${myBoardList.id}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
+							<td>${myBoardList.id}</td>
 							<td>${myBoardList.bDate}</td>
+							<td><input type="button" id="bookBtn${sts.count }" class="btn btn-secondary" value="북마크 취소" onclick="bookMark(${myBoardList.bNum}, ${sts.count})"></td>
 						</tr>
 					</c:forEach>
 				</table>
-				<c:if test = "${myBoardList == null}">
+				<c:if test = "${bookedList == null}">
 				<table>
-					<c:forEach items="${myBoardList}" var="myBoardList">
-						<tr>
-							<td><a>검색결과가 존재하지 않습니다.</a></td>
-						</tr>
-					</c:forEach>
+					<tr>
+						<td><a>북마크한 게시물이 존재하지 않습니다.</a></td>
+					</tr>
 				</table>
 				</c:if>
 				
@@ -93,47 +96,34 @@
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JavaScript -->
-	<script
-		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>
-	<script
-		src="<c:url value=" /resources/vendor/bootstrap/js/bootstrap.bundel.min.js " />"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
-	<script>
-		// Get the modal
-		var modal = document.getElementById('userMod');
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn2");
-
-		var cancle = document.getElementById("cancle");
-
-		// When the user clicks on the button, open the modal 
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-
-		// When the user clicks on <span> (x), close the modal
-		cancle.onclick = function() {
-			modal.style.display = "none";
-		}
-
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
-			}
-		}
-	</script>
 </body>
+<script>
+function bookMark(bNum, count) {
+	var bId = "bookBtn"+count;
+	if(${sessionScope.id == null}){
+		alert('로그인을 해주세요');
+		return false;
+	}
+	$.ajax({
+		type : "post",
+		url : "bookMark",
+		data : {
+			"bNum" : bNum
+		},
+		dataType : "text",
+		success : function(data) {
+			if (data == "1") {
+				$("input[id="+bId+"]").attr("class", "btn btn-secondary");
+				$('#'+bId).val('북마크 취소');
+			} else {
+				$("input[id="+bId+"]").attr("class", "btn btn-info");
+				$('#'+bId).val('북마크');
+			}
+		},
+		error : function(request, status, error) {
+			alert("code:" + request.status + "\n" + "error:" + error);
+		}
+	});
+}
+</script>
 </html>
