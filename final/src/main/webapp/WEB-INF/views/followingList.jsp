@@ -68,7 +68,7 @@
 						<c:forEach items="${BoardList }" var="boardList" varStatus="sts">
 						<tr>
 							<th colspan="2" align="center">'${boardList[sts.index].id}'님의 게시물</th>
-							<th><input type="button" id="followBtn${sts.count }" class="btn btn-success" value="팔로우 취소" onclick="follow(${boardList[sts.index].id}, ${sts.count})"></th>
+							<th><input type="button" id="followBtn${sts.count }" class="btn btn-success" value="팔로우 취소" onclick="follow('${boardList[sts.index].id}', ${sts.count})"></th>
 						</tr>
 						<tr>
 							<c:set var="loop_flag" value="false" />
@@ -179,7 +179,7 @@ function follow(fid, count) {
 		success : function(data) {
 			if (data == "1") {
 				$("input[id="+fBtn+"]").attr("class", "btn btn-success");
-				$('#'+fBtn).val('√팔로잉');
+				$('#'+fBtn).val('팔로우 취소');
 			} else {
 				$("input[id="+fBtn+"]").attr("class", "btn btn-primary");
 				$('#'+fBtn).val('팔로우');
