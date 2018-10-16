@@ -47,25 +47,7 @@ b {
 		location.href = "postCheck?which=" + which
 	}
 </script>
-
-<script>
-
-// 타임아웃에 인한 로그아웃 처리를 수행할 스크립트 함수
-function expireSession()
-{
-
-  alert("세션이 만료되었습니다.");
-
-  window.reload(true); // 파라메터를 true 로 하면 서버에서 reload .. false 로 하면 로컬에서 reload 한다.
-}
-
- 
-
-//setTimeout() 함수를 사용하여 세션유효시간 후에 수행 함수를 호출한다. (비동기)
-setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() * 1000 %>);
-</script>
-<title>HoneyPot</title>
-<link rel="shortcut icon" href="resources/img/honeypot.jpg">
+<title>main</title>
 </head>
 <body style="background-color: #dcdcdc">
 	<div class=container>
@@ -75,15 +57,15 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 				<%@include file="./sidebar.jsp"%>
 			</div>
 			<div>
+				<c:set var="food" value="1" />
+				<c:set var="movie" value="1" />
+				<c:set var="hotdeal" value="1" />
 				<c:if test="${sessionScope.id !=null }">
 					<b>맞춤</b>
 					<br>
 					<div class="contentContainer">
 						<c:set var="i" value="0" />
 						<c:set var="j" value="3" />
-						<c:set var="food" value="1"/>
-						<c:set var="movie" value="1"/>
-						<c:set var="hotdeal" value="1"/>
 						<table id="video" style="margin-left: 50px;">
 							<c:forEach var="board" items="${fitList}">
 								<c:if test="${board.bWhich =='음식'}">
@@ -199,13 +181,6 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 							</c:forEach>
 						</table>
 					</div>
-				</div>
-				<br> <b>채널(회원)</b> <br>
-				<div class="contentContainer"></div>
-				<br> <b>주제</b> <br>
-				
-				<div class="contentContainer"></div>
-				<br>
 				</c:if>
 			</div>
 			<b>인기 <i class="material-icons" style="font-size: 18px">restaurant</i>
@@ -216,7 +191,7 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 			<div class="contentContainer">
 				<table id="video" style="margin-left: 50px;">
 					<c:forEach var="board" items="${bestmain}">
-						<c:if test="${board.bWhich =='음식'}"> 
+						<c:if test="${board.bWhich =='음식'}">
 							<c:if test="${board.bBlind == 0 }">
 								<c:if test="${food<4 }">
 									<c:if test="${i%j == 0 }">
@@ -265,7 +240,7 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 										</tr>
 									</c:if>
 									<c:set var="i" value="${i+1 }" />
-									<c:set var="food" value="${food+1 }"/>
+									<c:set var="food" value="${food+1 }" />
 								</c:if>
 							</c:if>
 						</c:if>
@@ -324,9 +299,10 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 										</div>
 									</td>
 									<c:if test="${i%j == j-1 }">
+										</tr>
 									</c:if>
 									<c:set var="i" value="${i+1 }" />
-									<c:set var="movie" value="${movie+1 }"/>
+									<c:set var="movie" value="${movie+1 }" />
 								</c:if>
 							</c:if>
 						</c:if>
@@ -359,7 +335,7 @@ setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() 
 										<td>${board.bDate }</td>
 										<td style="color: #6478FF">${board.bTag}</td>
 									</tr>
-									<c:set var="hotdeal" value="${hotdeal+1 }"/>
+									<c:set var="hotdeal" value="${hotdeal+1 }" />
 								</c:if>
 							</c:if>
 						</c:if>

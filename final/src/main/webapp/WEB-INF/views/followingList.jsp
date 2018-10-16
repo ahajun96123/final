@@ -77,7 +77,7 @@
 							<td>
 								<c:choose>
 									<c:when test="${board.bBlind==1}">
-										<div class="card" id="card"
+										<div class="card" id="card"	
 											style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 											<span style="margin: 10px;">다수의 신고로 인해 블라인드 처리
 												되었습니다.</span> <img src="img/honeypot3.png"
