@@ -175,19 +175,21 @@ public class BoardService {
 	public ModelAndView boardView(BoardVO boardVO, CommentVO commentVO) {
 	      mav = new ModelAndView();
 	      BoardVO viewBoard = boardDAO.boardView(boardVO);
-	      System.out.println(commentVO.getbNum());
+	      System.out.println("아ㅓ아아아아아아아아아아아아아ㅏ" + commentVO.getbNum());
 	      List<CommentVO> commentList = boardDAO.boardCommentList(commentVO);
 	      int gradeCount = boardDAO.boardGradeCount(boardVO);
 	      BoardVO result = boardDAO.boardGradeCheck(boardVO);
 	      BoardVO report = boardDAO.boardReportCheck(boardVO);
+    	  boardDAO.boardReadCount(boardVO);
 	      if(viewBoard.getbWhich().equals("지름")) {
-	      	result = boardDAO.boardLikeCheck(boardVO);
+	    	  result = boardDAO.boardLikeCheck(boardVO);
 	      }
-	      boardDAO.boardReadCount(boardVO);
 	      boardVO.setId(viewBoard.getId());
 	      boardVO.setbNum(viewBoard.getbNum());
 	      boardVO.setbCategory(viewBoard.getbCategory());
-	      boardDAO.bigData(boardVO);
+	      if(!viewBoard.getbCategory().equals("지름")) {
+		      boardDAO.bigData(boardVO);
+	      }
 	      mav.addObject("reportValue", report);
 	      mav.addObject("gradeCount", gradeCount);
 	      mav.addObject("gradeValue",result);
@@ -319,7 +321,20 @@ public class BoardService {
 		mav.addObject("bookedList", bl2);
 		mav.addObject("idInfo", boardVO.getIdInfo());
 		mav.setViewName("bookedList");
-		
+		return mav;
+	}
+	public ModelAndView boardmain(BoardVO boardVO) {
+		mav = new ModelAndView();
+		List<BoardVO> boardList = boardDAO.boardBest();
+		if(session.getAttribute("id")!=null) {
+			String category = boardDAO.boardFit(boardVO).getbCategory();
+			boardVO.setbCategory(category);
+			List<BoardVO> fitList = boardDAO.boardFitList(boardVO);
+			mav.addObject("fitList", fitList);
+		}
+		System.out.println(boardList.size());
+		mav.addObject("bestmain", boardList);
+		mav.setViewName("main");
 		return mav;
 	}
 	

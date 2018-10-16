@@ -5,7 +5,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>일벌 리스트</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <style>
 .tr {
 	width: 500px;

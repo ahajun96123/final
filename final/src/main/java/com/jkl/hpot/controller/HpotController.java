@@ -163,7 +163,7 @@ public class HpotController {
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String start() {
 
-		return "login";
+		return "main";
 	}
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
@@ -233,24 +233,24 @@ public class HpotController {
 
 	// 회원의 내정보 열람
 	@RequestMapping(value = "/memberinfomation", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView memberinfo(@ModelAttribute MemberVO memberVO, @RequestParam("idInfo") String idInfo) {
+	public ModelAndView memberinfo(HttpServletResponse response, @ModelAttribute MemberVO memberVO, @RequestParam("idInfo") String idInfo) throws IOException {
 		mav = new ModelAndView();
 		if(!idInfo.equals("")) {
 			memberVO.setId(idInfo);
 		} else {
 			memberVO.setId((String) session.getAttribute("id"));
 		}
-		mav = ms.memberInfo(memberVO);
+		mav = ms.memberInfo(memberVO, response);
 		return mav;
 	}
 	
 	// 다른회원의 내정보 열람
 	@RequestMapping(value = "/MI", method = { RequestMethod.GET, RequestMethod.POST })
-	public ModelAndView MI(@RequestParam("id") String id) {
+	public ModelAndView MI(HttpServletResponse response,@RequestParam("id") String id) throws IOException {
 		mav = new ModelAndView();
 		MemberVO memberVO = new MemberVO();
 		memberVO.setId(id);
-		mav = ms.memberInfo(memberVO);
+		mav = ms.memberInfo(memberVO, response);
 		return mav;
 	}
 
@@ -318,22 +318,23 @@ public class HpotController {
 	 * request.setAttribute("which", which); return "main"; }
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpSession session) {
-
+	public ModelAndView main(HttpServletRequest request, HttpSession session,@ModelAttribute BoardVO boardVO) {
+		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
 			
 		} else {
 			
 		}
-
+		boardVO.setId(id);
+		mav = bs.boardmain(boardVO);
 		String which = null;
 		request.setAttribute("which", which);
-		return "main";
+		return mav;
 	}
 
 	@RequestMapping(value = "/postCheck", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception {
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		String which = request.getParameter("which");
@@ -425,8 +426,6 @@ public class HpotController {
 	@RequestMapping(value = "/write", method = RequestMethod.POST)
 	   public String boardWrite(HttpServletRequest request, HttpServletResponse response, @RequestParam("mapu") String mapu, @RequestParam("mapk") String mapk, @ModelAttribute BoardVO boardVO,
 	         MultipartFile file) throws IllegalStateException, IOException {
-	    System.out.println("위도 넘어오냐?? : "+mapu);
-	    System.out.println("경도 넘어오냐?? : "+mapk);
 		response.setContentType("text/html;charset=UTF-8");
 	      if (boardVO.getbThumb() != null) {
 	         MultipartFile bThumb = boardVO.getbThumb();

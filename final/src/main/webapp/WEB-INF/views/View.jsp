@@ -83,7 +83,8 @@
 	}
 </script>
 <meta charset="UTF-8">
-<title>View</title>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body>
 	<div class="container">

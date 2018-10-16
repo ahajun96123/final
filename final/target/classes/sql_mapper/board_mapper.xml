@@ -204,4 +204,15 @@
 	<select id="bookBoard" parameterType="board" resultType="board">
 		SELECT * FROM BOARD WHERE bNum=#{bNum}
 	</select>
+	<select id="boardBest" resultType="board">
+		SELECT * FROM BOARD WHERE BREADCOUNT<![CDATA[ > ]]>9 ORDER BY BDATE DESC
+	</select>
+	<select id="boardFit" parameterType="board" resultType="board">
+		SELECT BCATEGORY FROM
+		(SELECT COUNT(*) CNT, BCATEGORY FROM READ WHERE ID=#{id} GROUP BY BCATEGORY)
+		WHERE CNT = (SELECT MAX(COUNT(*)) FROM READ WHERE ID=#{id} GROUP BY BCATEGORY)
+	</select>
+	<select id="boardFitList" parameterType="board" resultType="board">
+		SELECT * FROM BOARD WHERE BCATEGORY = #{bCategory} ORDER BY BDATE DESC
+	</select>
 </mapper>

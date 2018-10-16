@@ -27,7 +27,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>꿀단지</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -62,10 +63,11 @@
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<th colspan="4" align="center">'${idInfo.idInfo}'님의 게시물</th>
+							<th colspan="5" align="center">'${idInfo.idInfo}'님의 게시물</th>
 						</tr>
 						<tr>
 							<th>썸네일</th>
+							<th>아이디</th>
 							<th>제목</th>
 							<th>태그</th>
 							<th>등록일자</th>
@@ -73,6 +75,7 @@
 					<c:forEach items="${myBoardList}" var="myBoardList">
 						<tr>
 							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
+							<td><a href = "MI?id=${myBoardList.id}">${myBoardList.id}</a></td>
 							<td><a href = "boardView?bNum=${myBoardList.bNum}&id=${myBoardList.id}">${myBoardList.bSubject}</a></td>
 							<td>${myBoardList.bContent}</td>
 							<td>${myBoardList.bDate}</td>

@@ -89,7 +89,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		session.invalidate();
 		mav.addObject("logout", "로그아웃");
-		mav.setViewName("redirect:/login");
+		mav.setViewName("redirect:/main");
 		return mav;
 	}
 
@@ -101,12 +101,22 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberInfo(MemberVO memberVO) {
+	public ModelAndView memberInfo(MemberVO memberVO, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		mav = new ModelAndView();
 		MemberVO mv = new MemberVO();
-		mv = mdao.memberInfo(memberVO);
-		mav.addObject("info", mv);
-		mav.setViewName("memberInfo");
+		if(session.getAttribute("id")==null) {
+			out.println("<script>");
+			out.println("alert('로그인이 만료되었습니다 다시로그인해 주세요');");
+			out.println("location.href='main';");
+			out.println("</script>");
+			out.close();
+		}else {
+			mv = mdao.memberInfo(memberVO);
+			mav.addObject("info", mv);
+			mav.setViewName("memberInfo");
+		}
 		return mav;
 	}
 

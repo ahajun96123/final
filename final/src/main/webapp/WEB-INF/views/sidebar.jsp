@@ -228,6 +228,17 @@ a.Livechat, a.Livechat:hover {
 	}
 }
 </style>
+<script type="text/javascript">
+var loginChat = "<%=session.getAttribute("id")%>";
+
+function chatCheck(){
+	if(loginChat ==""||loginChat=="null"){
+		alert("로그인을 해주세요.")
+	}else{
+		location.href="Livechat"
+	}
+}
+</script>
 <body>
 	<!-- Sidebar Holder -->
 	<nav id="sidebar">

@@ -212,6 +212,19 @@ public class BoardDAO {
 	public BoardVO bookBoard(int bNum) {
 		return sqlSession.selectOne("Board.bookBoard", bNum);
 	}
+
+	public List<BoardVO> boardBest() {
+		return sqlSession.selectList("Board.boardBest");
+	}
+
+	public List<BoardVO> boardFitList(BoardVO boardVO) {
+		return sqlSession.selectList("Board.boardFitList",boardVO);
+	}
+
+	public BoardVO boardFit(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardFit", boardVO);
+	}
+
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

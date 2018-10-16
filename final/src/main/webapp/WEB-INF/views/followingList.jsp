@@ -29,7 +29,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
