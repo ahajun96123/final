@@ -30,7 +30,7 @@
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <!-- ========================================================================================== -->
 <meta charset="UTF-8">
-<title>Testing websockets</title>
+<title>허니팟 채팅방</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>

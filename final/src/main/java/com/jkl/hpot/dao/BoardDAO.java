@@ -205,6 +205,14 @@ public class BoardDAO {
 		return sqlSession.selectList("Board.myBoard", id);
 	}
 
+	public List<BoardVO> bookNum(BoardVO boardVO) {
+		return sqlSession.selectList("Board.bookNum", boardVO);
+	}
+
+	public BoardVO bookBoard(int bNum) {
+		return sqlSession.selectOne("Board.bookBoard", bNum);
+	}
+
 	public List<BoardVO> boardBest() {
 		return sqlSession.selectList("Board.boardBest");
 	}

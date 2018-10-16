@@ -175,7 +175,7 @@ public class BoardService {
 	public ModelAndView boardView(BoardVO boardVO, CommentVO commentVO) {
 	      mav = new ModelAndView();
 	      BoardVO viewBoard = boardDAO.boardView(boardVO);
-	      System.out.println(commentVO.getbNum());
+	      System.out.println("아ㅓ아아아아아아아아아아아아아ㅏ" + commentVO.getbNum());
 	      List<CommentVO> commentList = boardDAO.boardCommentList(commentVO);
 	      int gradeCount = boardDAO.boardGradeCount(boardVO);
 	      BoardVO result = boardDAO.boardGradeCheck(boardVO);
@@ -307,6 +307,22 @@ public class BoardService {
 		}
 	}
 
+	public ModelAndView bookBoard(BoardVO boardVO) {
+		mav = new ModelAndView();
+		//북마크 리스트 불러오기
+		List<BoardVO> bl = boardDAO.bookNum(boardVO);
+		List<BoardVO> bl2 = new ArrayList<BoardVO>();
+		
+		for(BoardVO li : bl) {
+			
+			bl2.add(boardDAO.bookBoard(li.getbNum()));
+		}
+		
+		mav.addObject("bookedList", bl2);
+		mav.addObject("idInfo", boardVO.getIdInfo());
+		mav.setViewName("bookedList");
+		return mav;
+	}
 	public ModelAndView boardmain(BoardVO boardVO) {
 		mav = new ModelAndView();
 		List<BoardVO> boardList = boardDAO.boardBest();

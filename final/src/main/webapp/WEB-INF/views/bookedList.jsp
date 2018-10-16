@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+<%@ page import="com.jkl.hpot.vo.BoardVO"%>
+<%@ page import="com.jkl.hpot.vo.PageInfo"%>
+<%@ page import="java.util.*"%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,7 +19,6 @@
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!-- Our Custom CSS -->
 <link rel="stylesheet" href="style5.css">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Font Awesome JS -->
 <script defer
@@ -28,8 +31,7 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>꿀벌 비밀번호 찾기</title>
-<link rel="shortcut icon" href="resources/img/honeypot.jpg">
+<title>Insert title here</title>
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -53,36 +55,75 @@
 <body>
 	<div class=container>
 		<%@include file="./topui.jsp"%>
-		<div style="width: 1130px; height: 990px;">
+		<div style="width: 1130px; height: 1080px;">
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
 			<div style="width: 850px; float: left;">
-				<br> <a style="font-size: 30px; font-weight: bold;">회원관리</a>
-				<form action="pwfindservice" method="post">
-					<table class="table table-hover" style="margin-top: 20px;">
+				<table class="table">
 					<thead class="thead-light">
 						<tr>
-							<th colspan = "2">비밀번호 찾기</th>
+							<th colspan="6" align="center">'${idInfo}'님이 북마크한 게시물</th>
 						</tr>
 						<tr>
-							<td colspan = "2">이이디와 회원가입시 사용한 이메일주소를 입력해주십시요</td>
+							<th>썸네일</th>
+							<th>제목</th>
+							<th>태그</th>
+							<th>글쓴이</th>
+							<th>등록일자</th>
+							<th>북마크</th>
 						</tr>
+					<c:forEach items="${bookedList}" var="myBoardList" varStatus="sts">
 						<tr>
-							<td>아이디</td>
-							<td><input type="text" name="id" placeholder="아이디입력"
-								required></td>
+							<td><img class="photo" src="resources/img/${myBoardList.bThumbname}" alt="썸네일" style="width: 218px; height: 140px; margin: auto"></td>
+							<td><a href = "boardView?bNum=${myBoardList.bNum}&id=${myBoardList.id}">${myBoardList.bSubject}</a></td>
+							<td>${myBoardList.bContent}</td>
+							<td>${myBoardList.id}</td>
+							<td>${myBoardList.bDate}</td>
+							<td><input type="button" id="bookBtn${sts.count }" class="btn btn-secondary" value="북마크 취소" onclick="bookMark(${myBoardList.bNum}, ${sts.count})"></td>
 						</tr>
-						<tr>
-							<td><input class="btn btn-info" type="submit" value="페스워드 찾기"
-								onclick="return confirm('확인시 가입시 사용한 이메일주소에 인증메일이 전송됩니다 또한 인증완료후 비밀번호변경과정에서 종료시에는 별도의 메일인증없이 바로 변경이 가능합니다 진행하시겠습니까?');"
-								required></td>
-						</tr>
-					</table>
-				</form>
-				<button class="btn btn-warning" onclick="location.href='main'">메인으로 돌아가기</button>
+					</c:forEach>
+				</table>
+				<c:if test = "${bookedList == null}">
+				<table>
+					<tr>
+						<td><a>북마크한 게시물이 존재하지 않습니다.</a></td>
+					</tr>
+				</table>
+				</c:if>
+				
+				<button class="btn btn-lg btn-primary btn-block" onclick="goBack()">뒤로가기</button>
 			</div>
 		</div>
 	</div>
 </body>
+<script>
+function bookMark(bNum, count) {
+	var bId = "bookBtn"+count;
+	if(${sessionScope.id == null}){
+		alert('로그인을 해주세요');
+		return false;
+	}
+	$.ajax({
+		type : "post",
+		url : "bookMark",
+		data : {
+			"bNum" : bNum
+		},
+		dataType : "text",
+		success : function(data) {
+			if (data == "1") {
+				$("input[id="+bId+"]").attr("class", "btn btn-secondary");
+				$('#'+bId).val('북마크 취소');
+			} else {
+				$("input[id="+bId+"]").attr("class", "btn btn-info");
+				$('#'+bId).val('북마크');
+			}
+		},
+		error : function(request, status, error) {
+			alert("code:" + request.status + "\n" + "error:" + error);
+		}
+	});
+}
+</script>
 </html>

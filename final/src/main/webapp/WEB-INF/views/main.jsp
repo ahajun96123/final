@@ -47,7 +47,25 @@ b {
 		location.href = "postCheck?which=" + which
 	}
 </script>
-<title>main</title>
+
+<script>
+
+// 타임아웃에 인한 로그아웃 처리를 수행할 스크립트 함수
+function expireSession()
+{
+
+  alert("세션이 만료되었습니다.");
+
+  window.reload(true); // 파라메터를 true 로 하면 서버에서 reload .. false 로 하면 로컬에서 reload 한다.
+}
+
+ 
+
+//setTimeout() 함수를 사용하여 세션유효시간 후에 수행 함수를 호출한다. (비동기)
+setTimeout('expireSession()', <%= request.getSession().getMaxInactiveInterval() * 1000 %>);
+</script>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body style="background-color: #dcdcdc">
 	<div class=container>
@@ -181,6 +199,13 @@ b {
 							</c:forEach>
 						</table>
 					</div>
+				</div>
+				<br> <b>채널(회원)</b> <br>
+				<div class="contentContainer"></div>
+				<br> <b>주제</b> <br>
+				
+				<div class="contentContainer"></div>
+				<br>
 				</c:if>
 			</div>
 			<b>인기 <i class="material-icons" style="font-size: 18px">restaurant</i>
@@ -299,7 +324,6 @@ b {
 										</div>
 									</td>
 									<c:if test="${i%j == j-1 }">
-										</tr>
 									</c:if>
 									<c:set var="i" value="${i+1 }" />
 									<c:set var="movie" value="${movie+1 }"/>

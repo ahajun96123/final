@@ -91,7 +91,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		session.invalidate();
 		mav.addObject("logout", "로그아웃");
-		mav.setViewName("redirect:/login");
+		mav.setViewName("redirect:/main");
 		return mav;
 	}
 
@@ -103,12 +103,22 @@ public class MemberService {
 		return mav;
 	}
 
-	public ModelAndView memberInfo(MemberVO memberVO) {
+	public ModelAndView memberInfo(MemberVO memberVO, HttpServletResponse response) throws IOException {
+		response.setContentType("text/html;charset=utf-8");
+		PrintWriter out = response.getWriter();
 		mav = new ModelAndView();
 		MemberVO mv = new MemberVO();
-		mv = mdao.memberInfo(memberVO);
-		mav.addObject("info", mv);
-		mav.setViewName("memberInfo");
+		if(session.getAttribute("id")==null) {
+			out.println("<script>");
+			out.println("alert('로그인이 만료되었습니다 다시로그인해 주세요');");
+			out.println("location.href='main';");
+			out.println("</script>");
+			out.close();
+		}else {
+			mv = mdao.memberInfo(memberVO);
+			mav.addObject("info", mv);
+			mav.setViewName("memberInfo");
+		}
 		return mav;
 	}
 
@@ -184,7 +194,7 @@ public class MemberService {
 		msg += memberVO.getId() + "님의 비밀번호 변경이 요청되어 인증메일이 전송됬습니다.</h3>";
 		msg += "<div style='font-size: 130%'>";
 		msg += "하단의 인증 버튼 클릭 시 정상적으로 인증이 완료됩니다.</div><br/>";
-		msg += "<form method='post' action='http://192.168.0.147:8040/hpot/approvalmember'>";
+		msg += "<form method='post' action='http://192.168.0.146:8040/hpot/approvalmember'>";
 		msg += "<input type='hidden' name='id' value='" + memberVO.getId() + "'>";
 		msg += "<input type='hidden' name='email' value='" + memberVO.getEmail() + "'>";
 		msg += "<input type='hidden' name='approvalkey' value='" + memberVO.getApprovalkey() + "'>";

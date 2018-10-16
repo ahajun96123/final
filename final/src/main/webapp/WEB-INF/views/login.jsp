@@ -25,7 +25,7 @@
 	src="http://code.jquery.com/jquery-latest.js"></script>
 
 <title>HoneyPot</title>
-<link rel="shortcut icon" href="resources/img/bee.jpg">
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <!-- Bootstrap core CSS -->
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
@@ -88,19 +88,10 @@
 	}
 </style>
 
-<script type="text/javascript">
-window.history.forward();
-	function noBack(){
-		window.history.forward();
-	}
-</script>
-
-	
-
 
 </head>
 	
-<body onload="noBack();" onpageshow="if(event.persisted) noBack();" onunload="">
+<body>
 	<c:if test="${msg != null}">
 		<script>
 			alert('${msg}');
@@ -220,8 +211,6 @@ window.history.forward();
 
 				</div>
 				<br>
-				<button class="btn btn-lg btn-primary btn-block"
-					onclick="location.href='main'">비 로 그 인 접 속</button>
 			</div>
 		</div>
 

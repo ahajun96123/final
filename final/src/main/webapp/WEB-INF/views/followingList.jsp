@@ -17,9 +17,6 @@
 	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"></script>
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
-<!-- Our Custom CSS -->
-<link rel="stylesheet" href="style5.css">
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Font Awesome JS -->
 <script defer
@@ -32,7 +29,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>HoneyPot</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -52,18 +50,15 @@
 		window.history.back();
 	}
 </script>
-<style>
-      
-</style>
 </head>
 <body>
 	<div class=container>
 		<%@include file="./topui.jsp"%>
 		<div style="width: 1130px; height: 1080px;">
-			<div style="width: 260px; height: 100%; float: left;">
+			<div style="width: 230px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div style="width: 850px; float: left;">
+			<div style="width: 800px; float: left;">
 				<table class="table">
 					<thead class="thead-light">
 						<tr>
@@ -72,7 +67,8 @@
 						<tr style="height:20px"></tr>
 						<c:forEach items="${BoardList }" var="boardList" varStatus="sts">
 						<tr>
-							<th colspan="3" align="center">'${boardList[sts.index].id}'님의 게시물</th>
+							<th colspan="2" align="center">'${boardList[sts.index].id}'님의 게시물</th>
+							<th><input type="button" id="followBtn${sts.count }" class="btn btn-success" value="팔로우 취소" onclick="follow(${boardList[sts.index].id}, ${sts.count})"></th>
 						</tr>
 						<tr>
 							<c:set var="loop_flag" value="false" />
@@ -156,7 +152,7 @@
 				<c:if test = "${BoardList == null}">
 				<table>
 						<tr>
-							<td><a>검색결과가 존재하지 않습니다.</a></td>
+							<td>팔로잉 중인 사람이 없습니다.</td>
 						</tr>
 				</table>
 				</c:if>
@@ -165,47 +161,36 @@
 			</div>
 		</div>
 	</div>
-	<!-- Bootstrap core JavaScript -->
-	<script
-		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>
-	<script
-		src="<c:url value=" /resources/vendor/bootstrap/js/bootstrap.bundel.min.js " />"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
-	<script>
-		// Get the modal
-		var modal = document.getElementById('userMod');
-
-		// Get the button that opens the modal
-		var btn = document.getElementById("myBtn2");
-
-		var cancle = document.getElementById("cancle");
-
-		// When the user clicks on the button, open the modal 
-		btn.onclick = function() {
-			modal.style.display = "block";
-		}
-
-		// When the user clicks on <span> (x), close the modal
-		cancle.onclick = function() {
-			modal.style.display = "none";
-		}
-
-		// When the user clicks anywhere outside of the modal, close it
-		window.onclick = function(event) {
-			if (event.target == modal) {
-				modal.style.display = "none";
+<script>
+function follow(fid, count) {
+	var fBtn = "followBtn"+count;
+	console.log(fBtn);
+	if(${sessionScope.id == null}){
+		alert('로그인을 해주세요');
+		return false;
+	}
+	$.ajax({
+		type : "post",
+		url : "follow",
+		data : {
+			"id" : fid
+		},
+		dataType : "text",
+		success : function(data) {
+			if (data == "1") {
+				$("input[id="+fBtn+"]").attr("class", "btn btn-success");
+				$('#'+fBtn).val('√팔로잉');
+			} else {
+				$("input[id="+fBtn+"]").attr("class", "btn btn-primary");
+				$('#'+fBtn).val('팔로우');
 			}
+		},
+		error : function(request, status, error) {
+			alert("code:" + request.status + "\n" + "error:" + error);
 		}
-	</script>
+	});
+}
+</script>
 </body>
+
 </html>

@@ -173,7 +173,8 @@ function postCheck() {
       }
    }
 </script>
-<title>List</title>
+<title>허Honey니Pot팟</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body style="background-color: #dcdcdc">
 	<div class=container>
@@ -226,8 +227,7 @@ function postCheck() {
 															style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<div>
 																<div style="border-bottom: 1px solid gray;">
-																	<span
-																		style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																	<span><a href = "MI?id=${board.id}" style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</a></span>
 																	<c:choose>
 																		<c:when test="${fn:length(board.bSubject) > 14}">
 																			<span style="font-size: 12px;">&nbsp;<c:out
@@ -279,8 +279,7 @@ function postCheck() {
 															style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
 															<div>
 																<div style="border-bottom: 1px solid gray;">
-																	<span
-																		style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																	<span><a href = "MI?id=${board.id}" style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</a></span>
 																	<c:choose>
 																		<c:when test="${fn:length(board.bSubject) > 14}">
 																			<span style="font-size: 12px;">&nbsp;<c:out
@@ -342,7 +341,7 @@ function postCheck() {
 										</c:when>
 										<c:otherwise>
 											<tr>
-												<td style="color: #FF895A">${board.id}</td>
+												<td><a href = "MI?id=${board.id}" style="color: #FF895A">${board.id}</a></td>
 												<td><a
 													href="boardView?bNum=${board.bNum}&id=${sessionScope.id}">${board.bSubject }</a></td>
 												<td style="color: #28C28">${board.bLikecount}</td>

@@ -28,7 +28,8 @@
 	crossorigin="anonymous"></script>
 <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+<title>꿀벌 상세정보</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
 	href="${pageContext.request.contextPath}/resources/vendor/bootstrap/css/bootstrap.min.css"
 	type="text/css" rel="stylesheet">
@@ -143,7 +144,7 @@ tr{
 										<div class="btn-group" style="width:100%; margin:5px;">
 										<form action="bookBoard?id=${info.id}" method="post">
 											<button class="btn btn-lg btn-success btn-block" style="width:386px;"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 북마크한 게시물</button>
-											<%-- <input type = "hidden" name="id" value = "${info.id}"> --%>
+											<input type = "hidden" name="idInfo" value = "${info.id}">
 										</form>
 										<form action="following?id=${info.id}" method="post">
 											<button class="btn btn-lg btn-warning btn-block" style="width:386px;"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 팔로우 중인 사람들</button>
@@ -231,22 +232,7 @@ tr{
 		</div>
 	</div>
 	
-	<!-- Bootstrap core JavaScript -->
-	<script
-		src="<c:url value=" /resources/vendor/jquery/jquery.min.js " />"></script>
-	<script
-		src="<c:url value=" /resources/vendor/bootstrap/js/bootstrap.bundel.min.js " />"></script>
-	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
-		integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-		integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-		crossorigin="anonymous"></script>
-	<script
-		src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-		integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-		crossorigin="anonymous"></script>
+
 	<script>
 		// Get the modal
 		var modal = document.getElementById('userMod');
