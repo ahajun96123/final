@@ -34,12 +34,13 @@
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
 <body>
-	<%@include file="./topui.jsp"%>
-	<div style="width: 1920px; height: 1080px;">
-		<div style="width: 260px; height: 100%; float: left;">
-			<%@include file="./sidebar.jsp"%>
-		</div>
-		<div class="container">
+	<div class="container">
+		<%@include file="./topui.jsp"%>
+		<div style="width: 1920px; height: 1080px;">
+			<div style="width: 260px; height: 100%; float: left;">
+				<%@include file="./sidebar.jsp"%>
+			</div>
+			<div style="height: 50px;"></div>
 			<fieldset>
 				<textarea id="messageWindow" rows="20" cols="80" readonly="true"></textarea>
 				<!-- <div id="test" style="width: 500px; overflow-y: auto; height: 100px; border: 2px solid #09c;">
@@ -61,8 +62,8 @@
 			<p align="left">ddd</p>
 		</div> -->
 				<div class="selfbtn">
-					<button id="newMessage" class="btn btn-info" style="width: 100%; display: none;"
-						onclick="showNM()"></button>
+					<button id="newMessage" class="btn btn-info"
+						style="width: 100%; display: none;" onclick="showNM()"></button>
 				</div>
 				<br /> <input id="inputMessage" type="text" /> <input
 					type="submit" value="send" onclick="send()" />
@@ -109,7 +110,7 @@
 		var height = elem.scrollHeight;
 		console.log(top);
 		console.log(height);
-		if(height != 444 && (top+444!=height)){
+		if (height != 444 && (top + 444 != height)) {
 			console.log("오긴온다");
 			var messageBlock = document.getElementById('newMessage');
 			$('#newMessage').html(event.data);
@@ -122,7 +123,7 @@
 			textarea.value += event.data + "\n";
 		}
 	}
-	function showNM(){
+	function showNM() {
 		document.getElementById('newMessage').style.display = "none";
 		elem.scrollTop = elem.scrollHeight;
 	}

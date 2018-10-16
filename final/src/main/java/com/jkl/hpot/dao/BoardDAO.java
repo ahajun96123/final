@@ -204,6 +204,19 @@ public class BoardDAO {
 	public List<BoardVO> getfollowingBoard(String id) {
 		return sqlSession.selectList("Board.myBoard", id);
 	}
+
+	public List<BoardVO> boardBest() {
+		return sqlSession.selectList("Board.boardBest");
+	}
+
+	public List<BoardVO> boardFitList(BoardVO boardVO) {
+		return sqlSession.selectList("Board.boardFitList",boardVO);
+	}
+
+	public BoardVO boardFit(BoardVO boardVO) {
+		return sqlSession.selectOne("Board.boardFit", boardVO);
+	}
+
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

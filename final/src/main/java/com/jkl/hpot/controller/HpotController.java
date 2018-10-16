@@ -309,22 +309,23 @@ public class HpotController {
 	 * request.setAttribute("which", which); return "main"; }
 	 */
 	@RequestMapping(value = "/main", method = RequestMethod.GET)
-	public String main(HttpServletRequest request, HttpSession session) {
-
+	public ModelAndView main(HttpServletRequest request, HttpSession session,@ModelAttribute BoardVO boardVO) {
+		mav = new ModelAndView();
 		String id = (String) session.getAttribute("id");
 		if (id == null) {
 			
 		} else {
 			
 		}
-
+		boardVO.setId(id);
+		mav = bs.boardmain(boardVO);
 		String which = null;
 		request.setAttribute("which", which);
-		return "main";
+		return mav;
 	}
 
 	@RequestMapping(value = "/postCheck", method = RequestMethod.GET)
-	public ModelAndView post(HttpServletRequest request, HttpServletResponse response,Model model) throws Exception {
+	public ModelAndView post(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
 		String which = request.getParameter("which");
