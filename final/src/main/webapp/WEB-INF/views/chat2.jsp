@@ -33,16 +33,16 @@
 <title>허니팟 채팅방</title>
 <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
 </head>
-<body>
+<body style="background-color: #dcdcdc">
 	<div class="container">
 		<%@include file="./topui.jsp"%>
 		<div style="width: 1920px; height: 1080px;">
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div style="height: 50px;"></div>
+			<div style="height: 50px;"><h4>실시간 채팅</h4></div>
 			<fieldset>
-				<textarea id="messageWindow" rows="20" cols="80" readonly="true"></textarea>
+				<textarea id="messageWindow" rows="30" cols="100" readonly="true"></textarea>
 				<!-- <div id="test" style="width: 500px; overflow-y: auto; height: 100px; border: 2px solid #09c;">
 			<p align="right">ddd</p>
 			<p align="right">ddd</p>
@@ -65,8 +65,9 @@
 					<button id="newMessage" class="btn btn-info"
 						style="width: 100%; display: none;" onclick="showNM()"></button>
 				</div>
-				<br /> <input id="inputMessage" type="text" /> <input
-					type="submit" value="send" onclick="send()" />
+				<div class="input-group"> <textarea id="inputMessage" type="text" rows="2" cols="80"></textarea>
+				<button class="btn btn-dark" type="submit" onclick="send()">send</button>
+				</div>
 			</fieldset>
 		</div>
 	</div>

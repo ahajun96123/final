@@ -99,23 +99,22 @@
 					<tr>
 						<th>[${view.bCategory }]</th>
 						<c:if test="${view.id != sessionScope.id }">
-							<td colspan="5">${view.bSubject}&nbsp;&nbsp;
-							<c:if test="${commentcount > 0}">
-								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-							</c:if>
-							<span style="color: blue">${view.bTag}</span></td>
+							<td colspan="5">${view.bSubject}&nbsp;&nbsp;<c:if
+									test="${commentcount > 0}">
+									<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if> <span style="color: blue">${view.bTag}</span></td>
 							<td>
 								<div>
-									<input type="button" id="bookBtn" class="btn btn-info" onclick="bookMark()" value="북마크" />
+									<input type="button" id="bookBtn" class="btn btn-info"
+										onclick="bookMark()" value="북마크" />
 								</div>
 							</td>
 						</c:if>
 						<c:if test="${view.id == sessionScope.id }">
-							<td colspan="6">${view.bSubject}&nbsp;&nbsp;
-							<c:if test="${commentcount > 1}">
-								<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
-							</c:if>
-							<span style="color: blue">${view.bTag}</span></td>
+							<td colspan="6">${view.bSubject}&nbsp;&nbsp;<c:if
+									test="${commentcount > 1}">
+									<span style="color: green">[${commentcount}]</span>&nbsp;&nbsp;
+							</c:if> <span style="color: blue">${view.bTag}</span></td>
 						</c:if>
 						<td>
 							<div>
@@ -128,7 +127,8 @@
 						<th>작성자</th>
 						<td>
 							<div>
-								<a style="color: #FF895A" href="memberinfomation?idInfo=${view.id }">${view.id}</a>
+								<a style="color: #FF895A"
+									href="memberinfomation?idInfo=${view.id }">${view.id}</a>
 							</div>
 						</td>
 						<th>작성일</th>
@@ -155,7 +155,7 @@
 							<td colspan="7"><a href="${view.bUrl}">${view.bUrl}</a></td>
 						</tr>
 					</c:if>
-					
+
 					<tr>
 						<c:choose>
 							<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
@@ -170,11 +170,13 @@
 					</tr>
 				</table>
 				<c:if test="${view.bWhich eq '음식'}">
+					<c:if test="${view.mapu != null}">
 						<!-- 이미지 지도를 표시할 div 입니다 -->
-					<div id="staticMap" style="width:600px;height:350px;"></div>    
+						<div id="staticMap" style="width: 600px; height: 350px;"></div>
 
-					<script type="text/javascript" src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
-					<script>
+						<script type="text/javascript"
+							src="//dapi.kakao.com/v2/maps/sdk.js?appkey=b3c8dc6b57f4a90c120d1e51fc22e505"></script>
+						<script>
 					// 이미지 지도에서 마커가 표시될 위치입니다 
 					var markerPosition  = new daum.maps.LatLng(${view.mapu}, ${view.mapk});
 
@@ -195,6 +197,7 @@
 					var staticMap = new daum.maps.StaticMap(staticMapContainer, staticMapOption);
 					</script>
 					</c:if>
+				</c:if>
 				<div class="btn-group" style="float: right">
 					<c:choose>
 						<c:when test="${view.bWhich eq '음식'||view.bWhich eq '영화'}">
@@ -204,7 +207,8 @@
 										data-target="#Grade">평점 매기기</button>
 								</c:if>
 								<c:if test="${gradeValue != null}">
-									<button class="btn btn-secondary" data-target="#Grade" disabled="disabled">(${gradeValue.grade}점)평점주기 완료</button>
+									<button class="btn btn-secondary" data-target="#Grade"
+										disabled="disabled">(${gradeValue.grade}점)평점주기 완료</button>
 								</c:if>
 							</c:if>
 						</c:when>
@@ -218,16 +222,16 @@
 						</c:when>
 					</c:choose>
 					<c:if test="${sessionScope.id ne view.id}">
-								<c:if test="${reportValue == null}">
-									<button class="btn btn-danger" data-toggle="modal"
-										data-target="#Report">신고</button>
-								</c:if>
-							</c:if>
+						<c:if test="${reportValue == null}">
+							<button class="btn btn-danger" data-toggle="modal"
+								data-target="#Report">신고</button>
+						</c:if>
+					</c:if>
 					<c:if test="${sessionScope.id == view.id}">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
 						<button class="btn btn-danger" data-toggle="modal"
-										data-target="#Delete">삭제</button>
+							data-target="#Delete">삭제</button>
 					</c:if>
 					<button class="btn btn-warning" type="button"
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
@@ -325,13 +329,11 @@
 				<form action="boardReport" method="post">
 					<!-- Modal body -->
 					<div class="modal-body">
-						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 신고는 취소가 불가능합니다.</span> 
-						<span>&nbsp;신고를 3회 이상 받은 게시물은 블라인드 처리됩니다.</span>
-						<input
-							type="hidden" name="id" value="${sessionScope.id}"> <input
-							type="hidden" name="bNum" value="${view.bNum}"> <input
-							type="text" name="reason" class="form-control"
-							placeholder="신고 사유를 적어주세요.">
+						<span>&nbsp;한 게시물에 대하여 1회 가능하며 반영된 신고는 취소가 불가능합니다.</span> <span>&nbsp;신고를
+							3회 이상 받은 게시물은 블라인드 처리됩니다.</span> <input type="hidden" name="id"
+							value="${sessionScope.id}"> <input type="hidden"
+							name="bNum" value="${view.bNum}"> <input type="text"
+							name="reason" class="form-control" placeholder="신고 사유를 적어주세요.">
 					</div>
 
 					<!-- Modal footer -->
@@ -351,15 +353,16 @@
 					<h4 class="modal-title">게시물 삭제</h4>
 					<button type="button" class="close" data-dismiss="modal">&times;</button>
 				</div>
-					<!-- Modal body -->
-					<div class="modal-body">
-						<span>&nbsp;게시물을 삭제 하시겠습니까?</span>
-					</div>
+				<!-- Modal body -->
+				<div class="modal-body">
+					<span>&nbsp;게시물을 삭제 하시겠습니까?</span>
+				</div>
 
-					<!-- Modal footer -->
-					<div class="modal-footer">
-						<button class="btn btn-danger" type="button" onclick="DeleteCheck()">삭제</button>
-					</div>
+				<!-- Modal footer -->
+				<div class="modal-footer">
+					<button class="btn btn-danger" type="button"
+						onclick="DeleteCheck()">삭제</button>
+				</div>
 			</div>
 		</div>
 	</div>
