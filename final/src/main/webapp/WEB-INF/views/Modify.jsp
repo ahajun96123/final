@@ -31,6 +31,18 @@
 				minHeight : null,
 				maxHeight : null,
 				focus : true,
+				toolbar: [
+				    // [groupName, [list of button]]
+					['style', ['style']],
+  					['font', ['bold', 'italic', 'underline', 'clear']],
+					['fontname', ['fontname']],
+  					['color', ['color']],
+  					['para', ['ul', 'ol', 'paragraph']],
+  					['height', ['height']],
+  					['table', ['table']],
+  					['insert', ['link','hr','video']],
+  					['view', ['fullscreen', 'codeview']]
+				  ],
 				callbacks : {
 					callbacks : {
 						onImageUpload : function(files, editor, welEditable) {

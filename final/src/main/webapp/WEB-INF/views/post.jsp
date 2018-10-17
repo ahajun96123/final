@@ -9,7 +9,7 @@
 <title>HoneyPot</title>
 <link rel="shortcut icon" href="resources/img/honeypot.jpg">
 <link
-	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css"
+	href="http://netdna.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.css?ver=2"
 	rel="stylesheet">
 <script
 	src="http://cdnjs.cloudflare.com/ajax/libs/jquery/2.1.4/jquery.js"></script>
@@ -33,6 +33,18 @@
 				minHeight : null,
 				maxHeight : null,
 				focus : true,
+				toolbar: [
+				    // [groupName, [list of button]]
+					['style', ['style']],
+  					['font', ['bold', 'italic', 'underline', 'clear']],
+					['fontname', ['fontname']],
+  					['color', ['color']],
+  					['para', ['ul', 'ol', 'paragraph']],
+  					['height', ['height']],
+  					['table', ['table']],
+  					['insert', ['link','hr','video']],
+  					['view', ['fullscreen', 'codeview']]
+				  ],
 				callbacks : {
 					onImageUpload : function(files, editor, welEditable) {
 						for (var i = files.length - 1; i >= 0; i--) {
