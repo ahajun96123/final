@@ -61,126 +61,130 @@ b {
 				<c:set var="movie" value="1" />
 				<c:set var="hotdeal" value="1" />
 				<c:if test="${sessionScope.id !=null }">
-					<b>맞춤</b>
-					<br>
-					<div class="contentContainer">
-						<c:set var="i" value="0" />
-						<c:set var="j" value="3" />
-						<table id="video" style="margin-left: 50px;">
-							<c:forEach var="board" items="${fitList}">
-								<c:if test="${board.bWhich =='음식'}">
-									<c:if test="${board.bBlind == 0 }">
-										<c:if test="${i<3 }">
-											<c:if test="${i%j == 0 }">
-												<tr>
-											</c:if>
-											<td>
-												<div class="card" id="card"
-													style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
-													<div>
-														<div style="border-bottom: 1px solid gray;">
-															<span
-																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
-															<c:choose>
-																<c:when test="${fn:length(board.bSubject) > 14}">
-																	<span style="font-size: 12px;">&nbsp;<c:out
-																			value="${fn:substring(board.bSubject,0,13)}" />...
-																	</span>
-																</c:when>
-																<c:otherwise>
-																	<span style="font-size: 12px;"><c:out
-																			value="${board.bSubject}" /></span>
-																</c:otherwise>
-															</c:choose>
-														</div>
-														<div class="videoplay">
-															<img class="btn-img-rounded" data-toggle="popover"
-																data-trigger="hover"
-																data-content="${fn:substring(board.bContent,0,20)}..."
-																src="img/${board.bThumbname}"
-																style="width: 218px; height: 140px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
-															<div>
-																<div
-																	style="border-top: 1px solid gray; font-size: 12px;">
-																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
-																</div>
+					<c:if test="${fitList != null }">
+						<b>맞춤</b>
+						<br>
+						<div class="contentContainer">
+							<c:set var="i" value="0" />
+							<c:set var="j" value="3" />
+							<table id="video" style="margin-left: 50px;">
+								<c:forEach var="board" items="${fitList}">
+									<c:if test="${board.bWhich =='음식'}">
+										<c:if test="${board.bBlind == 0 }">
+											<c:if test="${i<3 }">
+												<c:if test="${i%j == 0 }">
+													<tr>
+												</c:if>
+												<td>
+													<div class="card" id="card"
+														style="height: 220px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+														<div>
+															<div style="border-bottom: 1px solid gray;">
+																<span
+																	style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																<c:choose>
+																	<c:when test="${fn:length(board.bSubject) > 14}">
+																		<span style="font-size: 12px;">&nbsp;<c:out
+																				value="${fn:substring(board.bSubject,0,13)}" />...
+																		</span>
+																	</c:when>
+																	<c:otherwise>
+																		<span style="font-size: 12px;"><c:out
+																				value="${board.bSubject}" /></span>
+																	</c:otherwise>
+																</c:choose>
+															</div>
+															<div class="videoplay">
+																<img class="btn-img-rounded" data-toggle="popover"
+																	data-trigger="hover"
+																	data-content="${fn:substring(board.bContent,0,20)}..."
+																	src="img/${board.bThumbname}"
+																	style="width: 218px; height: 140px; margin: auto"
+																	onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 																<div>
-																	<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																	<div
+																		style="border-top: 1px solid gray; font-size: 12px;">
+																		<span style="color: #FF9614">평점 ${board.bGrade}</span>
+																		<span class="text-info">조회 ${board.bReadcount}</span>
+																		<span>${board.bDate}</span>
+																	</div>
+																	<div>
+																		<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											</td>
-											<c:if test="${i%j == j-1 }">
-												</tr>
+												</td>
+												<c:if test="${i%j == j-1 }">
+													</tr>
+												</c:if>
+												<c:set var="i" value="${i+1 }" />
 											</c:if>
-											<c:set var="i" value="${i+1 }" />
 										</c:if>
 									</c:if>
-								</c:if>
-							</c:forEach>
-						</table>
-						<table id="video" style="margin-left: 50px;">
-							<c:forEach var="board" items="${fitList}">
-								<c:if test="${board.bWhich =='영화'}">
-									<c:if test="${board.bBlind == 0 }">
-										<c:if test="${i<3 }">
-											<c:if test="${i%j == 0 }">
-												<tr>
-											</c:if>
-											<td>
-												<div class="card" id="card"
-													style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
-													<div>
-														<div style="border-bottom: 1px solid gray;">
-															<span
-																style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
-															<c:choose>
-																<c:when test="${fn:length(board.bSubject) > 14}">
-																	<span style="font-size: 12px;">&nbsp;<c:out
-																			value="${fn:substring(board.bSubject,0,13)}" />...
-																	</span>
-																</c:when>
-																<c:otherwise>
-																	<span style="font-size: 12px;"><c:out
-																			value="${board.bSubject}" /></span>
-																</c:otherwise>
-															</c:choose>
-														</div>
-														<div class="videoplay">
-															<img class="btn-img-rounded" data-toggle="popover"
-																data-trigger="hover"
-																data-content="${fn:substring(board.bContent,0,20)}..."
-																src="img/${board.bThumbname}"
-																style="width: 218px; height: 280px; margin: auto"
-																onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
-															<div>
-																<div
-																	style="border-top: 1px solid gray; font-size: 12px;">
-																	<span style="color: #FF9614">평점 ${board.bGrade}</span>
-																	<span class="text-info">조회 ${board.bReadcount}</span> <span>${board.bDate}</span>
-																</div>
+								</c:forEach>
+							</table>
+							<table id="video" style="margin-left: 50px;">
+								<c:forEach var="board" items="${fitList}">
+									<c:if test="${board.bWhich =='영화'}">
+										<c:if test="${board.bBlind == 0 }">
+											<c:if test="${i<3 }">
+												<c:if test="${i%j == 0 }">
+													<tr>
+												</c:if>
+												<td>
+													<div class="card" id="card"
+														style="height: 360px; width: 220px; margin: 15px; padding: 0px; background-color: #c8c8c8; box-shadow: 6px 6px 10px 0px gray;">
+														<div>
+															<div style="border-bottom: 1px solid gray;">
+																<span
+																	style="font-weight: bold; border-right: 1px solid gray;">&nbsp;${board.id}&nbsp;</span>
+																<c:choose>
+																	<c:when test="${fn:length(board.bSubject) > 14}">
+																		<span style="font-size: 12px;">&nbsp;<c:out
+																				value="${fn:substring(board.bSubject,0,13)}" />...
+																		</span>
+																	</c:when>
+																	<c:otherwise>
+																		<span style="font-size: 12px;"><c:out
+																				value="${board.bSubject}" /></span>
+																	</c:otherwise>
+																</c:choose>
+															</div>
+															<div class="videoplay">
+																<img class="btn-img-rounded" data-toggle="popover"
+																	data-trigger="hover"
+																	data-content="${fn:substring(board.bContent,0,20)}..."
+																	src="img/${board.bThumbname}"
+																	style="width: 218px; height: 280px; margin: auto"
+																	onclick="location='boardView?bNum=${board.bNum}&id=${sessionScope.id}'">
 																<div>
-																	<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																	<div
+																		style="border-top: 1px solid gray; font-size: 12px;">
+																		<span style="color: #FF9614">평점 ${board.bGrade}</span>
+																		<span class="text-info">조회 ${board.bReadcount}</span>
+																		<span>${board.bDate}</span>
+																	</div>
+																	<div>
+																		<span style="color: #6478FF; font-size: 12px;">${board.bTag}</span>
+																	</div>
 																</div>
 															</div>
 														</div>
 													</div>
-												</div>
-											</td>
-											<c:if test="${i%j == j-1 }">
-												</tr>
+												</td>
+												<c:if test="${i%j == j-1 }">
+													</tr>
+												</c:if>
+												<c:set var="i" value="${i+1 }" />
 											</c:if>
-											<c:set var="i" value="${i+1 }" />
 										</c:if>
 									</c:if>
-								</c:if>
-							</c:forEach>
-						</table>
-					</div>
+								</c:forEach>
+							</table>
+						</div>
+					</c:if>
 				</c:if>
 			</div>
 			<b>인기 <i class="material-icons" style="font-size: 18px">restaurant</i>
