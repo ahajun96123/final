@@ -222,7 +222,15 @@ public class BoardDAO {
 	}
 
 	public BoardVO boardFit(BoardVO boardVO) {
-		return sqlSession.selectOne("Board.boardFit", boardVO);
+		BoardVO bv = new BoardVO();
+		bv = sqlSession.selectOne("Board.boardFit", boardVO);
+		if(bv!=null) {
+			return bv;
+		} else {
+			bv = new BoardVO();
+			bv.setbCategory("ko");
+			return bv;
+		}
 	}
 
 	

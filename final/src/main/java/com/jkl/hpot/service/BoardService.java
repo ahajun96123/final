@@ -327,10 +327,13 @@ public class BoardService {
 		mav = new ModelAndView();
 		List<BoardVO> boardList = boardDAO.boardBest();
 		if(session.getAttribute("id")!=null) {
-			String category = boardDAO.boardFit(boardVO).getbCategory();
-			boardVO.setbCategory(category);
-			List<BoardVO> fitList = boardDAO.boardFitList(boardVO);
-			mav.addObject("fitList", fitList);
+			if(!boardDAO.boardFit(boardVO).getbCategory().equals("ko")) {
+				String category = boardDAO.boardFit(boardVO).getbCategory();
+				boardVO.setbCategory(category);
+				List<BoardVO> fitList = boardDAO.boardFitList(boardVO);
+				mav.addObject("fitList", fitList);
+			}
+			
 		}
 		System.out.println(boardList.size());
 		mav.addObject("bestmain", boardList);

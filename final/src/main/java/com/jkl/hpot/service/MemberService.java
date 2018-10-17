@@ -130,7 +130,7 @@ public class MemberService {
 		mav = new ModelAndView();
 		memberVO = mdao.memberAlter(memberVO);
 		mav.addObject("info", memberVO);
-		mav.setViewName("redirect:/memberinfomation");
+		mav.setViewName("redirect:/memberinfomation?idInfo=");
 		return mav;
 	}
 
@@ -178,11 +178,11 @@ public class MemberService {
 		// Mail Server 설정
 		String charSet = "utf-8";
 		String hostSMTP = "smtp.naver.com";
-		String hostSMTPid = "bcno2008";
-		String hostSMTPpwd = "a8728824";
+		String hostSMTPid = "ahajun96";
+		String hostSMTPpwd = "098098qw";
 
 		// 보내는 사람 EMail, 제목, 내용
-		String fromEmail = "bcno2008@naver.com";
+		String fromEmail = "ahajun96@naver.com";
 		String fromName = "HoneyPot";
 		String subject = "";
 		String msg = "";

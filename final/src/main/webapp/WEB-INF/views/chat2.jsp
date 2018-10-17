@@ -61,8 +61,8 @@
 			<p align="right">ddd</p>
 			<p align="left">ddd</p>
 		</div> -->
-				<div class="selfbtn">
-					<button id="newMessage" class="btn btn-info"
+				<div class="selfbtn" style="width:300px;">
+					<button id="newMessage" class="btn btn-secondary"
 						style="width: 100%; display: none;" onclick="showNM()"></button>
 				</div>
 				<br /> <input id="inputMessage" type="text" /> <input
