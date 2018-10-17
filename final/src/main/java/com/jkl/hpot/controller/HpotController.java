@@ -361,8 +361,12 @@ public class HpotController {
 			@ModelAttribute BoardVO boardVO) {
 		response.setContentType("text/html;charset=UTF-8");
 		mav = new ModelAndView();
-		String which = request.getParameter("which");
-		System.out.println(which);
+		String which=request.getParameter("which");
+		
+		if(request.getParameter("search") != null) {
+			which = boardVO.getbWhich();
+		}
+		System.out.println(boardVO.getbWhich());
 		boardVO.setbWhich(which);
 		int page = 1;
 		int limit = 12;

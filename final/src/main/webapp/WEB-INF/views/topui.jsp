@@ -94,7 +94,7 @@
 									<option value="내용&지역">내용&지역</option>
 								</select>
 								<div class="input-group mb-1">
-									<input type="text" class="form-control" placeholder="Search">
+									<input type="text" class="form-control" placeholder="Search" name="search">
 									<div class="input-group-append" style="width: 200px;">
 										<button class="btn btn-warning" type="submit"><span class="fa fa-search"></span>검색	</button>
 									</div>
@@ -113,7 +113,6 @@
 					<c:if test="${sessionScope.id == null }">
 						<button class="btn btn-warning" onclick="location.href='login'">로 그 인</button>
 						<button class="btn btn-primary" onclick="location.href='login'">회 원 가 입</button>
-						<button class="btn btn-info" onclick="location.href='login'">아이디/비밀번호찾기</button>
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
