@@ -581,5 +581,9 @@ public class HpotController {
 
 		response.getWriter().close();
 	}
-
+	@RequestMapping(value = "/blindList", method = RequestMethod.GET)
+	public ModelAndView boardBlind() {
+		bs.blindList();
+		return mav;
+	}
 }

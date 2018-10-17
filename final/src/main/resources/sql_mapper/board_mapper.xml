@@ -215,4 +215,10 @@
 	<select id="boardFitList" parameterType="board" resultType="board">
 		SELECT * FROM BOARD WHERE BCATEGORY = #{bCategory} ORDER BY BDATE DESC
 	</select>
+	<select id="blindList" resultType="board">
+		SELECT * FROM BOARD WHERE BBLIND = 1
+	</select>
+	<select id="reportList" resultType="board">
+		SELECT * FROM REPORT
+	</select>
 </mapper>

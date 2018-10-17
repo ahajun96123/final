@@ -233,6 +233,14 @@ public class BoardDAO {
 		}
 	}
 
+	public List<BoardVO> blindList() {
+		return sqlSession.selectList("Board.blindList");
+	}
+
+	public List<BoardVO> reportList() {
+		return sqlSession.selectList("Board.reportList");
+	}
+
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

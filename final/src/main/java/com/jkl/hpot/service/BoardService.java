@@ -341,5 +341,14 @@ public class BoardService {
 		mav.setViewName("main");
 		return mav;
 	}
+
+	public ModelAndView blindList() {
+		List<BoardVO> blindList = boardDAO.blindList();
+		List<BoardVO> reportList = boardDAO.reportList();
+		mav.addObject("blindList", blindList);
+		mav.addObject("reportList", reportList);
+		mav.setViewName("blindList");
+		return mav;	
+	}
 	
 }
