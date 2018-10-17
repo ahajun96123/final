@@ -184,6 +184,7 @@ public class BoardService {
 	      if(viewBoard.getbWhich().equals("지름")) {
 	    	  result = boardDAO.boardLikeCheck(boardVO);
 	      }
+	      System.out.println(viewBoard.getMapu());
 	      boardVO.setId(viewBoard.getId());
 	      boardVO.setbNum(viewBoard.getbNum());
 	      boardVO.setbCategory(viewBoard.getbCategory());

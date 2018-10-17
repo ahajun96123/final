@@ -76,11 +76,11 @@
 		class="navbar navbar-expand-sm bg-dark navbar-muted navbar-fixed-top"
 		style="margin-bottom: 0px; background-image: url('img/honeybgcm3.png');height:80px;">
 		<!-- Brand/logo -->
-		<img src="resources/img/honeypot3.png" style="width: 200px; height: 90px;"></img>
+		<img class="btn-img"src="resources/img/honeypot3.png" style="width: 200px; height: 90px;" onclick="location='main'"></img>
 		<div style="width: 50px"></div>
 		<!-- Links -->
 		<ul class="navbar-nav">
-			<li class="nav-item"><a class="nav-link text-warning"
+			<li class="nav-item" style="width:100px"><a class="nav-link text-warning"
 				href="main">Home</a></li>
 			<c:choose>
 				<c:when test="${which ne null}">
