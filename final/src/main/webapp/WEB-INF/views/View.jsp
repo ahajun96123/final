@@ -6,7 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 
@@ -237,13 +237,13 @@
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
 				</div>
 				<div style="height: 30px"></div>
-				<span style="color: #aaaaaa">Total ${commentcount} Comments
+				<span style="color: #aaaaaa"><i class="fa fa-comments"></i>&nbsp;Total ${commentcount} Comments
 					─────────</span>
 				<div>
 					<c:forEach var="comment" items="${commentList}">
 						<div class="border border-muted" style="padding: 15px;">
 							<div>
-								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
+								<span style="color: #FF895A">${comment.id}</span> <span style="color: #aaaaaa">${comment.cDate }&nbsp;<i class="fa fa-comment"></i></span>
 							</div>
 							<div>
 								<span>${comment.cContent}</span>
