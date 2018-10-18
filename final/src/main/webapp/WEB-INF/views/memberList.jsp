@@ -73,7 +73,7 @@
 			<div style="width: 850px;float: left;">
 			<br>
 			<a style = "font-size: 30px; font-weight: bold;">회원관리</a>
-			<button class="btn btn-dark" onclick="blindList">블라인드 목록</button>
+			<button class="btn btn-dark" onclick="location='blindList'">블라인드 목록</button>
 				<table class="table table-hover" style = "margin-top: 20px;">
 					<thead class="thead-light">
 						<tr>

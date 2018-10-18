@@ -47,7 +47,8 @@ b {
 		location.href = "postCheck?which=" + which
 	}
 </script>
-<title>main</title>
+<title>꿀정보들~~</title>
+<link rel="shortcut icon" href="resources/img/honeypot.jpg">
 </head>
 <body style="background-color: #dcdcdc">
 	<div class=container>

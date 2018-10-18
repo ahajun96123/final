@@ -69,10 +69,6 @@
 								<td>회원님의 회원가입때 입력한 이메일로 인증주소가 전송되었습니다. 인증확인시 이메일 재설정이
 									가능합니다.</td>
 							</tr>
-							<tr>
-								<td><button class="btn btn-info" onclick="location.href='login'">로그인창으로
-										이동</button></td>
-							</tr>
 					</table>
 				</form>
 				<button class="btn btn-warning" onclick="location.href='main'">메인으로 돌아가기</button>

@@ -343,6 +343,7 @@ public class BoardService {
 	}
 
 	public ModelAndView blindList() {
+		mav = new ModelAndView();
 		List<BoardVO> blindList = boardDAO.blindList();
 		List<BoardVO> reportList = boardDAO.reportList();
 		mav.addObject("blindList", blindList);
