@@ -221,4 +221,7 @@
 	<select id="reportList" resultType="board">
 		SELECT * FROM REPORT
 	</select>
+	<update id="blindRelease" parameterType="board">
+		UPDATE BOARD SET BBLIND=0 WHERE BNUM=#{bNum}
+	</update>
 </mapper>

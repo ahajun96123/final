@@ -241,6 +241,10 @@ public class BoardDAO {
 		return sqlSession.selectList("Board.reportList");
 	}
 
+	public int blindRelease(BoardVO boardVO) {
+		return sqlSession.update("Board.blindRelease", boardVO);
+	}
+
 	
 	/*public int imgUpload(UploadFile saveFile) {
 		return sqlSession.insert("Board.imgUpload",saveFile);

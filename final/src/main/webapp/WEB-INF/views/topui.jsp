@@ -95,7 +95,7 @@
 								</select>
 								<div class="input-group mb-1">
 									<input type="text" class="form-control" placeholder="Search" name="search">
-									<div class="input-group-append" style="width: 200px;">
+									<div class="input-group-append" style="width: 100px;">
 										<button class="btn btn-warning" type="submit"><span class="fa fa-search"></span>검색	</button>
 									</div>
 								</div>
@@ -115,13 +115,13 @@
 						<button class="btn btn-primary" onclick="location.href='login'">회 원 가 입</button>
 					</c:if>
 					<c:if
-						test="${sessionScope.id != null && !sessionScope.id.equals('admin') }">
+						test="${sessionScope.id != null && !sessionScope.id.equals('koxk') }">
 						<button class="btn btn-warning" onclick="location.href='memberinfomation?idInfo='">내 정 보</button>
 						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 					<c:if
-						test="${sessionScope.id != null && sessionScope.id.equals('admin') }">
-						<button class="btn btn-warning" onclick="location.href='memberlist'">회 원 관 리</button>
+						test="${sessionScope.id != null && sessionScope.id.equals('koxk') }">
+						<button class="btn btn-warning" onclick="location.href='memberlist'">관 리 자</button>
 						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 				</div>

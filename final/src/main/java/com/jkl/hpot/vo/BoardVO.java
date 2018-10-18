@@ -38,11 +38,23 @@ public class BoardVO {
 	private double grade;
 	private double gradeavg;
 	private String reason;
+	private String release;
+	
 	public BoardVO() {
 
 	}
 	
 	
+	public String getRelease() {
+		return release;
+	}
+
+
+	public void setRelease(String release) {
+		this.release = release;
+	}
+
+
 	public String getReason() {
 		return reason;
 	}

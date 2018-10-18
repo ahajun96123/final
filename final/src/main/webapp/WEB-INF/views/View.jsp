@@ -258,7 +258,7 @@
 							<textarea cols="95" rows="3" name="cContent" class="form-control"></textarea>
 						</div>
 						<input type="hidden" name="bNum" value="${view.bNum}"> <input
-							type="hidden" name="id" value="${view.id}">
+							type="hidden" name="id" value="${sessionScope.id}">
 						<button class="input-group-text" type="submit">댓글등록</button>
 					</div>
 				</form>
