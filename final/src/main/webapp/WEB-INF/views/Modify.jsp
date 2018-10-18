@@ -18,7 +18,6 @@
 <script src="plugins/summernote.js"></script>
 <script src="plugins/lang/summernote-ko-KR.js"></script>
 
-
 <script type="text/javascript">
 	
 </script>
