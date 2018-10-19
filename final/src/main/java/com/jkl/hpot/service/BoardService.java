@@ -346,10 +346,21 @@ public class BoardService {
 		mav = new ModelAndView();
 		List<BoardVO> blindList = boardDAO.blindList();
 		List<BoardVO> reportList = boardDAO.reportList();
+		System.out.println(blindList.size());
+		System.out.println(reportList.size());
 		mav.addObject("blindList", blindList);
 		mav.addObject("reportList", reportList);
 		mav.setViewName("blindList");
 		return mav;	
+	}
+
+	public String blindRelease(BoardVO boardVO) {
+		if(boardVO.getRelease()=="삭제") {
+			boardDAO.boardDelete(boardVO);
+		}else {
+			boardDAO.blindRelease(boardVO);
+		}
+		return "redirect:/blind";
 	}
 	
 }

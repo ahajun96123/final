@@ -7,7 +7,8 @@
 <!-- =========================================main에서 가져옴================================================= -->
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=1">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -15,7 +16,6 @@
 <script
 	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"></script>
 <!-- Our Custom CSS -->
-<link rel="stylesheet" href="style5.css">
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 
 <!-- Font Awesome JS -->
@@ -40,33 +40,21 @@
 			<div style="width: 260px; height: 100%; float: left;">
 				<%@include file="./sidebar.jsp"%>
 			</div>
-			<div style="height: 50px;"><h4>실시간 채팅</h4></div>
+			<div style="height: 50px;">
+				<h4><i class="fa fa-comments"></i> 실시간 채팅</h4>
+			</div>
 			<fieldset>
-				<textarea id="messageWindow" rows="30" cols="100" readonly="true"></textarea>
-				<!-- <div id="test" style="width: 500px; overflow-y: auto; height: 100px; border: 2px solid #09c;">
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="right">ddd</p>
-			<p align="left">ddd</p>
-		</div> -->
-				<div class="selfbtn" style="width:300px;">
-					<button id="newMessage" class="btn btn-secondary"
-						style="width: 100%; display: none;" onclick="showNM()"></button>
-				</div>
-				<div class="input-group"> <textarea id="inputMessage" type="text" rows="2" cols="80"></textarea>
-				<button class="btn btn-dark" type="submit" onclick="send()">send</button>
+				<div id="container">
+					<textarea class="form-control form-rounded" id="messageWindow"
+						style="width: 800px" rows="30" cols="100" readonly="true"></textarea>
+					<div class="selfbtn" style="width: 800px;">
+						<button id="newMessage" class="btn btn-secondary"
+							style="width: 100%; display: none;" onclick="showNM()"></button>
+					</div>
+					<div class="input-group" style="width: 800px">
+						<input type="text" class="form-control" id="inputMessage">
+						<button class="btn btn-dark" type="submit" onclick="send()">send</button>
+					</div>
 				</div>
 			</fieldset>
 		</div>
@@ -111,13 +99,13 @@
 		var height = elem.scrollHeight;
 		console.log(top);
 		console.log(height);
-		if (height != 444 && (top + 444 != height)) {
+		if (height != 671 && (top + 671 != height)) {
 			console.log("오긴온다");
 			var messageBlock = document.getElementById('newMessage');
 			$('#newMessage').html(event.data);
 			messageBlock.style.display = "block";
 		}
-		if (top + 444 == height) {
+		if (top + 671 == height) {
 			textarea.value += event.data + "\n";
 			elem.scrollTop = elem.scrollHeight;
 		} else {
@@ -144,10 +132,12 @@
 			inputMessage.value = "";
 			var elem = document.getElementById('messageWindow');
 			elem.scrollTop = elem.scrollHeight;
+			console.log(elem.scrollTop);
+			console.log(elem.scrollHeight);
 		}
 	}
 	window.setInterval(function() {
-		if (elem.scrollTop + 444 == elem.scrollHeight) {
+		if (elem.scrollTop + 671 == elem.scrollHeight) {
 			document.getElementById('newMessage').style.display = "none";
 		}
 	}, 0);

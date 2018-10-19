@@ -21,7 +21,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=1">
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 <script
@@ -329,8 +329,8 @@ function postCheck() {
 								<tr>
 									<th>작성자</th>
 									<th>제목</th>
-									<th>추천수</th>
-									<th>조회수</th>
+									<th>추천</th>
+									<th>조회</th>
 									<th>작성일</th>
 									<th>태그</th>
 								</tr>

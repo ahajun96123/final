@@ -95,7 +95,7 @@
 								</select>
 								<div class="input-group mb-1">
 									<input type="text" class="form-control" placeholder="Search" name="search">
-									<div class="input-group-append" style="width: 200px;">
+									<div class="input-group-append" style="width: 100px;">
 										<button class="btn btn-warning" type="submit"><span class="fa fa-search"></span>검색	</button>
 									</div>
 								</div>
@@ -121,7 +121,7 @@
 					</c:if>
 					<c:if
 						test="${sessionScope.id != null && sessionScope.id.equals('admin') }">
-						<button class="btn btn-warning" onclick="location.href='memberlist'">회 원 관 리</button>
+						<button class="btn btn-warning" onclick="location.href='memberlist'">관 리 자</button>
 						<button class="btn btn-info" onclick="location.href='memberlogout'">로 그 아 웃</button>
 					</c:if>
 				</div>

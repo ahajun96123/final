@@ -70,6 +70,7 @@ b {
 							<c:set var="j" value="3" />
 							<table id="video" style="margin-left: 50px;">
 								<c:forEach var="board" items="${fitList}">
+								<c:if test="${board.id != sessionScope.id }">
 									<c:if test="${board.bWhich =='음식'}">
 										<c:if test="${board.bBlind == 0 }">
 											<c:if test="${i<3 }">
@@ -123,6 +124,7 @@ b {
 												<c:set var="i" value="${i+1 }" />
 											</c:if>
 										</c:if>
+									</c:if>
 									</c:if>
 								</c:forEach>
 							</table>

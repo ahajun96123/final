@@ -39,21 +39,21 @@ public class MemberService {
 	@Autowired
 	private BCryptPasswordEncoder passEncoder;
 
-	public ModelAndView memberJoin(MemberVO memberVO) throws Exception {
-		mav = new ModelAndView();
+	public String memberJoin(MemberVO memberVO,HttpServletRequest request) throws Exception {
+		String url=null;
 		memberVO.setApprovalkey(create_key());
 		int result = mdao.memberJoin(memberVO);
 		if (result == 0) {
-			mav.addObject("msg", "회원가입실패");
-			mav.setViewName("login");
+			request.setAttribute("msg", "회원가입실패");
+			url = "redirect:/login";
 
 		} else {
-			mav.addObject("msg", "회원가입");
+			request.setAttribute("msg", "회원가입");
 			session.setAttribute("id", memberVO.getId());
-			mav.setViewName("main");
+			url = "redirect:/main";
 		}
 
-		return mav;
+		return url;
 	}
 
 	public String memberLogin(MemberVO memberVO, HttpServletResponse response ,HttpServletRequest request) throws IOException {

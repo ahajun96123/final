@@ -72,8 +72,8 @@
 			</div>
 			<div style="width: 850px;float: left;">
 			<br>
-			<a style = "font-size: 30px; font-weight: bold;">회원관리</a>
-			<button class="btn btn-dark" onclick="location='blindList'">블라인드 목록</button>
+			<a style = "font-size: 30px; font-weight: bold;">관리자</a>
+			<button class="btn btn-dark" onclick="location.href='blind'">블라인드 목록보기</button>
 				<table class="table table-hover" style = "margin-top: 20px;">
 					<thead class="thead-light">
 						<tr>

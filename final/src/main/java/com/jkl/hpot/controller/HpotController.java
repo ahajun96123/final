@@ -189,12 +189,11 @@ public class HpotController {
 
 	// 회원가입 처리
 	@RequestMapping(value = "/memberjoin", method = RequestMethod.POST)
-	public ModelAndView memberJoin(@ModelAttribute MemberVO memberVO) throws Exception {
-		mav = new ModelAndView();
+	public String memberJoin(@ModelAttribute MemberVO memberVO,HttpServletRequest request) throws Exception {
 		String encPassword = passEncoder.encode(memberVO.getPassword());
 		memberVO.setPassword(encPassword);
-		mav = ms.memberJoin(memberVO);
-		return mav;
+		ms.memberJoin(memberVO,request);
+		return "redirect:/main";
 	}
 
 	// 로그인 처리
@@ -576,15 +575,26 @@ public class HpotController {
 		jobj.put("url", fullPath);
 		System.out.println();
 		response.setContentType("application/json");
-		System.out.println(fullPath);
+		System.out.println(fullPath); 
 		response.getWriter().println(request.getParameter("callback") + "(" + jobj + ")");
 
 		response.getWriter().close();
 	}
-	@RequestMapping(value = "/blindList", method = RequestMethod.GET)
+	@RequestMapping(value = "/blind", method = RequestMethod.GET)
 	public ModelAndView boardBlind() {
 		mav = new ModelAndView();
 		mav = bs.blindList();
 		return mav;
+	}
+	
+	@RequestMapping(value = "/blindRelease", method = RequestMethod.GET)
+	public String blndRelease(HttpServletRequest request,@ModelAttribute BoardVO boardVO, HttpServletResponse response) {
+		response.setContentType("text/html;charset=UTF-8");
+		String release = request.getParameter("rel");
+		int num = Integer.parseInt(request.getParameter("num"));
+		boardVO.setRelease(release);
+		boardVO.setbNum(num);
+		bs.blindRelease(boardVO);
+		return "redirect:/blind";
 	}
 }

@@ -6,7 +6,7 @@
 <head>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css?ver=2">
 
@@ -75,7 +75,7 @@
 	
 	function GradeCheck() {
 		var grade = document.getElementById("grade").value;	
-		if(grade > 1 && grade < 5) {
+		if(grade > 1 && grade <= 5) {
 			document.getElementById("gradeForm").submit();
 		}else{
 			alert("1.0~5.0 사이의 평점으로 등록해주세요.")
@@ -223,13 +223,21 @@
 					</c:choose>
 					<c:if test="${sessionScope.id ne view.id && sessionScope.id != null}">
 						<c:if test="${reportValue == null}">
-							<button class="btn btn-danger" data-toggle="modal"
-								data-target="#Report">신고</button>
+							<c:if test="${sessionScope.id != 'admin' }">
+								<button class="btn btn-danger" data-toggle="modal"
+									data-target="#Report">신고</button>
+							</c:if>
+							<c:if test="${sessionScope.id == 'admin' }">
+								<button class="btn btn-danger" data-toggle="modal"
+									data-target="#Report">블라인드</button>
+							</c:if>
 						</c:if>
 					</c:if>
-					<c:if test="${sessionScope.id == view.id}">
+					<c:if test="${sessionScope.id == view.id || sessionScope.id == 'admin'}">
+						<c:if test="${sessionScope.id == view.id }">
 						<button class="btn btn-warning" type="button"
 							onclick="ModifyCheck()">수정</button>
+						</c:if>
 						<button class="btn btn-danger" data-toggle="modal"
 							data-target="#Delete">삭제</button>
 					</c:if>
@@ -237,13 +245,13 @@
 						onclick="location='boardList?which=${view.bWhich}'">목록</button>
 				</div>
 				<div style="height: 30px"></div>
-				<span style="color: #aaaaaa">Total ${commentcount} Comments
+				<span style="color: #aaaaaa"><i class="fa fa-comments"></i>&nbsp;Total ${commentcount} Comments
 					─────────</span>
 				<div>
 					<c:forEach var="comment" items="${commentList}">
 						<div class="border border-muted" style="padding: 15px;">
 							<div>
-								<span style="color: #FF895A">${comment.id}</span> <span>${comment.cDate }</span>
+								<span style="color: #FF895A">${comment.id}</span> <span style="color: #aaaaaa">${comment.cDate }&nbsp;<i class="fa fa-comment"></i></span>
 							</div>
 							<div>
 								<span>${comment.cContent}</span>
@@ -258,7 +266,7 @@
 							<textarea cols="95" rows="3" name="cContent" class="form-control"></textarea>
 						</div>
 						<input type="hidden" name="bNum" value="${view.bNum}"> <input
-							type="hidden" name="id" value="${view.id}">
+							type="hidden" name="id" value="${sessionScope.id}">
 						<button class="input-group-text" type="submit">댓글등록</button>
 					</div>
 				</form>
