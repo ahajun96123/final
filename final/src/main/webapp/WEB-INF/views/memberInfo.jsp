@@ -147,7 +147,9 @@ tr{
 											<input type = "hidden" name="idInfo" value = "${info.id}">
 										</form>
 										<form action="following?id=${info.id}" method="post">
-											<button class="btn btn-lg btn-warning btn-block" style="width:386px;"><c:if test="${info.id eq sessionScope.id }">내가</c:if><c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 팔로우 중인 사람들</button>
+											<button class="btn btn-lg btn-warning btn-block" style="width:386px;">
+											<c:if test="${info.id eq sessionScope.id }">내가</c:if>
+											<c:if test="${info.id ne sessionScope.id }">'${info.id}'님이</c:if> 팔로우 중인 사람들</button>
 											<%-- <input type = "hidden" name="id" value = "${info.id}"> --%>
 										</form>
 										</div>

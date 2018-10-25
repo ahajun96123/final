@@ -54,13 +54,6 @@
 	<update parameterType="member" id="pwalter"> update member set password =
 		#{password} , approvalstatus = 'false' where id = #{id} </update>
 		
-		
-		
-		
-		
-		
-		
-	<!-- =====================================준모========================================== -->
 	<select id="ifFollow" parameterType="member" resultType="member">
 		SELECT * FROM FOLLOW WHERE id = #{id} AND followid = #{followId}
 	</select>

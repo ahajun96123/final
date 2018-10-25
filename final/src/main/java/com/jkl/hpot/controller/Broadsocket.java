@@ -45,18 +45,10 @@ public class Broadsocket {
 	}
 
 	@OnOpen
-	public void onOpen(/*String message, */Session session) throws IOException {
+	public void onOpen(Session session) throws IOException {
 		// Add session to the connected sessions set
 		System.out.println(session);
 		clients.add(session);
-		/*synchronized (clients) {
-			// 들어왔을때 메시지 띄우기
-			for (Session client : clients) {
-				if (!client.equals(session)) {
-					client.getBasicRemote().sendText(message);
-				}
-			}
-		}*/
 	}
 
 	@OnClose

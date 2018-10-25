@@ -67,7 +67,6 @@ public class MemberDAO {
 	}
 	
 	public int follow(MemberVO memberVO) {
-		System.out.println("test아위디"+memberVO.getId());
 		return sqlSession.insert("Member.follow", memberVO);
 	}
 

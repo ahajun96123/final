@@ -84,7 +84,6 @@
 	var textarea = document.getElementById("messageWindow");
 	var webSocket = new WebSocket("ws://192.168.0.146:8040/hpot/broadcasting");
 	var inputMessage = document.getElementById("inputMessage");
-	var elem = document.getElementById('messageWindow');
 	webSocket.onerror = function(event) {
 		onError(event)
 	};
@@ -95,26 +94,25 @@
 		onMessage(event);
 	};
 	function onMessage(event) {
-		var top = elem.scrollTop;
-		var height = elem.scrollHeight;
+		var top = textarea.scrollTop;
+		var height = textarea.scrollHeight;
 		console.log(top);
 		console.log(height);
 		if (height != 671 && (top + 671 != height)) {
-			console.log("오긴온다");
 			var messageBlock = document.getElementById('newMessage');
 			$('#newMessage').html(event.data);
 			messageBlock.style.display = "block";
 		}
 		if (top + 671 == height) {
 			textarea.value += event.data + "\n";
-			elem.scrollTop = elem.scrollHeight;
+			textarea.scrollTop = textarea.scrollHeight;
 		} else {
 			textarea.value += event.data + "\n";
 		}
 	}
 	function showNM() {
 		document.getElementById('newMessage').style.display = "none";
-		elem.scrollTop = elem.scrollHeight;
+		textarea.scrollTop = textarea.scrollHeight;
 	}
 	function onOpen(event) {
 		textarea.value += "연결 성공\n";
@@ -130,21 +128,16 @@
 			textarea.value += "나 : " + inputMessage.value + "\n";
 			webSocket.send(massage);
 			inputMessage.value = "";
-			var elem = document.getElementById('messageWindow');
-			elem.scrollTop = elem.scrollHeight;
-			console.log(elem.scrollTop);
-			console.log(elem.scrollHeight);
+			var textarea = document.getElementById('messageWindow');
+			textarea.scrollTop = textarea.scrollHeight;
+			console.log(textarea.scrollTop);
+			console.log(textarea.scrollHeight);
 		}
 	}
 	window.setInterval(function() {
-		if (elem.scrollTop + 671 == elem.scrollHeight) {
+		if (textarea.scrollTop + 671 == textarea.scrollHeight) {
 			document.getElementById('newMessage').style.display = "none";
 		}
 	}, 0);
-	//     채팅이 많아져 스크롤바가 넘어가더라도 자동적으로 스크롤바가 내려가게함
-	/* window.setInterval(function() {
-		var elem = document.getElementById('messageWindow');
-		elem.scrollTop = elem.scrollHeight;
-	}, 0); */
 </script>
 </html>

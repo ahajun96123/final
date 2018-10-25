@@ -311,15 +311,11 @@ public class MemberService {
 		List<MemberVO> mv = mdao.followingList(memberVO);
 		List<BoardVO> bv = null;
 		List<List<BoardVO>> st = new ArrayList<List<BoardVO>>();
-		
-		System.out.println("설마 안들어감?");
 		for(MemberVO fl : mv) {
-			System.out.println("testid    :     "+fl.getFollowId());
 			bv = new ArrayList<BoardVO>();
 			bv = bdao.getfollowingBoard(fl.getFollowId());
 			st.add(bv);
 		}
-		
 		mav.addObject("followingList", mv);
 		mav.addObject("BoardList", st);
 		mav.addObject("idInfo", memberVO.getId());
